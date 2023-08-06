@@ -1,185 +1,261 @@
-# ![Laravel Example App](logo.png)
+<a name="readme-top"></a>
 
-[![Build Status](https://img.shields.io/travis/gothinkster/laravel-realworld-example-app/master.svg)](https://travis-ci.org/gothinkster/laravel-realworld-example-app) [![Gitter](https://img.shields.io/gitter/room/realworld-dev/laravel.svg)](https://gitter.im/realworld-dev/laravel) [![GitHub stars](https://img.shields.io/github/stars/gothinkster/laravel-realworld-example-app.svg)](https://github.com/gothinkster/laravel-realworld-example-app/stargazers) [![GitHub license](https://img.shields.io/github/license/gothinkster/laravel-realworld-example-app.svg)](https://raw.githubusercontent.com/gothinkster/laravel-realworld-example-app/master/LICENSE)
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
-> ### Example Laravel codebase containing real world examples (CRUD, auth, advanced patterns and more) that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API.
 
-This repo is functionality complete — PRs and issues welcome!
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Nate-go/school-verse">
+    <img src="logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-----------
+  <h3 align="center">school-verse</h3>
 
-# Getting started
+  <p align="center">
+    This README find for the school-verse project!!
+    <br />
+    <a href="https://github.com/Nate-go/school-verse"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Nate-go/school-verse">View Demo</a>
+    ·
+    <a href="https://github.com/Nate-go/school-verse/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Nate-go/school-verse/issues">Request Feature</a>
+  </p>
+</div>
 
-## Installation
 
-Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/5.4/installation#installation)
 
-Alternative installation is possible without local dependencies relying on [Docker](#docker). 
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-Clone the repository
 
-    git clone git@github.com:gothinkster/laravel-realworld-example-app.git
 
-Switch to the repo folder
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-    cd laravel-realworld-example-app
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Install all the dependencies using composer
+School-Verse is an advanced school management system designed to streamline and enhance administrative tasks within educational institutions. Our comprehensive platform is tailored to meet the unique needs of schools, enabling them to efficiently manage various aspects of their daily operations.
 
-    composer install
+With School-Verse, administrators can effortlessly handle student enrollment, attendance tracking, and academic records. The platform simplifies the scheduling of classes and exams, making it easier for schools to organize their academic calendar. It also offers a centralized database for storing and accessing student and staff information securely.
 
-Copy the example env file and make the required configuration changes in the .env file
+Additionally, School-Verse empowers teachers with tools to manage their classrooms effectively. They can easily record and evaluate student grades, create interactive lesson plans, and communicate with students and parents within the platform.
 
-    cp .env.example .env
+Our goal is to provide schools with a user-friendly, reliable, and comprehensive management solution, freeing up valuable time for educators and administrators to focus on what truly matters: nurturing the growth and development of students. With School-Verse, educational institutions can embrace digital transformation and create a more efficient, connected, and thriving learning community.
 
-Generate a new application key
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-    php artisan key:generate
 
-Generate a new JWT authentication secret key
 
-    php artisan jwt:generate
+### Built With
 
-Run the database migrations (**Set the database connection in .env before migrating**)
+This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-    php artisan migrate
+* [![Laravel][Laravel.com]][Laravel-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![JQuery][JQuery.com]][JQuery-url]
+* [![MySQL][MySQL.com]][MySQL-url]
+* [![Blade][Blade.com]][Blade-url]
+* [![Tailwind][Tailwind.com]][Tailwind-url]
 
-Start the local development server
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-    php artisan serve
 
-You can now access the server at http://localhost:8000
 
-**TL;DR command list**
+<!-- GETTING STARTED -->
+## Getting Started
 
-    git clone git@github.com:gothinkster/laravel-realworld-example-app.git
-    cd laravel-realworld-example-app
-    composer install
-    cp .env.example .env
-    php artisan key:generate
-    php artisan jwt:generate 
-    
-**Make sure you set the correct database connection information before running the migrations** [Environment variables](#environment-variables)
+Follow these steps to clone and run the Laravel project school-verse on your local machine:
 
-    php artisan migrate
-    php artisan serve
+### Prerequisites
 
-## Database seeding
+1. PHP: You'll need PHP version 10. or higher installed on your machine. You can check your PHP version by running php -v in the command line.
 
-**Populate the database with seed data with relationships which includes users, articles, comments, tags, favorites and follows. This can help you to quickly start testing the api or couple a frontend and start using it with ready content.**
+2. Composer: Composer is a PHP package manager that is required for Laravel. You can download and install it from the official website: https://getcomposer.org/download/
 
-Open the DummyDataSeeder and set the property values as per your requirement
+3. MySQL: Ensure you have a MySQL database server set up or any other database supported by Laravel.
 
-    database/seeds/DummyDataSeeder.php
+### Installation
 
-Run the database seeder and you're done
+_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-    php artisan db:seed
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Nate-go/school-verse.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd school-verse
+   ```
+3. Install project dependencies:
+   ```sh
+   composer install
+   ```
+4. Create a copy of the `.env.example` file and rename it to `.env`:
+   ```sh
+   cp .env.example .env
+   ```
+5. Generate the application key:
+   ```sh
+   cp .env.example .env
+   ```
+6. Configure the database:
+    * Open the `.env` file in a text editor.
+    * Set the database connection details like `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` according to your MySQL setup.
+7. Run the database migrations:
+   ```sh
+   php artisan migrate
+   ```
+8. Serve the application:
+   ```sh
+   php artisan serve
+   ```
+9. Open your web browser and navigate to http://localhost:8000 to see the application running.
+   
+Congratulations! You have successfully cloned, installed, and run the Laravel project on your local machine. Now you can start exploring and customizing it for your needs. If you encounter any issues, feel free to open an issue on the project's repository or seek help from the Laravel community. Goodluck!
+   
 
-***Note*** : It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-    php artisan migrate:refresh
-    
-## Docker
 
-To install with [Docker](https://www.docker.com), run following commands:
 
-```
-git clone git@github.com:gothinkster/laravel-realworld-example-app.git
-cd laravel-realworld-example-app
-cp .env.example.docker .env
-docker run -v $(pwd):/app composer install
-cd ./docker
-docker-compose up -d
-docker-compose exec php php artisan key:generate
-docker-compose exec php php artisan jwt:generate
-docker-compose exec php php artisan migrate
-docker-compose exec php php artisan db:seed
-docker-compose exec php php artisan serve --host=0.0.0.0
-```
+<!-- USAGE EXAMPLES -->
+## Usage
 
-The api can be accessed at [http://localhost:8000/api](http://localhost:8000/api).
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-## API Specification
+_For more examples, please refer to the [Documentation](https://example.com)_
 
-This application adheres to the api specifications set by the [Thinkster](https://github.com/gothinkster) team. This helps mix and match any backend with any other frontend without conflicts.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-> [Full API Spec](https://github.com/gothinkster/realworld/tree/master/api)
 
-More information regarding the project can be found here https://github.com/gothinkster/realworld
 
-----------
+<!-- ROADMAP -->
+## Roadmap
 
-# Code overview
+- [x] Add Changelog
+- [x] Add back to top links
+- [ ] Add Additional Templates w/ Examples
+- [ ] Add "components" document to easily copy & paste sections of the readme
+- [ ] Multi-language Support
+    - [ ] Chinese
+    - [ ] Spanish
 
-## Dependencies
+See the [open issues](https://github.com/Nate-go/school-verse/issues) for a full list of proposed features (and known issues).
 
-- [jwt-auth](https://github.com/tymondesigns/jwt-auth) - For authentication using JSON Web Tokens
-- [laravel-cors](https://github.com/barryvdh/laravel-cors) - For handling Cross-Origin Resource Sharing (CORS)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Folders
 
-- `app` - Contains all the Eloquent models
-- `app/Http/Controllers/Api` - Contains all the api controllers
-- `app/Http/Middleware` - Contains the JWT auth middleware
-- `app/Http/Requests/Api` - Contains all the api form requests
-- `app/RealWorld/Favorite` - Contains the files implementing the favorite feature
-- `app/RealWorld/Filters` - Contains the query filters used for filtering api requests
-- `app/RealWorld/Follow` - Contains the files implementing the follow feature
-- `app/RealWorld/Paginate` - Contains the pagination class used to paginate the result
-- `app/RealWorld/Slug` - Contains the files implementing slugs to articles
-- `app/RealWorld/Transformers` - Contains all the data transformers
-- `config` - Contains all the application configuration files
-- `database/factories` - Contains the model factory for all the models
-- `database/migrations` - Contains all the database migrations
-- `database/seeds` - Contains the database seeder
-- `routes` - Contains all the api routes defined in api.php file
-- `tests` - Contains all the application tests
-- `tests/Feature/Api` - Contains all the api tests
 
-## Environment variables
+<!-- CONTRIBUTING -->
+## Contributing
 
-- `.env` - Environment variables can be set in this file
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-***Note*** : You can quickly set the database information and other variables in this file and have the application fully working.
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-----------
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-# Testing API
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Run the laravel development server
 
-    php artisan serve
 
-The api can now be accessed at
+<!-- LICENSE -->
+## License
 
-    http://localhost:8000/api
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-Request headers
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-| **Required** 	| **Key**              	| **Value**            	|
-|----------	|------------------	|------------------	|
-| Yes      	| Content-Type     	| application/json 	|
-| Yes      	| X-Requested-With 	| XMLHttpRequest   	|
-| Optional 	| Authorization    	| Token {JWT}      	|
 
-Refer the [api specification](#api-specification) for more info.
 
-----------
- 
-# Authentication
- 
-This applications uses JSON Web Token (JWT) to handle authentication. The token is passed with each request using the `Authorization` header with `Token` scheme. The JWT authentication middleware handles the validation and authentication of the token. Please check the following sources to learn more about JWT.
- 
-- https://jwt.io/introduction/
-- https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html
+<!-- CONTACT -->
+## Contact
 
-----------
+Nate - nate.ha.goldenowl@egmail.com
 
-# Cross-Origin Resource Sharing (CORS)
- 
-This applications has CORS enabled by default on all API endpoints. The default configuration allows requests from `http://localhost:3000` and `http://localhost:4200` to help speed up your frontend testing. The CORS allowed origins can be changed by setting them in the config file. Please check the following sources to learn more about CORS.
- 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
-- https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
-- https://www.w3.org/TR/cors
+Project Link: [https://github.com/Nate-go/school-verse](https://github.com/Nate-go/school-verse)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+
+* [Choose an Open Source License](https://choosealicense.com)
+* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
+* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
+* [Malven's Grid Cheatsheet](https://grid.malven.co/)
+* [Img Shields](https://shields.io)
+* [GitHub Pages](https://pages.github.com)
+* [Font Awesome](https://fontawesome.com)
+* [React Icons](https://react-icons.github.io/react-icons/search)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Nate-go/school-verse.svg?style=for-the-badge
+[contributors-url]: https://github.com/Nate-go/school-verse/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Nate-go/school-verse.svg?style=for-the-badge
+[forks-url]: https://github.com/Nate-go/school-verse/network/members
+[stars-shield]: https://img.shields.io/github/stars/Nate-go/school-verse.svg?style=for-the-badge
+[stars-url]: https://github.com/Nate-go/school-verse/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Nate-go/school-verse.svg?style=for-the-badge
+[issues-url]: https://github.com/Nate-go/school-verse/issues
+[license-shield]: https://img.shields.io/github/license/Nate-go/school-verse.svg?style=for-the-badge
+[license-url]: https://github.com/Nate-go/school-verse/blob/master/LICENSE.txt
+[product-screenshot]: images/screenshot.png
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com 
+[MySQL.com]: https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white
+[MySQL-url]: https://www.mysql.com/
+[Blade.com]: https://img.shields.io/badge/Blade-39464e?style=for-the-badge&logo=laravel&logoColor=white
+[Blade-url]: https://laravel.com/docs/10.x/blade
+[Tailwind.com]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind-url]: https://tailwindcss.com/
