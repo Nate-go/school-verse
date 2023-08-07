@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class UserFactory extends Factory
+class SubjectTeachersFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +19,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => fake()->unique()->safeEmail(),
-            'password' => encrypt('123456'),
-            'role' => random_int(1,2),
-            'status' => 1,
+            'user_id' => User::all()->random(),
+            'subject_id' => Subject::all()->random(),
             'created_at' => now(),
             'updated_at' => now()
         ];
