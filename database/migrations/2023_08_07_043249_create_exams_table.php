@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('type');
             $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('student_id');
-            $table->integer('score')->nullable();
+            $table->double('score')->nullable();
             $table->string('review')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

@@ -21,9 +21,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => encrypt('123456'),
             'role' => random_int(1,2),
-            'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'status' => random_int(0,2),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -20,11 +21,9 @@ class NotificationFactory extends Factory
     {
         return [
             'content' => Str::random(20),
-            'user_id' => User::all()->random(),
+            'user_id' => DB::table('users')->inRandomOrder()->value('id'),
             'status' => random_int(0,1),
             'uri' => Str::random(20),
-            'created_at' => now(),
-            'updated_at' => now()
         ];
     }
 }

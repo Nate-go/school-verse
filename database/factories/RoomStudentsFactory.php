@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class RoomStudentsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => DB::table('users')->where('role', 2)->inRandomOrder()->value('id'),
+            'room_id' => DB::table('rooms')->inRandomOrder()->value('id')
         ];
     }
 }

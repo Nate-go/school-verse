@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,14 +19,13 @@ class ProfileFactory extends Factory
     public function definition(): array
     {    
         return [
-            'user_id' => User::all()->unique()->random(),
+            'user_id' => DB::table('users')->inRandomOrder()->value('id'),
             'username' => fake()->userName(),
+            'gender' => random_int(0,2),
             'address' => fake()->address(),
             'phonenumber' => fake()->phoneNumber(),
             'realname' => fake()->name(),
             'date_of_birth' => fake()->dateTimeBetween("-18 years", "-15 years"),
-            'created_at' => now(),
-            'updated_at' => now()
         ];
     }
 }
