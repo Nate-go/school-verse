@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', [AuthenController::class, 'loginView'])->name('login');
+Route::post('/login', [AuthenController::class, 'login'])->name('login1');
+
+
+Route::group([
+    'middleware' => 'auth:web',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });
