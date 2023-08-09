@@ -31,12 +31,15 @@ class AuthenController extends Controller
         $credentials = $validator->validate();
 
         if (Auth::attempt($credentials)) {
+            if($request->session()->has('previousUrl')){
+                $previousUrl = $request->session()->get('previousUrl');
+                $request->session()->forget('previousUrl');
+                $request->session()->regenerate();
+                return redirect($previousUrl);
+            }
             $request->session()->regenerate();
-            dd(Auth::getUser());
-            return redirect()->intended('welcome');
+            return redirect()->route('welcome');
         }
-
-        dd(Auth::getUser());
  
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
@@ -68,7 +71,7 @@ class AuthenController extends Controller
     public function logout() {
         auth()->logout();
 
-        return response()->json(['message' => 'User successfully signed out']);
+        return route('loginView');
     }
 
     public function throwAuthenError() {

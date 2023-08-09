@@ -1,5 +1,6 @@
 <?php
 
+use App\Constant\UserRole;
 use App\Http\Controllers\AuthenController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,14 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [AuthenController::class, 'loginView'])->name('login');
 Route::post('/login', [AuthenController::class, 'login'])->name('login1');
-
+Route::get('/not-permission', function () {
+    return view('notPermission');
+})->name('notPermission');
 
 Route::group([
-    'middleware' => 'auth:web',
-    'prefix' => 'auth'
-
+    'middleware' => ['auth', 'author:'. json_encode([UserRole::ADMIN])]
 ], function ($router) {
     Route::get('/', function () {
         return view('welcome');
-    });
+    })->name('welcome');
+
+    Route::get('/homepage', function () {
+        return view('homepage');
+    })->name('homepage');
 });
