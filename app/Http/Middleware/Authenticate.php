@@ -16,6 +16,6 @@ class Authenticate extends Middleware
             return null;
         }
         $request->session()->put('previousUrl', $request->url());
-        return route('login');
+        return route('login.index');
     }
 }

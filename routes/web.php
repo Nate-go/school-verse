@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', [AuthenController::class, 'loginView'])->name('login');
-Route::post('/login', [AuthenController::class, 'login'])->name('login1');
+Route::get('/login', [AuthenController::class, 'index'])->name('login.index');
+Route::post('/login', [AuthenController::class, 'login'])->name('login');
 Route::get('/not-permission', function () {
     return view('notPermission');
 })->name('notPermission');
