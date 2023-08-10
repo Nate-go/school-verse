@@ -21,10 +21,14 @@ Route::get('/not-permission', function () {
     return view('notPermission');
 })->name('notPermission');
 
+Route::get('/', function () {
+    return view('index');
+});
+
 Route::group([
     'middleware' => ['auth', 'author:'. json_encode([UserRole::ADMIN])]
 ], function ($router) {
-    Route::get('/', function () {
+    Route::get('/welcome', function () {
         return view('welcome');
     })->name('welcome');
 
