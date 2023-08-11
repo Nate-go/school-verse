@@ -16,7 +16,11 @@
         <div class='min-h-screen'>
             <livewire:sidebar/>
             <div class="p-4 md:ml-72">
-                <livewire:header/>  
+                <livewire:header/>
+                <main class='overflow-x-hidden mt-8 mb-8 flex flex-col gap-12'>
+                    <livewire:tableuser/>
+                </main>
+                
                 <livewire:notifytable/>
             </div>
         </div>
@@ -24,5 +28,4 @@
     </div>
     @livewireScripts
 </body>
-
 </html>

@@ -10,7 +10,7 @@ class Settingbutton extends Component
 
     public $headerIsLocked = false;
 
-    protected $listeners = ['changeHeaderLock' => 'changeLock'];
+    protected $listeners = ['changeHeaderLock' => 'changeLock', 'scrollToTop' => 'scrollToTop'];
     
     public function render()
     {
@@ -23,5 +23,9 @@ class Settingbutton extends Component
 
     public function changeLock(){
         $this->headerIsLocked = !$this->headerIsLocked;
+    }
+
+    public function scrollToTop() {
+        $this->dispatchBrowserEvent('scrollToTop');
     }
 }

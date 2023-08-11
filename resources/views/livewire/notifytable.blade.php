@@ -1,4 +1,4 @@
-<div>
+<div class="{{ $notifyIsOpen ? 'block' : 'hidden'}}">
     <ul tabindex="-1"
         class="absolute top-16 right-12 bg-white min-w-[180px] p-3 border-blue-gray-50 rounded-md shadow-lg shadow-blue-gray-500/10 font-sans text-sm font-normal text-blue-gray-500 overflow-auto focus:outline-none z-[999] w-max border-0">
         <li role="menuitem"
