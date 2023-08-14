@@ -21,14 +21,28 @@ Route::get('/not-permission', function () {
     return view('notPermission');
 })->name('notPermission');
 
-Route::group([
-    'middleware' => ['auth', 'author:'. json_encode([UserRole::ADMIN])]
-], function ($router) {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('welcome');
+Route::get('/', function () {
+    return view('index');
+});
 
-    Route::get('/homepage', function () {
-        return view('homepage');
-    })->name('homepage');
+Route::get('/change', function () {
+    return view('otherindex');
+});
+
+Route::get('/homepage', function () {
+    return view('homepage');
+})->name('homepage');
+
+Route::group([
+    'middleware' => ['auth']
+], function ($router) {
+    Route::resource('users', UserController::class);
+
+    Route::resource('grades', GradeController::class);
+
+    Route::resource('semters', SemesterController::class);
+    Route::resource('subjects', SubjectController::class);
+    Route::resource('teachers', TeacherController::class);
+    Route::resource('insistences', InsistenceController::class);
+    Route::resource('rooms', RoomController::class);
 });
