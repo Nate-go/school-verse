@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 
 class AuthenService{
-    public static function login(Request $request){
+    public function login(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -34,7 +34,7 @@ class AuthenService{
         ])->onlyInput('email');
     }
 
-    public static function logout(){
+    public function logout(){
         auth()->logout();
         return route('login.index');
     } 

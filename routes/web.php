@@ -38,7 +38,11 @@ Route::group([
 ], function ($router) {
     Route::resource('users', UserController::class);
 
-    // Route::get('/homepage', function () {
-    //     return view('homepage');
-    // })->name('homepage');
+    Route::resource('grades', GradeController::class);
+
+    Route::resource('semters', SemesterController::class);
+    Route::resource('subjects', SubjectController::class);
+    Route::resource('teachers', TeacherController::class);
+    Route::resource('insistences', InsistenceController::class);
+    Route::resource('rooms', RoomController::class);
 });

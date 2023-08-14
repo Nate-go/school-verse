@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class AuthenController extends Controller
 {
-    public function __construct() {
+    protected $authenService;
 
+    public function __construct(AuthenService $authenService) {
+        $this->authenService = $authenService;
     }
 
     public function index(){
@@ -16,10 +18,10 @@ class AuthenController extends Controller
     }
 
     public function login(Request $request){
-    	return AuthenService::login($request);
+    	return $this->authenService->login($request);
     }
 
     public function logout() {
-        return AuthenService::logout();
+        return $this->authenService->logout();
     }
 }

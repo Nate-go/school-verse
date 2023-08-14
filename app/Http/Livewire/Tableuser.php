@@ -11,11 +11,9 @@ class Tableuser extends Component
     use WithPagination;
     public $actionIsOpen = false;
 
-    //public $users;
 
     public function render()
     {
-        //$this->users = User::paginate(5);
         return view('livewire.tableuser', [
             'users' => User::paginate(5)
         ]);

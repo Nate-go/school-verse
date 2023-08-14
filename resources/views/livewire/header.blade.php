@@ -19,8 +19,8 @@
             <button
                 class="hover:bg-slate-200 hidden font-sans font-bold center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-base py-3 px-2 rounded-lg items-center hover:text-blue-400 active:text-blue-500"
                 type="button">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                Sign In
+                <i class="fa-solid fa-right-to-bracket pr-2"></i>
+                Login
             </button>
 
             <div>
