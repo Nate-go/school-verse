@@ -8,7 +8,7 @@
         </button>
 
         @if ($isActive) 
-            <div class="absolute bottom-full right-0 z-20 mb-2 w-full min-w-[175px] overflow-hidden rounded-md bg-white pb-1.5 pt-1 outline-none opacity-100 translate-y-0 text-base">
+            <div class="border-2 border-blue-600 absolute bottom-full right-0 z-20 mb-2 w-full min-w-[175px] overflow-hidden rounded-md bg-white pb-1.5 pt-1 outline-none opacity-100 translate-y-0 text-base">
                 <a wire:click='scrollToTop' class="flex p-3 items-center gap-3 transition-colors duration-200 cursor-pointer hover:text-blue-600">
                     <i class="fa-solid fa-circle-up"></i>
                     <span>Back to top</span></a>

@@ -12,7 +12,13 @@ class Header extends Component
 
     public $notifyIsOpen = false;
 
-    protected $listeners = ['changeHeaderLock' => 'changeLock', 'displaySidebar' => 'changeSidebar', 'displayNotify' => 'changeNotify'];
+    public $userInfoIsOpen = false;
+
+    protected $listeners = [
+        'changeHeaderLock' => 'changeLock', 
+        'displaySidebar' => 'changeSidebar', 
+        'displayNotify' => 'changeNotify'
+    ];
 
     public function render()
     {
@@ -35,4 +41,6 @@ class Header extends Component
     {
         $this->notifyIsOpen = !$this->notifyIsOpen;
     }
+
+    
 }

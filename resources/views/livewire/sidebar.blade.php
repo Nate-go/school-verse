@@ -9,14 +9,14 @@
         </div>
         <div class="m-4">
             <ul class="mb-4 flex flex-col gap-1 text-base">
-                <li><a class="" href="#/dashboard/home" ><button
+                <li><a class="" href="/home" ><button
                             class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize"
                             ><i class="fa-solid fa-house"></i>
                             <p
                                 class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
                                 home</p>
                         </button></a></li>
-                <li><a class="active" href="#/dashboard/profile"><button
+                <li><a class="active" href="/change"><button
                             class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 w-full flex items-center gap-4 px-4 capitalize"
                             ><i class="fa-solid fa-layer-group fa-xl"></i>
                             <p

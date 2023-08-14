@@ -3,7 +3,7 @@
         <div class="flex items-center gap-4"><img src="/material-tailwind-dashboard-react/img/logo-xd.svg"
                  class="inline-block relative object-cover object-center w-9 h-9 rounded-md">
             <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
-                Material XD Version</p>
+                {{$user->id}}</p>
         </div>
     </td>
     <td class="py-3 px-5 border-b border-blue-gray-50"><img src="/material-tailwind-dashboard-react/img/team-1.jpeg"
@@ -16,7 +16,7 @@
             class="inline-block relative object-cover object-center !rounded-full w-6 h-6 cursor-pointer border-2 border-white -ml-2.5">
     </td>
     <td class="py-3 px-5 border-b border-blue-gray-50">
-        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">$14,000</p>
+        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">{{$user->email}}</p>
     </td>
     <td class="py-3 px-5 border-b border-blue-gray-50">
         <div class="w-10/12">

@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    Hello
+    @auth
+        {{ Auth::user() }}
+    @endauth
+
+    hello
 </body>
 </html>

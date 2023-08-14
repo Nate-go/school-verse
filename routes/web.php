@@ -25,14 +25,20 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::group([
-    'middleware' => ['auth', 'author:'. json_encode([UserRole::ADMIN])]
-], function ($router) {
-    Route::get('/welcome', function () {
-        return view('welcome');
-    })->name('welcome');
+Route::get('/change', function () {
+    return view('otherindex');
+});
 
-    Route::get('/homepage', function () {
-        return view('homepage');
-    })->name('homepage');
+Route::get('/homepage', function () {
+    return view('homepage');
+})->name('homepage');
+
+Route::group([
+    'middleware' => ['auth']
+], function ($router) {
+    Route::resource('users', UserController::class);
+
+    // Route::get('/homepage', function () {
+    //     return view('homepage');
+    // })->name('homepage');
 });
