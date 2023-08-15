@@ -5,32 +5,25 @@ use DB;
 use Illuminate\Support\Facades\Schema;
 
 class BaseService{
-    protected $table;
+    protected $model;
 
     public function getAll(){
-        $result = DB::table($this->table)->get();
-        return $result;
+        return $this->model->all();
     }
 
-    public function __call($method, $parameters)
-    {
-        $column = $this->getColumnFromMethod($method);
-
-        if (!$this->isTableHasColumn($column) or count($parameters) !== 1) {
-            return null;
-        }
-        return DB::table($this->table)->where($column, $parameters[0])->get();
+    public function getById($id){
+        return $this->model->where('id', $id)->get();
     }
 
-    private function getColumnFromMethod($method){
-        $method = lcfirst(substr($method, 5));
-        $camelCasePattern = '/([a-z])([A-Z])/';
-        $snakeCasePattern = '$1_$2';
-        $result = preg_replace($camelCasePattern, $snakeCasePattern, $method);
-        return strtolower($result);
+    public function add($data) {
+        $this->model->create($data);
     }
 
-    private function isTableHasColumn($column){
-        return Schema::hasColumn($this->table, $column);
+    public function update($id, $data){
+        $this->model->where('id', $id)->update($data);
+    }
+
+    public function delete($id){
+        $this->model->where('id', $id)->delete();
     }
 }

@@ -5,9 +5,9 @@ use App\Constant\UserRole;
 use App\Models\User;
 
 class UserService extends BaseService{
-    public function __construct()
+    public function __construct(User $user)
     {
-        $this->table = 'users';
+        $this->model = $user;
     }
 
     public function getAll() {

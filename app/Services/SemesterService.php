@@ -2,11 +2,12 @@
 
 namespace App\Services;
 use App\Constant\UserRole;
+use App\Models\Semester;
 use App\Models\User;
 
 class SemesterService extends BaseService{
-    public function __construct()
+    public function __construct(Semester $semester)
     {
-        $this->table = 'semesters';
+        $this->model = $semester;
     }
 }
