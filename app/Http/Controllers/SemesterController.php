@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\UserRole;
+use App\Services\SemesterService;
 use Illuminate\Http\Request;
 
 class SemesterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $semesterService;
+
+    public function __construct(SemesterService $semesterService){
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+        $this->semesterService = $semesterService;
+    }
+
     public function index()
     {
         //

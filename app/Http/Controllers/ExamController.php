@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\SubjectService;
+use App\Services\ExamService;
 use Illuminate\Http\Request;
 
-class SubjectController extends Controller
+class ExamController extends Controller
 {
-    protected $subjectService;
+    protected $examService;
 
-    public function __construct(SubjectService $subjectService)
-    {
-        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
-        $this->subjectService = $subjectService;
+    public function __construct(ExamService $examService){
+        $this->middleware('author:' . json_encode([UserRole::ADMIN, UserRole::TEACHER]))->except('show');
+        $this->examService = $examService;
     }
+
     public function index()
     {
-        //
+        
     }
 
     /**

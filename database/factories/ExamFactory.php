@@ -20,10 +20,7 @@ class ExamFactory extends Factory
     {
         return [
             'type' => random_int(0,3),
-            'subject_id' => DB::table('subjects')->inRandomOrder()->value('id'),
-            'student_id' => DB::table('room_students')->inRandomOrder()->value('id'),
-            'score' => random_int(0, 10),
-            'review' => Str::random(20),
+            'teacher_id' => DB::table('room_teachers')->inRandomOrder()->value('id'),
         ];
     }
 }

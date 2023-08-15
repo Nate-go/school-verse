@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\UserRole;
+use App\Services\GradeService;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $gradeService;
+
+    public function __construct(GradeService $gradeService){
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+        $this->gradeService = $gradeService;
+    }
+
     public function index()
     {
         //

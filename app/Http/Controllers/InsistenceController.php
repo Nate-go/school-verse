@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\UserRole;
+use App\Services\InsistenceService;
 use Illuminate\Http\Request;
 
 class InsistenceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $insistenceService;
+
+    public function __construct(InsistenceService $insistenceService){
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('create', 'store');
+        $this->insistenceService = $insistenceService;
+    }
+
+
     public function index()
     {
         //

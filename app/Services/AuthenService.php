@@ -38,4 +38,6 @@ class AuthenService{
         auth()->logout();
         return route('login.index');
     } 
+
+    
 }

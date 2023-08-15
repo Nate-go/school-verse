@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\UserRole;
+use App\Services\RoomService;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $roomService;
+
+    public function __construct(RoomService $roomService){
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+        $this->roomService = $roomService;
+    }
+
     public function index()
     {
         //

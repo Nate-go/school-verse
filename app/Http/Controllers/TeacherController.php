@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\UserRole;
+use App\Services\TeacherService;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $teacherService;
+
+    public function __construct(TeacherService $teacherService){
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+        $this->teacherService = $teacherService;
+    }
+
     public function index()
     {
         //
