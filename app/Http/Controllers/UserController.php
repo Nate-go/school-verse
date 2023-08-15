@@ -11,13 +11,13 @@ class UserController extends Controller
     protected $userService;
 
     public function __construct(UserService $userService){
-        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
+        // $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
         $this->userService = $userService;
     }
 
     public function index()
     {
-        
+        return view('index');
     }
 
     /**

@@ -2,19 +2,35 @@
 
 namespace App\Services;
 use App\Constant\UserRole;
+use App\Constant\UserStatus;
+use App\Models\Profile;
 use App\Models\User;
 
 class UserService extends BaseService{
-    public function __construct(User $user)
-    {
-        $this->model = $user;
+
+    protected $profileModel;
+
+    public function __construct(Profile $profileModel){
+        parent::__construct();
+        $this->profileModel = $profileModel;
     }
 
-    public function getAll() {
-        $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->select('users.id', 'users.role', 'users.status', 'users.email', 'profiles.username', 'profiles.img')
-            ->get();
+    protected function getModel()
+    {
+        return User::class;
+    }
 
+    public function getTable() {
+
+        $users = $this->profileModel
+       ->with('user')
+        ;
+
+        dd($users->getQuery()->toSql());
+
+        $users = $this->mappingConstant(UserRole::class, 'role', $users);
+
+        $users = $this->mappingConstant(UserStatus::class, 'status', $users);
         return $users;
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Constant\UserRole;
 use App\Http\Controllers\AuthenController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +22,7 @@ Route::get('/not-permission', function () {
     return view('notPermission');
 })->name('notPermission');
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [UserController::class, 'index'])->name('index');
 
 Route::get('/change', function () {
     return view('otherindex');

@@ -24,19 +24,19 @@
                 <tr>
                     <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
                         <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            companies</p>
+                            username</p>
                     </th>
                     <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
                         <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            members</p>
+                            email</p>
                     </th>
                     <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
                         <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            budget</p>
+                            role</p>
                     </th>
                     <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
                         <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            completion</p>
+                            status</p>
                     </th>
                 </tr>
             </thead>
