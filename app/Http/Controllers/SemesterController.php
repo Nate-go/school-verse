@@ -11,8 +11,8 @@ class SemesterController extends Controller
     protected $semesterService;
 
     public function __construct(SemesterService $semesterService){
-        $this->semesterService = $semesterService;
         $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+        $this->semesterService = $semesterService;
     }
 
     public function index()

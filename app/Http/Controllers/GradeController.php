@@ -11,8 +11,8 @@ class GradeController extends Controller
     protected $gradeService;
 
     public function __construct(GradeService $gradeService){
-        $this->gradeService = $gradeService;
         $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+        $this->gradeService = $gradeService;
     }
 
     public function index()

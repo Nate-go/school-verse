@@ -11,13 +11,13 @@ class ExamController extends Controller
     protected $examService;
 
     public function __construct(ExamService $examService){
+        $this->middleware('author:' . json_encode([UserRole::ADMIN, UserRole::TEACHER]))->except('show');
         $this->examService = $examService;
-        $this->middleware('author:' .json_encode([UserRole::ADMIN, UserRole::TEACHER]))->except('show');
     }
 
     public function index()
     {
-        //
+        
     }
 
     /**
