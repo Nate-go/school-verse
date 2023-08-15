@@ -42,7 +42,10 @@ Route::group([
 
     Route::resource('semters', SemesterController::class);
     Route::resource('subjects', SubjectController::class);
-    Route::resource('teachers', TeacherController::class);
     Route::resource('insistences', InsistenceController::class);
     Route::resource('rooms', RoomController::class);
+
+    Route::resource('rooms.exams', ExamsController::class)->shallow();
+    Route::resource('rooms.teachers', TeachersController::class)->shallow();
+    Route::resource('rooms.students', StudentsController::class)->shallow();
 });

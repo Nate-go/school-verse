@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\UserRole;
+use App\Services\SubjectService;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $subjectService;
+
+    public function __construct(SubjectService $subjectService)
+    {
+        $this->subjectService = $subjectService;
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+    }
     public function index()
     {
         //

@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\InsistenceService;
+use App\Services\ExamService;
 use Illuminate\Http\Request;
 
-class InsistenceController extends Controller
+class ExamController extends Controller
 {
-    protected $insistenceService;
+    protected $examService;
 
-    public function __construct(InsistenceService $insistenceService){
-        $this->insistenceService = $insistenceService;
-        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('create', 'store');
+    public function __construct(ExamService $examService){
+        $this->examService = $examService;
+        $this->middleware('author:' .json_encode([UserRole::ADMIN, UserRole::TEACHER]))->except('show');
     }
-
 
     public function index()
     {

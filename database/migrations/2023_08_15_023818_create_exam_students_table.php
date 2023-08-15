@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('exam_students', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
-            $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('exam_id');
+            $table->unsignedBigInteger('student_id');
+            $table->double('score')->nullable();
+            $table->string('review')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
 
-            $table->foreign('teacher_id')->references('id')->on('room_teachers');
+            $table->foreign('exam_id')->references('id')->on('exams');
+            $table->foreign('student_id')->references('id')->on('room_students');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exams');
+        Schema::dropIfExists('exam_students');
     }
 };
