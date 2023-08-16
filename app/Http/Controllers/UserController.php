@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\Table;
 use App\Constant\UserRole;
+use App\DTO\TableForm;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,8 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('index');
+        // $tableForm = new TableForm(Table::USER_TABLE);
+        return view('index', ['tableName' => 'USER_TABLE']);
     }
 
     /**

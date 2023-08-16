@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             RoomTeacherSeeder::class,
             RoomStudentSeeder::class,
             ExamSeeder::class,
-            InsistenceSeeder::class
+            InsistenceSeeder::class,
+            ExamStudentsSeeder::class
         ]);
     }
 }

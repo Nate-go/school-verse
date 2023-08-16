@@ -1,17 +1,18 @@
 <div
     class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
     @if ($actionIsOpen)
-        <livewire:useractions/>
+        <livewire:useractions />
     @endif
     <div
         class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
         <div>
             <h6
                 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">
-                Users</h6>
+                {{ $tableName }}</h6>
             <p
                 class="antialiased font-sans text-sm leading-normal flex items-center gap-1 font-normal text-blue-gray-600">
-                <i class="fa-solid fa-magnifying-glass"></i><strong>{{ $users->lastPage() }}</strong> pages found</p>
+                <i class="fa-solid fa-magnifying-glass"></i><strong>{{ $data->lastPage() }}</strong> pages found
+            </p>
         </div>
         <button
             class="hover:bg-slate-100 relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
@@ -22,30 +23,24 @@
         <table class="w-full min-w-[640px] table-auto">
             <thead>
                 <tr>
+                    @foreach ($header as $column)
+                        <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                                {{$column->name}}</p>
+                        </th>
+                    @endforeach
                     <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
                         <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            username</p>
-                    </th>
-                    <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                        <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            email</p>
-                    </th>
-                    <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                        <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            role</p>
-                    </th>
-                    <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                        <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                            status</p>
+                            select</p>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
-                    @livewire('rowuser', ['user' => $user], key($user->id))
+                @foreach ($data as $item)
+                    @livewire('row', ['item' => $item, 'header' => $header])
                 @endforeach
             </tbody>
         </table>
-        {{ $users->links('livewire.pagination') }}
+        {{ $data->links('livewire.pagination') }}
     </div>
 </div>

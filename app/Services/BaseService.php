@@ -35,23 +35,23 @@ abstract class BaseService{
         $this->model->where('id', $id)->delete();
     }
 
-    public function getConstants($constantClass)
+    public static function getConstants($constantClass)
     {
         $reflectionClass = new ReflectionClass($constantClass);
         return $reflectionClass->getConstants();
     }
 
-    public function getNameConstant($constantClass ,$value)
+    public static function getNameConstant($constantClass ,$value)
     {
-        $constants = $this->getConstants($constantClass);
+        $constants = self::getConstants($constantClass);
         $key = array_search($value, $constants);
         return $key !== false ? $key : null;
     }
 
-    public function mappingConstant($constantClass, $name, $data)
+    public static function mappingConstant($constantClass, $name, $data)
     {
         foreach ($data as $item) {
-            $key = $this->getNameConstant($constantClass, $item->$name);
+            $key = self::getNameConstant($constantClass, $item->$name);
             if ($key) {
                 $item->$name = $key;
             }
