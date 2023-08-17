@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\RoomService;
+use App\Services\ModelServices\RoomService;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
