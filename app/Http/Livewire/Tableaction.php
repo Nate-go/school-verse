@@ -4,10 +4,10 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class Rowinsistence extends Component
+class Tableaction extends Component
 {
     public function render()
     {
-        return view('livewire.rowinsistence');
+        return view('livewire.tableaction');
     }
 }

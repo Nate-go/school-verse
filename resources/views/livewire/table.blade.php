@@ -1,7 +1,7 @@
 <div
     class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
     @if ($actionIsOpen)
-        <livewire:useractions />
+        <livewire:tableaction />
     @endif
     <div
         class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
@@ -36,8 +36,33 @@
                 </tr>
             </thead>
             <tbody>
+                
                 @foreach ($data as $item)
-                    @livewire('row', ['item' => $item, 'header' => $header])
+                    <tr>
+                        @foreach ($header as $column)
+                        <td>
+                            @php
+                            $value = $item;
+                            foreach ($column->attributesName as $attributename) {
+                                $value = $value->$attributename;
+                                if($value === null) {
+                                    break;
+                                }
+                            }
+                            @endphp
+                    
+                            @if ($column->type === 0)
+                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">{{$value ?? 'null'}}
+                            </p>
+                            @else
+                            <img src="{{$value ?? 'null'}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md">
+                            @endif
+                        </td>
+                        @endforeach
+                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">checkbox</p>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
