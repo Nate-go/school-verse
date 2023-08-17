@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\Table;
 use App\Constant\UserRole;
+use App\DTO\TableForm;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -11,13 +13,14 @@ class UserController extends Controller
     protected $userService;
 
     public function __construct(UserService $userService){
-        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
+        // $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
         $this->userService = $userService;
     }
 
     public function index()
     {
-        
+        // $tableForm = new TableForm(Table::USER_TABLE);
+        return view('index', ['tableName' => 'USER_TABLE']);
     }
 
     /**
