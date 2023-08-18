@@ -22,28 +22,26 @@ class UserService extends BaseService{
     }
 
     public function getTable($filterData) {
-        
-        $roles = $filterData['UserRole'];
-        $statuses = $filterData['UserStatus'];
 
-        $users = $this->model
+        $filterElements = $filterData['filterElements'];
+        $roles = $filterElements['role'];
+        $statuses = $filterElements['status'];
+        $sort = $filterData['sort'];
+
+        $users = $this->model->selectColumns(['id', 'role', 'status', 'email'])
+            ->role($roles)->status($statuses)
             ->with([
-                'profile' => function ($query) {
-                    return $query->select(['id', 'user_id', 'username', 'image_url']);
+                'profile' => function ($query) use ($sort) {
+                    $query->selectColumns(['id', 'user_id', 'username', 'image_url'])->sort($sort);
                 }
             ])
-            ->when(!empty($roles), function ($query) use ($roles) {
-                return $query->whereIn('role', $roles);
-            })
-            ->when(!empty($statuses), function ($query) use ($statuses) {
-                return $query->whereIn('status', $statuses);
-            })
-            ->select(['id', 'role', 'status', 'email'])
-            ->paginate(10);
+            ->sort($sort)
+            ->paginate($filterData['perPage']);
 
         $users = ConstantService::mappingConstant(UserRole::class, 'role', $users);
 
         $users = ConstantService::mappingConstant(UserStatus::class, 'status', $users);
+
         return $users;
     }
 }

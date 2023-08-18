@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+use Exception;
+use ReflectionClass;
 use ReflectionMethod;
 
 class UtilService{
@@ -14,12 +16,10 @@ class UtilService{
             throw new Exception("Method $methodName does not exist in class $className.");
         }
 
-        $reflection = new ReflectionMethod($className, $methodName);
-        if ($reflection->isStatic()) {
-            return $className::$methodName(...$args);
-        } else {
-            $instance = new $className();
-            return $instance->$methodName(...$args);
-        }
+        $model = app()->make($className);
+        $reflection_class = new ReflectionClass($model);
+        $reflection_method = $reflection_class->getMethod($methodName);
+        $result = $reflection_method->invokeArgs($model, $args);
+        return $result;
     }
 }

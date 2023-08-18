@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('index', ['tableSource' => 'USER_TABLE']);
+        return view('index', ['tableSource' => 'USERS']);
     }
 
     /**

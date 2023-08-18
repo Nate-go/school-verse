@@ -3,37 +3,73 @@
 namespace App\Http\Livewire\Table;
 
 use App\Constant\TableData;
-use App\Services\TableLivewireService\TableForm;
+use App\Constant\TableSetting;
+use App\Services\ConstantService;
+use App\Services\TableLivewireService\TableService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Table extends Component
 {
     use WithPagination;
-    public $tableSource;
-    public $actionIsOpen = false;
-    private $tableForm; 
+    public $actionIsOpen = false; 
     public $tableName;
+    public $tableHeader;
     public $filterForm;
+    public $currentFilterForm;
+    public $dataSource;
+    public $selectedItems = [];
+    protected $listeners = ['dataSent' => 'updateFilterForm', 'filter' => 'updateData'];
 
     public function mount($tableSource)
     {
-        $this->tableSource = $tableSource;
+        $table = constant(TableData::class . '::' . $tableSource);
+        $this->tableName = $table['name'];
+        $this->tableHeader = $table['header'];
+        $this->filterForm = TableService::generateFilterForm($table['filterForm']);
+        $this->currentFilterForm = $this->filterForm;
+        $this->dataSource = $table['dataSource'];
+    }
+
+    private function updateData() {
+        $this->currentFilterForm = $this->filterForm;
     }
 
     public function render()
     {
-        $this->tableForm = new TableForm(constant(TableData::class . '::' . $this->tableSource));
-        $this->tableName = $this->tableForm->name;
-        $this->filterForm = json_encode($this->tableForm->filterForm);
         return view('livewire.table.table', [
-            'data' => $this->tableForm->getData(),
-            'header' => $this->tableForm->header,
+            'data' => TableService::getDataTable($this->dataSource, $this->currentFilterForm)
         ]);
     }
 
     public function openAction()
     {
         $this->actionIsOpen = !$this->actionIsOpen;
+    }
+
+    public function pageChange($page) {
+        $this->selectedItems = [];
+        $this->gotoPage($page);
+    }
+
+    public function updateFilterForm($filterForm) {
+        $this->filterForm = $filterForm;
+    }
+
+    public function selectChange($itemId) {
+        $index = array_search($itemId, $this->selectedItems);
+
+        if ($index !== false) {
+            unset($this->selectedItems[$index]);
+        } else {
+            $this->selectedItems[] = $itemId;
+        }
+    }
+    public function sort($name, $attributeName) {
+        $this->filterForm['sort']['columnName'] = $name;
+        $this->filterForm['sort']['displayName'] = $attributeName;
+        $this->filterForm['sort']['type'] = ConstantService::getSortType($this->filterForm['sort']['type']);
+        $this->filterForm['sort']['displayType'] = ConstantService::getNameConstant(TableSetting::class, $this->filterForm['sort']['type']);
+        $this->updateData();
     }
 }

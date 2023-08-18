@@ -11,6 +11,6 @@ class TableSetting{
     const TEXT_TYPE = 0;
     const IMG_TYPE = 1;
     const DEFAULT_VALUE = -1;
-    const DECREASE_SORT = 0;
-    const INCREASE_SORT = 1;
+    const DECREASE_SORT = 'desc';
+    const INCREASE_SORT = 'asc';
 }

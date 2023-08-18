@@ -15,7 +15,7 @@
     <div id='root' class='bg-slate-300'>
         <div class='min-h-screen'>
             @livewire('fregment.sidebar')
-            <div class="p-4 md:ml-72 ">
+            <div class="p-4 md:ml-72">
                 @livewire('fregment.header')
                 <main class='overflow-x-hidden mt-8 mb-8 flex flex-col gap-12'>
                     @livewire('table.table', ['tableSource' => $tableSource])
