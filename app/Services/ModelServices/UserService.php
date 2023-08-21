@@ -27,15 +27,14 @@ class UserService extends BaseService{
         $roles = $filterElements['role'];
         $statuses = $filterElements['status'];
         $sort = $filterData['sort'];
+        $search = $filterData['search'];
 
-        $users = $this->model->selectColumns(['id', 'role', 'status', 'email'])
-            ->role($roles)->status($statuses)
-            ->with([
-                'profile' => function ($query) use ($sort) {
-                    $query->selectColumns(['id', 'user_id', 'username', 'image_url'])->sort($sort);
-                }
-            ])
-            ->sort($sort)
+        $users = $this->model->selectColumns(['users.id', 'role', 'status', 'email', 'username', 'image_url'])
+            ->role($roles)
+            ->status($statuses)
+            ->join('profiles', 'users.id', 'profiles.user_id')
+            ->search($search)
+            ->orderBy($sort['columnName'], $sort['type'])
             ->paginate($filterData['perPage']);
 
         $users = ConstantService::mappingConstant(UserRole::class, 'role', $users);

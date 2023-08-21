@@ -8,14 +8,19 @@ class TableData{
     const USERS = [
         'name' => 'users',
         'header' => [
-            ['name' => '', 'attributesName' => ['profile', 'image_url'], 'type' => TableSetting::IMG_TYPE, 'sortable' => false],
-            ['name' => 'username', 'attributesName' => ['profile', 'username'], 'type' => TableSetting::TEXT_TYPE, 'sortable' => true],
-            ['name' => 'email', 'attributesName' => ['email'], 'type' => TableSetting::TEXT_TYPE, 'sortable' => true],
-            ['name' => 'role', 'attributesName' => ['role'], 'type' => TableSetting::TEXT_TYPE, 'sortable' => true],
-            ['name' => 'status', 'attributesName' => ['status'], 'type' => TableSetting::TEXT_TYPE, 'sortable' => true]
+            ['name' => '', 'attributesName' => 'image_url', 'type' => TableSetting::IMG_TYPE, 'sortable' => false, 'searchable' => false ],
+            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
+            ['name' => 'email', 'attributesName' => 'email', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
+            ['name' => 'role', 'attributesName' => 'role', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
+            ['name' => 'status', 'attributesName' => 'status', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false]
         ],
         'dataSource' => ['model' => UserService::class, 'method' => 'getTable'],
         'filterForm' => [
+            'search' => [
+                'columnName' => 'email',
+                'type' => TableSetting::CONTAIN,
+                'data' => 'english'
+            ],
             'perPage' => 10,
             'sort' => [
                 'columnName' => 'username',

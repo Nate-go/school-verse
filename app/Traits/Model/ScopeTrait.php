@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits\Model;
+use App\Constant\TableSetting;
 use Schema;
 
 trait ScopeTrait
@@ -14,8 +15,55 @@ trait ScopeTrait
     {
         $column = $sort['columnName'];
         if (Schema::hasColumn($this->getTable(), $column)) {
-            return $query->orderBy($column, $sort['type'])->get();
+            $query = $query->orderBy($column, $sort['type']);
+            return $query;
         }
         return $query;
+    }
+
+    public function scopeSearch($query, $search){
+        $column = $search['columnName'];
+        $type = $search['type'];
+        $data = $search['data'];
+        switch ($type) {
+            case TableSetting::CONTAIN:
+                return $this->scopeContain($query, $column, $data);
+            case TableSetting::BETWEEN_NOT_INCLUDE:
+                return $this->scopeBetweenNotInclude($query, $column, $data);
+            case TableSetting::BETWEEN_INCLUDE:
+                return $this->scopeBetweenInclude($query, $column, $data);
+            case TableSetting::OUTSIDE_INCLUDE:
+                return $this->scopeOutsideInclude($query, $column, $data);
+            case TableSetting::OUTSIDE_NOT_INCLUDE:
+                return $this->scopeOutsideNotInclude($query, $column, $data);
+            default:
+                return $this->scopeNormalCompare($query, $column, $type, $data);
+        }
+    }
+
+    public function scopeContain($query, $column, $data) {
+        return $query->where($column, 'like', '%' . $data . '%');
+    }
+
+    public function scopeNormalCompare($query, $column, $type, $data){
+        return $query->where($column, $type, $data);
+    }
+
+    public function scopeBetweenNotInclude($query, $column, $data){
+        return $query->where($column, '>', $data[0])->where($column, '<', $data[1]);
+    }
+
+    public function scopeBetweenInclude($query, $column, $data){
+        return $query->whereIn($column, $data);
+    }
+
+    public function scopeOutsideNotInclude($query, $column, $data)
+    {
+        return $query->where($column, '<', $data[0])->where($column, '>', $data[1]);
+    }
+
+    public function scopeOutsideInclude($query, $column, $data)
+    {
+        return $query->where($column, '<=', $data[0])->where($column, '>=', $data[1]);
     }
 }
