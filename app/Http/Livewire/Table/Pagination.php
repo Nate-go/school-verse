@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Table;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -8,8 +8,9 @@ use Livewire\WithPagination;
 class Pagination extends Component
 {
     use WithPagination;
+
     public function render()
     {
-        return view('livewire.pagination');
+        return view('livewire.table.pagination');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Fregment;
 
 use Livewire\Component;
 
@@ -14,7 +14,7 @@ class Settingbutton extends Component
     
     public function render()
     {
-        return view('livewire.settingbutton');
+        return view('livewire.fregment.settingbutton');
     }
 
     public function changeSetting() {

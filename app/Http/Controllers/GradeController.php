@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\GradeService;
+use App\Services\ModelServices\GradeService;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller

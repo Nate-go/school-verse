@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Fregment;
 
 use Livewire\Component;
 
@@ -12,7 +12,7 @@ class Sidebar extends Component
 
     public function render()
     {
-        return view('livewire.sidebar');
+        return view('livewire.fregment.sidebar');
     }
 
     public function changeSidebar(){

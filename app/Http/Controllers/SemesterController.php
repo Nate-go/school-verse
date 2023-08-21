@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\SemesterService;
+use App\Services\ModelServices\SemesterService;
 use Illuminate\Http\Request;
 
 class SemesterController extends Controller

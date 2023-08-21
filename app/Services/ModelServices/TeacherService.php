@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Services;
-use App\Constant\UserRole;
+namespace App\Services\ModelServices;
 use App\Models\RoomTeachers;
-use App\Models\User;
 
 class TeacherService extends BaseService{
     protected function getModel(){

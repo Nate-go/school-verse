@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Fregment;
 
 use Livewire\Component;
 
@@ -13,7 +13,7 @@ class Userinfomation extends Component
     ];
     public function render()
     {
-        return view('livewire.userinfomation');
+        return view('livewire.fregment.userinfomation');
     }
 
     public function changeUserInfo()

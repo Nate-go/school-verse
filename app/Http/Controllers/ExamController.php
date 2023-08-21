@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\ExamService;
+use App\Services\ModelServices\ExamService;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
