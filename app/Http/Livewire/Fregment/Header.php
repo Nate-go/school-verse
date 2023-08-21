@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Fregment;
 
 use Livewire\Component;
 
@@ -22,7 +22,7 @@ class Header extends Component
 
     public function render()
     {
-        return view('livewire.header');
+        return view('livewire.fregment.header');
     }
 
     public function changeLock() {

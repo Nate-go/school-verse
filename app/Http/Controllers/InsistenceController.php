@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\InsistenceService;
+use App\Services\ModelServices\InsistenceService;
 use Illuminate\Http\Request;
 
 class InsistenceController extends Controller

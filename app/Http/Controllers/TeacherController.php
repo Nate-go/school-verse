@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\TeacherService;
+use App\Services\ModelServices\TeacherService;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller

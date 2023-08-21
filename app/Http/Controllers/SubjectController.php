@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\SubjectService;
+use App\Services\ModelServices\SubjectService;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller

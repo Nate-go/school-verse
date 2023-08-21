@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Fregment;
 
 use Livewire\Component;
 
@@ -11,7 +11,7 @@ class Notifytable extends Component
 
     public function render()
     {
-        return view('livewire.notifytable');
+        return view('livewire.fregment.notifytable');
     }
 
     public function changeNotify()
