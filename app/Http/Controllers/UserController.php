@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers
+namespace App\Http\Controllers;
 use App\Constant\UserRole;
 use App\Services\ModelServices\UserService;
 use Illuminate\Http\Request;
