@@ -55,6 +55,7 @@ class Table extends Component
         } else {
             $this->search['data'] = $value;
         }
+        $this->updateData();
     }
 
     public function setTypesSearch(){
@@ -66,8 +67,8 @@ class Table extends Component
     }
 
     public function updateData() {
-        $this->currentFilterForm = $this->filterForm;
         $this->filterForm['search'] = $this->search;
+        $this->currentFilterForm = $this->filterForm;
         $this->gotoPage(1);
     }
 
