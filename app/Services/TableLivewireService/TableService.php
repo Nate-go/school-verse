@@ -67,6 +67,7 @@ class TableService{
         $filterData['perPage'] = $filterForm['perPage'];
         $filterData['sort'] = $filterForm['sort'];
         $filterData['filterElements'] = self::getAllFilterValues($filterForm['filterElements']);
+        $filterData['search'] = $filterForm['search'];
         return $filterData;
     }
 

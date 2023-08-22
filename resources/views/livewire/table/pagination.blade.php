@@ -1,4 +1,4 @@
-<div class='text-4xl flex justify-center pt-2'>
+<div class='text-4xl flex justify-center'>
     @if ($paginator->hasPages())
         @if ($paginator->currentPage() === 1)
             <button
