@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('grade_id');
-            $table->string('name');
-            $table->unsignedBigInteger('semester_id');
+            $table->unsignedBigInteger('school_year_id');
             $table->unsignedBigInteger('homeroom_teacher_id');
+            $table->string('name');
             $table->string('image_url')->nullable();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('delete_at')->nullable();
 
             $table->foreign('grade_id')->references('id')->on('grades');
-            $table->foreign('semester_id')->references('id')->on('semesters');
-            $table->foreign('homeroom_teacher_id')->references('id')->on('subject_teachers');
+            $table->foreign('school_year_id')->references('id')->on('school_years');
+            $table->foreign('homeroom_teacher_id')->references('id')->on('teachers');
         });
     }
 

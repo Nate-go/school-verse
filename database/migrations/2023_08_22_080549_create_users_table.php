@@ -16,11 +16,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('role');
-            $table->rememberToken();
+            $table->string('username');
+            $table->string('image_url')->nullable();
             $table->integer('status');
-            $table->string('password_reset_token')->nullable();
+            $table->unsignedBigInteger('profile_id')->unique();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('delete_at')->nullable();
+
+            $table->foreign('profile_id')->references('id')->on('profiles');
         });
     }
 

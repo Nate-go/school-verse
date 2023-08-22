@@ -2,6 +2,8 @@
 
 namespace App\Constant;
 use App\Services\ConstantService;
+use App\Services\ModelServices\InsistenceService;
+use App\Services\ModelServices\RoomService;
 use App\Services\ModelServices\UserService;
 
 class TableData{ 
@@ -38,6 +40,45 @@ class TableData{
                     'name' => 'status',
                     'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [UserStatus::class]],
                     'defaultValues' => [UserStatus::ACTIVE]
+                ]
+            ]
+        ]
+    ];
+
+    const INSISTENCES = [
+        'name' => 'insistences',
+        'header' => [
+            ['name' => '', 'attributesName' => 'image_url', 'type' => TableSetting::IMG_TYPE, 'sortable' => false, 'searchable' => false],
+            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
+            ['name' => 'room', 'attributesName' => 'room', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
+            ['name' => 'status', 'attributesName' => 'status', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
+            ['name' => 'time', 'attributesName' => 'create_at', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::EQUAL, TableSetting::BETWEEN_INCLUDE, TableSetting::GREATER_EQUAL, TableSetting::SMALLER_EQUAL]],
+            ['name' => 'content', 'attributesName' => 'content', 'type' => TableSetting::TEXT_TYPE, 'sortable' => false, 'searchable' => false]
+        ],
+        'dataSource' => ['model' => InsistenceService::class, 'method' => 'getTable'],
+        'filterForm' => [
+            'search' => [
+                'columnName' => 'username',
+                'type' => TableSetting::CONTAIN,
+                'data' => ''
+            ],
+            'perPage' => 10,
+            'sort' => [
+                'columnName' => 'create_at',
+                'displayName' => 'time',
+                'type' => TableSetting::DECREASE_SORT,
+                'displayType' => 'Decrease'
+            ],
+            'filterElements' => [
+                [
+                    'name' => 'room',
+                    'resource' => ['model' => RoomService::class, 'method' => 'getRoomJson', 'args' => []],
+                    'defaultValues' => []
+                ],
+                [
+                    'name' => 'status',
+                    'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [Insistence::class]],
+                    'defaultValues' => [Insistence::PENDING]
                 ]
             ]
         ]

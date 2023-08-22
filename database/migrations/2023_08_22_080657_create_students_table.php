@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('insistences', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('school_year_id');
+            $table->unsignedBigInteger('grade_id');
             $table->unsignedBigInteger('room_id');
-            $table->integer('status');
-            $table->string('content');
-            $table->string('feedback')->nullable();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('delete_at')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('school_year_id')->references('id')->on('school_years');
+            $table->foreign('grade_id')->references('id')->on('grades');
             $table->foreign('room_id')->references('id')->on('rooms');
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('insistences');
+        Schema::dropIfExists('students');
     }
 };

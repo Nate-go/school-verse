@@ -11,11 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grades', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('grade_id');
             $table->string('name');
+            $table->integer('number_lesson');
+            $table->integer('coefficient');
+            $table->string('image_url')->nullable();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('delete_at')->nullable();
+
+            $table->foreign('grade_id')->references('id')->on('grades');
         });
     }
 
@@ -24,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grades');
+        Schema::dropIfExists('subjects');
     }
 };
