@@ -17,9 +17,9 @@ class TableData{
         'dataSource' => ['model' => UserService::class, 'method' => 'getTable'],
         'filterForm' => [
             'search' => [
-                'columnName' => 'email',
+                'columnName' => 'username',
                 'type' => TableSetting::CONTAIN,
-                'data' => 'english'
+                'data' => ''
             ],
             'perPage' => 10,
             'sort' => [

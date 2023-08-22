@@ -45,7 +45,7 @@
                 </select>
             </div>
             <div class='border-2 rounded-md'>
-                <input type="text" value='{{$search['data']}}' wire:change='changeData($event.target.value)'>
+                <input type="text" value='{{$search['data']}}' wire:input.debounce.1500ms='changeData($event.target.value)'>
             </div>
         </div>
         <button
