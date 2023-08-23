@@ -7,6 +7,7 @@ use Livewire\Component;
 class Notifytable extends Component
 {
     public $notifyIsOpen = false;
+
     protected $listeners = ['displayNotify' => 'changeNotify'];
 
     public function render()
@@ -16,6 +17,6 @@ class Notifytable extends Component
 
     public function changeNotify()
     {
-        $this->notifyIsOpen = !$this->notifyIsOpen;
+        $this->notifyIsOpen = ! $this->notifyIsOpen;
     }
 }

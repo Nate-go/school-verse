@@ -1,18 +1,21 @@
 <?php
 
 namespace App\Services;
+
+use App\Models\SchoolYear;
+use Carbon\Carbon;
 use Exception;
 use ReflectionClass;
-use ReflectionMethod;
 
-class UtilService{
+class UtilService
+{
     public static function callMethod($className, $methodName, $args = [])
     {
-        if (!class_exists($className)) {
+        if (! class_exists($className)) {
             throw new Exception("Class $className does not exist.");
         }
 
-        if (!method_exists($className, $methodName)) {
+        if (! method_exists($className, $methodName)) {
             throw new Exception("Method $methodName does not exist in class $className.");
         }
 
@@ -20,11 +23,33 @@ class UtilService{
         $reflection_class = new ReflectionClass($model);
         $reflection_method = $reflection_class->getMethod($methodName);
         $result = $reflection_method->invokeArgs($model, $args);
+
         return $result;
     }
 
-    public static function randValues($args) {
+    public static function randValues($args)
+    {
         $index = array_rand($args);
+
         return $args[$index];
+    }
+
+    public static function getCurrentSchoolYear() {
+        $currentTime = Carbon::now();
+        $schoolYear = SchoolYear::where('start_at', '<=', $currentTime)
+            ->where('end_at', '>=', $currentTime)
+            ->first();
+        return $schoolYear->id ?? null;
+    }
+
+    public static function getJsonData($data) {
+        $jsonData = [];
+        foreach ($data as $item) {
+            $temp = [];
+            $temp['name'] = $item->name;
+            $temp['value'] = $item->value;
+            $jsonData[] = $temp;
+        }
+        return $jsonData;
     }
 }

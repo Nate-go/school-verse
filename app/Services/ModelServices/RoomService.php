@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Services\ModelServices;
+
 use App\Models\Room;
 use App\Models\Semester;
 use Carbon\Carbon;
 
-class RoomService extends BaseService{
+class RoomService extends BaseService
+{
     public function getModel()
     {
         return Room::class;
     }
 
-    public function getRoomJson() {
+    public function getRoomJson()
+    {
         dd(Carbon::now());
         $currentSemester = Semester::where('start_from', '<=', Carbon::now())
             ->where('end_at', '>=', Carbon::now())
@@ -21,7 +24,7 @@ class RoomService extends BaseService{
             $query->where('start_from', '<=', Carbon::now())
                 ->where('end_at', '>=', Carbon::now());
         })
-        ->get();
+            ->get();
 
         dd($rooms);
 

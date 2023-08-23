@@ -10,8 +10,9 @@ class TeacherController extends Controller
 {
     protected $teacherService;
 
-    public function __construct(TeacherService $teacherService){
-        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+    public function __construct(TeacherService $teacherService)
+    {
+        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('show');
         $this->teacherService = $teacherService;
     }
 

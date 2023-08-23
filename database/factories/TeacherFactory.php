@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Services\UtilService;
 use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,7 +16,7 @@ class TeacherFactory extends Factory
     {
         return [
             'user_id' => DB::table('users')->where('users.role', 1)->inRandomOrder()->value('id'),
-            'subject_id' => DB::table('subjects')->inRandomOrder()->value('id')
+            'subject_id' => DB::table('subjects')->inRandomOrder()->value('id'),
         ];
     }
 }

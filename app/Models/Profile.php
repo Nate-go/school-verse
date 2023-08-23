@@ -11,9 +11,9 @@ class Profile extends Model
 {
     use HasFactory, ScopeTrait;
 
-    protected $fillable = ['id','username','image_url', 'user_id'];
+    protected $fillable = ['id', 'username', 'image_url', 'user_id'];
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

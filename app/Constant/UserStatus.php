@@ -1,8 +1,12 @@
 <?php
+
 namespace App\Constant;
 
-class UserStatus {
+class UserStatus
+{
     const DEACTIVE = 0;
+
     const ACTIVE = 1;
+
     const BLOCK = 2;
 }

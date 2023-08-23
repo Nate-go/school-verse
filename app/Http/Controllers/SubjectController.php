@@ -12,9 +12,10 @@ class SubjectController extends Controller
 
     public function __construct(SubjectService $subjectService)
     {
-        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->except('show');
+        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('show');
         $this->subjectService = $subjectService;
     }
+
     public function index()
     {
         //

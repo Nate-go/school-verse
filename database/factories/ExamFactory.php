@@ -19,7 +19,7 @@ class ExamFactory extends Factory
     {
         return [
             'room_teacher_id' => DB::table('room_teachers')->inRandomOrder()->value('id'),
-            'type' => random_int(0, 4)
+            'type' => random_int(0, 4),
         ];
     }
 }

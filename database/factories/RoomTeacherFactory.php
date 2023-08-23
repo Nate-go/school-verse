@@ -12,7 +12,7 @@ class RoomTeacherFactory extends Factory
 
         return [
             'teacher_id' => DB::table('teachers')->inRandomOrder()->value('id'),
-            'room_id' => DB::table('rooms')->inRandomOrder()->value('id')
+            'room_id' => DB::table('rooms')->inRandomOrder()->value('id'),
         ];
     }
 }

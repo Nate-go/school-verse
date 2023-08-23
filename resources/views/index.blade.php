@@ -17,8 +17,9 @@
             @livewire('fregment.sidebar')
             <div class="p-4 md:ml-72">
                 @livewire('fregment.header')
-                <main class='overflow-x-hidden mt-8 mb-8 flex flex-col gap-12'>
-                    @livewire('table.table', ['tableSource' => $usersSource])
+                <main class='overflow-x-hidden mt-8 mb-8 flex flex-col gap-8 overflow-visible min-h-screen'>
+                    {{-- @livewire('table.table', ['tableSource' => $usersSource]) --}}
+                    
                     @livewire('table.table', ['tableSource' => $insistencesSource])
                 </main>
             </div>

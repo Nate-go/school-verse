@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Profile;
-use App\Models\Subject;
 use App\Models\User;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,10 +14,10 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users_data = array(
+        $users_data = [
             // Admin
             ['email' => 'admin@gmail.com', 'password' => Hash::make('123456'), 'role' => 0, 'status' => 1, 'username' => 'admin', 'profile_id' => 1],
-        );
+        ];
 
         Profile::factory()->count(1)->create();
         foreach ($users_data as $user) {

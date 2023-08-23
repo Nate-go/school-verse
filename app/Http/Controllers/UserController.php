@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Constant\UserRole;
 use App\Services\ModelServices\UserService;
 use Illuminate\Http\Request;
@@ -9,7 +10,8 @@ class UserController extends Controller
 {
     protected $userService;
 
-    public function __construct(UserService $userService){
+    public function __construct(UserService $userService)
+    {
         // $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
         $this->userService = $userService;
     }

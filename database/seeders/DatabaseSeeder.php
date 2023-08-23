@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             StudentSeeder::class,
             RoomTeacherSeeder::class,
             ExamSeeder::class,
-            ExamStudentsSeeder::class
+            ExamStudentsSeeder::class,
         ]);
     }
 }
