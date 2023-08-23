@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('school_years', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->integer('type');
             $table->timestamp('start_at');
             $table->timestamp('end_at');
             $table->timestamps();

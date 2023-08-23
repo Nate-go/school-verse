@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('subject_id');
             $table->timestamps();
-            $table->timestamp('delete_at');
+            $table->timestamp('delete_at')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('subject_id')->references('id')->on('subjects');

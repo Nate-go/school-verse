@@ -3,8 +3,10 @@
 namespace Database\Factories;
 
 use App\Services\FactoryService;
+use App\Services\UtilService;
 use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notification>
@@ -20,11 +22,11 @@ class NotificationFactory extends Factory
         $this->statuses[] = $status;
          
         return [
-            'content' => fake()->sentence(20),
+            'content' => Str::random(20),
             'status' => $status,
-            'link' => fake()->sentence(15),
+            'link' => Str::random(15),
             'user_id' => DB::table('users')->inRandomOrder()->value('id'),
-            'from_user_id' => array_rand([null, DB::table('users')->inRandomOrder()->value('id')])
+            'from_user_id' => UtilService::randValues([null, DB::table('users')->inRandomOrder()->value('id')])
         ];
     }
 }

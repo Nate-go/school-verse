@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->foreign('grade_id')->references('id')->on('grades');
             $table->foreign('school_year_id')->references('id')->on('school_years');
-            $table->foreign('homeroom_teacher_id')->references('id')->on('teachers');
+            $table->foreign('homeroom_teacher_id')->references('id')->on('users');
         });
     }
 
