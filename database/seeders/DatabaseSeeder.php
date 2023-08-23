@@ -14,18 +14,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            SubjectSeeder::class,
-            SemesterSeeder::class,
-            GradeSeeder::class,
-            ProfileSeeder::class,
-            NotificationSeeder::class,
-            SubjectTeachersSeeder::class,
-            GradeSubjectsSeeder::class,
-            RoomSeeder::class,
-            RoomTeacherSeeder::class,
-            RoomStudentSeeder::class,
-            ExamSeeder::class,
             InsistenceSeeder::class,
+            NotificationSeeder::class,
+            GradeSeeder::class,
+            SchoolYearSeeder::class,
+            SubjectSeeder::class,
+            TeacherSeeder::class,
+            RoomSeeder::class,
+            StudentSeeder::class,
+            RoomTeacherSeeder::class,
+            ExamSeeder::class,
             ExamStudentsSeeder::class
         ]);
     }

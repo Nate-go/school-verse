@@ -13,14 +13,6 @@ class GradeSeeder extends Seeder
      */
     public function run(): void
     {
-        $grades = [
-            ['name' => '10th grade'],
-            ['name' => '11th grade'],
-            ['name' => '12th grade']
-        ];
-
-        foreach ($grades as $grade) {
-            Grade::create($grade);
-        }
+        Grade::factory()->count(7)->create();
     }
 }

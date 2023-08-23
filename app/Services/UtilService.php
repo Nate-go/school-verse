@@ -22,4 +22,9 @@ class UtilService{
         $result = $reflection_method->invokeArgs($model, $args);
         return $result;
     }
+
+    public static function randValues($args) {
+        $index = array_rand($args);
+        return $args[$index];
+    }
 }

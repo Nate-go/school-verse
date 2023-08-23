@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Profile;
+use App\Models\SchoolYear;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProfileSeeder extends Seeder
+class SchoolYearSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Profile::factory()->count(100)->create();
+        SchoolYear::factory()->count(5)->create();
     }
 }
