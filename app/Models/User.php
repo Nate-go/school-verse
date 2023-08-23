@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Schema;
 
 class User extends Authenticatable
 {
@@ -30,22 +29,26 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function profile() :HasOne
+    public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
 
     public function scopeRole($query, $roles)
     {
-        if(empty($roles))
+        if (empty($roles)) {
             return $query;
+        }
+
         return $query->whereIn('role', $roles);
     }
 
     public function scopeStatus($query, $statuses)
     {
-        if(empty($statuses))
+        if (empty($statuses)) {
             return $query;
+        }
+
         return $query->whereIn('status', $statuses);
     }
 }

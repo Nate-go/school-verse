@@ -15,7 +15,8 @@ class Sidebar extends Component
         return view('livewire.fregment.sidebar');
     }
 
-    public function changeSidebar(){
-        $this->sidebarIsDisplay = !$this->sidebarIsDisplay;
+    public function changeSidebar()
+    {
+        $this->sidebarIsDisplay = ! $this->sidebarIsDisplay;
     }
 }

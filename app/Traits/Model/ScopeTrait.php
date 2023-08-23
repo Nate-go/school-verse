@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits\Model;
+
 use App\Constant\TableSetting;
 use Schema;
 
@@ -16,12 +17,15 @@ trait ScopeTrait
         $column = $sort['columnName'];
         if (Schema::hasColumn($this->getTable(), $column)) {
             $query = $query->orderBy($column, $sort['type']);
+
             return $query;
         }
+
         return $query;
     }
 
-    public function scopeSearch($query, $search){
+    public function scopeSearch($query, $search)
+    {
         $column = $search['columnName'];
         $type = $search['type'];
         $data = $search['data'];
@@ -41,19 +45,23 @@ trait ScopeTrait
         }
     }
 
-    public function scopeContain($query, $column, $data) {
-        return $query->where($column, 'like', '%' . $data . '%');
+    public function scopeContain($query, $column, $data)
+    {
+        return $query->where($column, 'like', '%'.$data.'%');
     }
 
-    public function scopeNormalCompare($query, $column, $type, $data){
+    public function scopeNormalCompare($query, $column, $type, $data)
+    {
         return $query->where($column, $type, $data);
     }
 
-    public function scopeBetweenNotInclude($query, $column, $data){
+    public function scopeBetweenNotInclude($query, $column, $data)
+    {
         return $query->where($column, '>', $data[0])->where($column, '<', $data[1]);
     }
 
-    public function scopeBetweenInclude($query, $column, $data){
+    public function scopeBetweenInclude($query, $column, $data)
+    {
         return $query->whereIn($column, $data);
     }
 

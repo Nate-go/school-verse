@@ -1,17 +1,19 @@
 <?php
 
 namespace App\Services\ModelServices;
+
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\ConstantService;
 
-class UserService extends BaseService{
-
+class UserService extends BaseService
+{
     protected $profileModel;
 
-    public function __construct(Profile $profileModel){
+    public function __construct(Profile $profileModel)
+    {
         parent::__construct();
         $this->profileModel = $profileModel;
     }
@@ -21,7 +23,8 @@ class UserService extends BaseService{
         return User::class;
     }
 
-    public function getTable($filterData) {
+    public function getTable($filterData)
+    {
 
         $filterElements = $filterData['filterElements'];
         $roles = $filterElements['role'];
@@ -29,10 +32,9 @@ class UserService extends BaseService{
         $sort = $filterData['sort'];
         $search = $filterData['search'];
 
-        $users = $this->model->selectColumns(['users.id', 'role', 'status', 'email', 'username', 'image_url'])
+        $users = $this->model->selectColumns(['id', 'role', 'status', 'email', 'username', 'image_url'])
             ->role($roles)
             ->status($statuses)
-            ->join('profiles', 'users.id', 'profiles.user_id')
             ->search($search)
             ->orderBy($sort['columnName'], $sort['type'])
             ->paginate($filterData['perPage']);

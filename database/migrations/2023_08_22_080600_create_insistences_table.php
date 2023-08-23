@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('content');
+            $table->string('feedback')->nullable();
             $table->integer('status');
             $table->timestamps();
             $table->timestamp('delete_at')->nullable();

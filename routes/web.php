@@ -1,6 +1,5 @@
 <?php
 
-use App\Constant\UserRole;
 use App\Http\Controllers\AuthenController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +32,7 @@ Route::get('/homepage', function () {
 })->name('homepage');
 
 Route::group([
-    'middleware' => ['auth']
+    'middleware' => ['auth'],
 ], function ($router) {
     Route::resource('users', UserController::class);
 

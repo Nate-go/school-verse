@@ -7,10 +7,11 @@ use Livewire\Component;
 class Userinfomation extends Component
 {
     public $userInfoIsOpen = false;
-    
+
     protected $listeners = [
-        'displayUserInfo' => 'changeUserInfo'
+        'displayUserInfo' => 'changeUserInfo',
     ];
+
     public function render()
     {
         return view('livewire.fregment.userinfomation');
@@ -18,6 +19,6 @@ class Userinfomation extends Component
 
     public function changeUserInfo()
     {
-        $this->userInfoIsOpen = !$this->userInfoIsOpen;
+        $this->userInfoIsOpen = ! $this->userInfoIsOpen;
     }
 }

@@ -11,21 +11,24 @@ class Settingbutton extends Component
     public $headerIsLocked = false;
 
     protected $listeners = ['changeHeaderLock' => 'changeLock', 'scrollToTop' => 'scrollToTop'];
-    
+
     public function render()
     {
         return view('livewire.fregment.settingbutton');
     }
 
-    public function changeSetting() {
-        $this->isActive = !$this->isActive;
+    public function changeSetting()
+    {
+        $this->isActive = ! $this->isActive;
     }
 
-    public function changeLock(){
-        $this->headerIsLocked = !$this->headerIsLocked;
+    public function changeLock()
+    {
+        $this->headerIsLocked = ! $this->headerIsLocked;
     }
 
-    public function scrollToTop() {
+    public function scrollToTop()
+    {
         $this->dispatchBrowserEvent('scrollToTop');
     }
 }

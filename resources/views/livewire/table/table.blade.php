@@ -1,5 +1,5 @@
 <div
-    class="flex flex-col rounded-xl bg-white text-gray-700 shadow-md xl:col-span-2 overflow-y-hidden">
+    class="flex flex-col rounded-xl bg-white text-gray-700 shadow-md xl:col-span-2 overflow-visible">
     <div class='relative flex'>
         @if ($actionIsOpen)
             @livewire('table.tableaction', ['filterForm' => $filterForm, 'selectedCount' => count($selectedItems)])
@@ -53,8 +53,8 @@
             wire:click='openAction'><i class="fa-solid fa-ellipsis-vertical text-xl"></i>
         </button>
     </div>
-    <div class=" overflow-x-auto px-0 pt-0 z-10 flex-col table-wrp block max-h-[32.5rem]">
-        <table class="w-full min-w-[640px] table-autos h-[28rem]">
+    <div class=" overflow-x-auto px-0 pt-0 z-10 flex-col table-wrp block max-h-[32.5rem] rounded-b-xl">
+        <table class="w-full min-w-[640px] table-autos">
             <thead class="sticky top-0 z-20">
                 <tr class='bg-slate-100'>
                     <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
@@ -64,10 +64,13 @@
                                 $all[] = $item->id;
                             }
                         @endphp
-                        <div  class="flex antialiased font-sans text-lg font-medium uppercase text-blue-gray-400 items-center gap-2">
+                        <div  class="flex antialiased font-sans text-sm font-medium uppercase text-blue-gray-400 items-center gap-2">
                             <i wire:click='selectAll({{json_encode($all)}})' class="fa-solid fa-list-check"></i>  <p>({{count($selectedItems)}})</p>  <i wire:click='unselectAll()' class="fa-solid fa-square-xmark"></i></div>
                     </th>
                     @foreach ($tableHeader as $column)
+                        @if ($column['name'] === '')
+                            @continue
+                        @endif
                         @if ($column['sortable'])
                             <th class="border-b border-blue-gray-50 py-3 px-6 text-left cursor-pointer" wire:click="sort('{{$column['name']}}', '{{$column['attributesName']}}')">
                                 <div class='flex items-center justify-center'>
@@ -83,7 +86,10 @@
                             </th>
                         @endif
                     @endforeach
-                    
+                    <th class="border-b border-blue-gray-50 py-3 px-6 text-center">
+                        <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                            Action</p>
+                    </th>
                 </tr>
             </thead>
             <tbody class="overflow-y-auto">
@@ -91,31 +97,65 @@
                     $count = 0;
                 @endphp
                 @foreach ($data as $item)
-                    <tr class='{{ $count%2 === 1 ? 'bg-slate-100' : '' }}  cursor-pointer hover:bg-blue-100 max-h-fit'>
-                        <td class="py-5 pl-10 border-b border-blue-gray-50 felx justify-center ">
-                            <input type="checkbox" {{ in_array($item->id, $selectedItems) ? 'checked' : ''}}
-                            wire:change="selectChange({{$item->id}})" class="w-4 h-4 checkbox-info align-middle" />
+                    <tr class='{{ $count%2 === 1 ? 'bg-slate-100' : '' }}  cursor-pointer hover:bg-blue-100 items-center justify-between'>
+                        <td class="py-3 px-5 flex justify-center items-center">
+                            <div>
+                                <input type="checkbox" {{ in_array($item->id, $selectedItems) ? 'checked' : ''}}
+                                wire:change="selectChange({{$item->id}})" class="w-4 h-4 checkbox-info align-middle" />
+                            </div>
                         </td>
-                        @foreach ($tableHeader as $column)
+                        @for ($i=0; $i< count($tableHeader); $i++)
                         <td class="py-3 px-5 border-b border-blue-gray-50">
                             @php
-                            $value = $item[$column['attributesName']];
-                            $count += 1;
+                                $column = $tableHeader[$i];
+                                $value = $item[$column['attributesName']];
+                                if($column['type'] === App\Constant\TableSetting::USER_TYPE) {
+                                    $i += 1;
+                                    $newColumn = $tableHeader[$i];
+                                    $name = $item[$newColumn['attributesName']]; 
+                                }
                             @endphp
-                    
-                            @if ($column['type'] ===  App\Constant\TableSetting::TEXT_TYPE )
-                                <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">{{$value ?? 'null'}}
-                                </p>
-                            @else
-                                <img src="{{$value ?? 'null'}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md z-0">
-                            @endif
+
+                            @switch($column['type'])
+                                @case(App\Constant\TableSetting::TEXT_TYPE)
+                                        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">{{$value ?? 'null'}}
+                                        </p>
+                                    @break
+                                @case(App\Constant\TableSetting::TEXTARE_TYPE)
+                                    <div class='h-20 w-full' >
+                                        <textarea class="h-full w-full resize-none bg-transparent" readonly>{{$value ?? 'null'}}</textarea>
+                                    </div>
+                                    
+                                    @break
+                                @case(App\Constant\TableSetting::USER_TYPE)
+                                    <div class="flex gap-1 items-center">
+                                        <img src="{{$value ?? 'null'}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md z-0">
+                                        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">{{$name ?? 'null'}}
+                                        </p>
+                                    </div>
+                                    @break
+                                @default
+                                    <img src="{{$value ?? 'null'}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md z-0">
+                            @endswitch
                         </td>
-                        @endforeach
-                        
+                        @endfor
+                        <td class="py-3 px-5 flex justify-center items-center">
+                            <button
+                                class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                wire:click="" type="button"><i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button
+                                class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                wire:click="" type="button"><i class="fa-solid fa-eraser"></i>
+                            </button>
+                        </td>
                     </tr>
+                    @php
+                        $count += 1;
+                    @endphp
                 @endforeach
             </tbody>
-            <tfoot class="sticky bg-slate-200 rounded-md bottom-0">
+            <tfoot class="sticky bg-slate-200 rounded-b-md bottom-0">
                 <tr>
                     <th colspan="100%" class="items-center py-1">{{ $data->links('livewire.table.pagination') }}</th>
                 </tr>

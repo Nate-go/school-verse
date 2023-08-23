@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Services;
+
 use Auth;
 use Illuminate\Http\Request;
 use Validator;
 
-class AuthenService{
-    public function login(Request $request){
+class AuthenService
+{
+    public function login(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -23,9 +26,11 @@ class AuthenService{
                 $previousUrl = $request->session()->get('previousUrl');
                 $request->session()->forget('previousUrl');
                 $request->session()->regenerate();
+
                 return redirect($previousUrl);
             }
             $request->session()->regenerate();
+
             return redirect()->route('homepage');
         }
 
@@ -34,10 +39,10 @@ class AuthenService{
         ])->onlyInput('email');
     }
 
-    public function logout(){
+    public function logout()
+    {
         auth()->logout();
-        return route('login.index');
-    } 
 
-    
+        return route('login.index');
+    }
 }

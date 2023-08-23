@@ -1,17 +1,21 @@
-<?php 
+<?php
 
 namespace App\Services;
+
 use App\Constant\TableSetting;
 use ReflectionClass;
 
-class ConstantService{
-    public static function getSortType($currentType) {
+class ConstantService
+{
+    public static function getSortType($currentType)
+    {
         return $currentType === TableSetting::DECREASE_SORT ? TableSetting::INCREASE_SORT : TableSetting::DECREASE_SORT;
     }
 
     public static function getConstants($constantClass)
     {
         $reflectionClass = new ReflectionClass($constantClass);
+
         return $reflectionClass->getConstants();
     }
 
@@ -26,6 +30,7 @@ class ConstantService{
                 'value' => $value,
             ];
         }
+
         return $constants;
     }
 
@@ -33,6 +38,7 @@ class ConstantService{
     {
         $constants = self::getConstants($constantClass);
         $key = array_search($value, $constants);
+
         return $key !== false ? $key : null;
     }
 
@@ -44,6 +50,7 @@ class ConstantService{
                 $item->$name = $key;
             }
         }
+
         return $data;
     }
 }
