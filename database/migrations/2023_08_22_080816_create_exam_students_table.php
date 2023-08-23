@@ -18,10 +18,10 @@ return new class extends Migration
             $table->double('score')->nullable();
             $table->string('review')->nullable();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('delete_at');
 
             $table->foreign('exam_id')->references('id')->on('exams');
-            $table->foreign('student_id')->references('id')->on('room_students');
+            $table->foreign('student_id')->references('id')->on('students');
         });
     }
 

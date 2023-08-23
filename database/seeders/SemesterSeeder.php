@@ -37,6 +37,8 @@ class SemesterSeeder extends Seeder
             ['name' => 'Semester 1 - 2023-2024', 'start_from' => '2023-09-01', 'end_at' => '2024-02-01', 'type' => 1],
             ['name' => 'Semester 2 - 2023-2024', 'start_from' => '2024-02-16', 'end_at' => '2024-05-16', 'type' => 2],
             ['name' => 'Semester 3 - 2023-2024', 'start_from' => '2024-06-16', 'end_at' => '2024-08-16', 'type' => 3],
+
+            ['name' => 'Semester 1 - 2024-2025', 'start_from' => '2024-08-22', 'end_at' => '2025-02-01', 'type' => 1],
         );
 
         foreach ($semesters_data as $semester) {

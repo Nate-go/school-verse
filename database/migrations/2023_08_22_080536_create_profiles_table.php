@@ -13,18 +13,12 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('username');
             $table->integer('gender')->nullable();
             $table->string('address')->nullable();
             $table->string('phonenumber')->nullable();
-            $table->string('realname')->nullable();
             $table->timestamp('date_of_birth')->nullable();
-            $table->string('image_url')->nullable();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamp('delete_at')->nullable();
         });
     }
 

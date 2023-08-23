@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
-            $table->unsignedBigInteger('teacher_id');
+            $table->string('name')->unique();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-
-            $table->foreign('teacher_id')->references('id')->on('room_teachers');
+            $table->timestamp('delete_at')->nullable();
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exams');
+        Schema::dropIfExists('grades');
     }
 };

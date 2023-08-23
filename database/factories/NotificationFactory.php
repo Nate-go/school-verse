@@ -2,28 +2,29 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Services\FactoryService;
 use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notification>
  */
 class NotificationFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    public $statuses = [];
+    public $statusRanges = [[20, 35], [65, 80]];
+
     public function definition(): array
     {
+        $status = FactoryService::getValidValue($this->statuses, $this->statusRanges, range(0, 1));
+        $this->statuses[] = $status;
+         
         return [
-            'content' => Str::random(20),
+            'content' => fake()->sentence(20),
+            'status' => $status,
+            'link' => fake()->sentence(15),
             'user_id' => DB::table('users')->inRandomOrder()->value('id'),
-            'status' => random_int(0,1),
-            'uri' => Str::random(20),
+            'from_user_id' => array_rand([null, DB::table('users')->inRandomOrder()->value('id')])
         ];
     }
 }

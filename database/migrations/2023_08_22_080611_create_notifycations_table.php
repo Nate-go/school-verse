@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subject_teachers', function (Blueprint $table) {
+        Schema::create('notifycations', function (Blueprint $table) {
             $table->id();
+            $table->string('content');
+            $table->unsignedBigInteger('from_user_id')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('subject_id');
+            $table->string('link')->nullable();
+            $table->integer('status');
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('delete_at')->nullable();
 
+            $table->foreign('from_user_id')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('subject_id')->references('id')->on('subjects');
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subject_teachers');
+        Schema::dropIfExists('notifycations');
     }
 };

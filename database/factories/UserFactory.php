@@ -2,14 +2,22 @@
 
 namespace Database\Factories;
 
+use App\Models\Profile;
+use App\Services\FactoryService;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
+    public $roles = [];
+    public $roleRange = [[], [35, 40], [60, 65]];
+
+    public $statuses = [];
+
+    public $statusRange = [[10, 15], [80, 85], [5, 10]];
     /**
      * Define the model's default state.
      *
@@ -17,11 +25,20 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $role = FactoryService::getValidValue($this->roles, $this->roleRange, [1, 2]);
+        $this->roles[] = $role;
+
+        $profile = Profile::factory()->create();
+
+        $status = FactoryService::getValidValue($this->statuses, $this->statusRange, range(0,2));
+        $this->statuses[] = $status;
         return [
             'email' => fake()->unique()->safeEmail(),
-            'password' => encrypt('123456'),
-            'role' => random_int(1,2),
-            'status' => random_int(0,2),
+            'password' => Hash::make('123456'),
+            'role' => $role,
+            'username' => fake()->userName(),
+            'profile_id' => $profile->id,
+            'status' => $status
         ];
     }
 }
