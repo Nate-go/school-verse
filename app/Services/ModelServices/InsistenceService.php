@@ -4,7 +4,6 @@ namespace App\Services\ModelServices;
 
 use App\Constant\UserRole;
 use App\Models\Insistence;
-use App\Services\ConstantService;
 
 class InsistenceService extends BaseService
 {
@@ -29,9 +28,9 @@ class InsistenceService extends BaseService
             ->orderBy($sort['columnName'], $sort['type'])
             ->paginate($filterData['perPage']);
 
-        $insistences = ConstantService::mappingConstant(UserRole::class, 'role', $insistences);
+        $insistences = $this->constantService->mappingConstant(UserRole::class, 'role', $insistences);
 
-        $insistences = ConstantService::mappingConstant(\App\Constant\Insistence::class, 'status', $insistences);
+        $insistences = $this->constantService->mappingConstant(\App\Constant\Insistence::class, 'status', $insistences);
 
         return $insistences;
     }

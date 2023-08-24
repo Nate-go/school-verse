@@ -34,13 +34,8 @@
             <div class='border-2 rounded-md'>
                 <select name="" id="" wire:change='changeTypeSearch($event.target.value)'>
                     @foreach ($types as $type)
-                        @if ($search['type'] === $type)
-                            <option selected value="{{$type}}">{{App\Services\ConstantService::getNameConstant(App\Constant\TableSetting::class, $type)}}
-                                                    </option>
-                        @else
-                           <option value="{{$type}}">{{App\Services\ConstantService::getNameConstant(App\Constant\TableSetting::class, $type)}}
-                                                </option> 
-                        @endif
+                        <option {{$search['type']===$type ? 'selected' : '' }} value="{{$type['value']}}">{{$type['name']}}
+                        </option>
                     @endforeach
                 </select>
             </div>

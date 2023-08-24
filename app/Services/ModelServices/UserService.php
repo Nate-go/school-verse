@@ -25,7 +25,6 @@ class UserService extends BaseService
 
     public function getTable($filterData)
     {
-
         $filterElements = $filterData['filterElements'];
         $roles = $filterElements['role'];
         $statuses = $filterElements['status'];
@@ -39,9 +38,9 @@ class UserService extends BaseService
             ->orderBy($sort['columnName'], $sort['type'])
             ->paginate($filterData['perPage']);
 
-        $users = ConstantService::mappingConstant(UserRole::class, 'role', $users);
+        $users = $this->constantService->mappingConstant(UserRole::class, 'role', $users);
 
-        $users = ConstantService::mappingConstant(UserStatus::class, 'status', $users);
+        $users = $this->constantService->mappingConstant(UserStatus::class, 'status', $users);
 
         return $users;
     }

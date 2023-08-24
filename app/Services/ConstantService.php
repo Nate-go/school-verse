@@ -7,19 +7,19 @@ use ReflectionClass;
 
 class ConstantService
 {
-    public static function getSortType($currentType)
+    public function getSortType($currentType)
     {
         return $currentType === TableSetting::DECREASE_SORT ? TableSetting::INCREASE_SORT : TableSetting::DECREASE_SORT;
     }
 
-    public static function getConstants($constantClass)
+    public function getConstants($constantClass)
     {
         $reflectionClass = new ReflectionClass($constantClass);
 
         return $reflectionClass->getConstants();
     }
 
-    public static function getConstantsJson($constantClass)
+    public function getConstantsJson($constantClass)
     {
         $reflectionClass = new ReflectionClass($constantClass);
         $constants = [];
@@ -34,18 +34,18 @@ class ConstantService
         return $constants;
     }
 
-    public static function getNameConstant($constantClass, $value)
+    public function getNameConstant($constantClass, $value)
     {
-        $constants = self::getConstants($constantClass);
+        $constants = $this->getConstants($constantClass);
         $key = array_search($value, $constants);
 
         return $key !== false ? $key : null;
     }
 
-    public static function mappingConstant($constantClass, $name, $data)
+    public function mappingConstant($constantClass, $name, $data)
     {
         foreach ($data as $item) {
-            $key = self::getNameConstant($constantClass, $item->$name);
+            $key = $this->getNameConstant($constantClass, $item->$name);
             if ($key) {
                 $item->$name = $key;
             }
