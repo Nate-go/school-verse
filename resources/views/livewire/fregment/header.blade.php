@@ -5,11 +5,16 @@
         }}">
         <div class="flex justify-between">
             <div
-                class="capitalize antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-dark text-center ">
-                home
+                class="capitalize antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-dark text-center justify-content-between flex">
+                @foreach ($urls as $url)
+                    @if (!$loop->last)
+                        <a href={{$url['url']}}><p class="pt-1.5 text-slate-300 hover:text-slate-400 cursor-pointer">{{$url['name']}}/</p></a>
+                    @else
+                        <p class="pt-1.5">{{$url['name']}}</p>
+                    @endif
+                @endforeach
             </div>
             <div class="flex items-center">
-    
                 <div class="mr-auto md:mr-4 px-2">
                     <div class="relative w-full min-w-[120px] h-10"><input
                             class="border-4 peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-blue-500"

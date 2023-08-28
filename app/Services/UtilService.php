@@ -51,4 +51,18 @@ class UtilService
         }
         return $jsonData;
     }
+
+    public function getUrls($path){
+        $parts = explode('/', $path);
+        $currentUrl = '';
+
+        $urls = [];
+        foreach($parts as $part) {
+            if($part !== '') {
+                $currentUrl .= $part;
+                $urls[] = ['name' => $part, 'url' => $currentUrl];
+            }
+        }
+        return $urls;
+    }
 }

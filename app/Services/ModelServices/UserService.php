@@ -32,12 +32,9 @@ class UserService extends BaseService
         $sort = $filterData['sort'];
         $search = $filterData['search'];
 
-        $databaseName = DB::connection()->getDatabaseName();
-        dump('$databaseName');
-
         $users = $this->model->selectColumns(['id', 'role', 'status', 'email', 'username', 'image_url'])
-            ->role($roles)
-            ->status($statuses)
+            ->filter('role', $roles)
+            ->filter('status', $statuses)
             ->search($search)
             ->orderBy($sort['columnName'], $sort['type'])
             ->paginate($filterData['perPage']);

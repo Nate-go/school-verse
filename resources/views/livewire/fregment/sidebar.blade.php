@@ -9,35 +9,46 @@
         </div>
         <div class="m-4">
             <ul class="mb-4 flex flex-col gap-1 text-base">
-                <li><a class="" href="/home" ><button
-                            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize"
-                            ><i class="fa-solid fa-house"></i>
-                            <p
-                                class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-                                home</p>
+                <li><a class="" href="/insistences"><button
+                            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'insistences' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                            <i class="fa-solid fa-envelope"></i>
+                            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                Insistences</p>
                         </button></a></li>
-                <li><a class="active" href="/change"><button
-                            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 w-full flex items-center gap-4 px-4 capitalize"
-                            ><i class="fa-solid fa-layer-group fa-xl"></i>
-                            <p
-                                class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-                                resources</p>
+                <li><a class="" href="/rooms"><button
+                            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'rooms' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                            <i class="fa-solid fa-people-roof"></i>
+                            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                Rooms</p>
                         </button></a></li>
-                <li><a class="" href="#/dashboard/tables"><button
-                            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none py-3 rounded-lg text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 w-full flex items-center gap-4 px-4 capitalize"
-                            ><i class="fa-solid fa-users"></i>
-                            <p
-                                class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-                                users</p>
-                        </button></a></li>
-                <li><a class="" href="#/dashboard/notifactions">
-                        <button
-                            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none py-3 rounded-lg text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 w-full flex items-center gap-4 px-4 capitalize"
-                            ><i class="fa-solid fa-comments"></i>
-                            <p
-                                class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-                                notifactions</p>
-                        </button></a></li>
+                @if (true) 
+                {{-- Auth::user()->role === config(constants.ADMIN) --}}
+                    <li><a class="" href="/users"><button
+                                class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'users' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                                <i class="fa-solid fa-users"></i>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                    Users</p>
+                            </button></a></li>
+                    
+                    <li><a class="" href="/school-years"><button
+                                class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'school-years' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                                <i class="fa-solid fa-calendar"></i>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                    School Years</p>
+                            </button></a></li>
+                    <li><a class="" href="/grades"><button
+                                class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'grades' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                    Grades</p>
+                            </button></a></li>
+                    <li><a class="" href="/subjects"><button
+                                class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'subjects' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                                <i class="fa-solid fa-book"></i>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                    Subjects</p>
+                            </button></a></li>
+                @endif
             </ul>
         </div>
     </aside>

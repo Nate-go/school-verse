@@ -75,9 +75,9 @@ class TableData
             ],
             'filterElements' => [
                 [
-                    'name' => 'school year',
+                    'name' => 'schoolYear',
                     'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
-                    'defaultValues' => [-1],
+                    'defaultValues' => [],
                 ],
                 [
                     'name' => 'status',

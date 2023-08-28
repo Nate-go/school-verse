@@ -33,22 +33,4 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
-
-    public function scopeRole($query, $roles)
-    {
-        if (empty($roles)) {
-            return $query;
-        }
-
-        return $query->whereIn('role', $roles);
-    }
-
-    public function scopeStatus($query, $statuses)
-    {
-        if (empty($statuses)) {
-            return $query;
-        }
-
-        return $query->whereIn('status', $statuses);
-    }
 }

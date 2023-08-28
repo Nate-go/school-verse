@@ -137,7 +137,7 @@
                         <td class="py-3 px-5 flex justify-center items-center">
                             <button
                                 class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
-                                wire:click="" type="button"><i class="fa-solid fa-pen-to-square"></i>
+                                wire:click="" type="button"><i class="fa-solid fa-eye"></i>
                             </button>
                             <button
                                 class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"

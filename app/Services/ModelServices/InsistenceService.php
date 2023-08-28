@@ -7,6 +7,14 @@ use App\Models\Insistence;
 
 class InsistenceService extends BaseService
 {
+    protected $schoolYearService;
+    
+    public function __construct(SchoolYearService $schoolYearService)
+    {
+        parent::__construct();
+        $this->schoolYearService = $schoolYearService;
+    }
+
     public function getModel()
     {
         return Insistence::class;
@@ -17,13 +25,17 @@ class InsistenceService extends BaseService
         $filterElements = $filterData['filterElements'];
         $statuses = $filterElements['status'];
         $roles = $filterElements['role'];
+        $schoolYears = $filterElements['schoolYear'];
         $sort = $filterData['sort'];
         $search = $filterData['search'];
 
+        $schoolYearRanges = $this->schoolYearService->getRanges($schoolYears);
+
         $insistences = $this->model->selectColumns(['insistences.id', 'username','role', 'insistences.status', 'content', 'insistences.created_at', 'image_url'])
             ->join('users', 'insistences.user_id', 'users.id')
-            ->whereIn('insistences.status', $statuses)
-            ->whereIn('role', $roles)
+            ->filter('insistences.status', $statuses)
+            ->filter('role', $roles)
+            ->inSchoolYears('insistences.created_at', $schoolYearRanges)
             ->search($search)
             ->orderBy($sort['columnName'], $sort['type'])
             ->paginate($filterData['perPage']);

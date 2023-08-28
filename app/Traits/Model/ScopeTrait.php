@@ -3,6 +3,8 @@
 namespace App\Traits\Model;
 
 use App\Constant\TableSetting;
+use App\Models\SchoolYear;
+use Carbon\Carbon;
 use Schema;
 
 trait ScopeTrait
@@ -21,6 +23,27 @@ trait ScopeTrait
             return $query;
         }
 
+        return $query;
+    }
+
+    public function scopeFilter($query, $columnName, $values) {
+        if (empty($values)) {
+            return $query;
+        }
+
+        return $query->whereIn($columnName, $values);
+    }
+
+    public function scopeInSchoolYears($query, $time, $schoolYears) {
+        if (empty($schoolYears)) {
+            $currentTime = str(Carbon::now());
+            $currentSchoolYear = SchoolYear::where('start_at', '<=', $currentTime)->where('end_at', '>=', $currentTime)->first();
+            $schoolYear[] = [$currentSchoolYear->start_at, $currentSchoolYear->end_at];
+        }
+
+        foreach($schoolYears as $schoolYear) {
+            $query = $query->whereBetween($time, $schoolYear);
+        }
         return $query;
     }
 

@@ -11,13 +11,4 @@ class Insistence extends Model
     use HasFactory, ScopeTrait;
 
     protected $fillable = [];
-
-    public function scopeStatus($query, $statuses)
-    {
-        if (empty($statuses)) {
-            return $query;
-        }
-
-        return $query->whereIn('status', $statuses);
-    }
 }
