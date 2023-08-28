@@ -2,34 +2,13 @@
 
 namespace Tests\Unit;
 
-use App\Constant\TableData;
-use App\Services\ModelServices\UserService;
-use App\Services\TableLivewireService\TableService;
+
 use Illuminate\Pagination\LengthAwarePaginator;
-use Laravel\Prompts\Output\ConsoleOutput;
-use Nette\Utils\Paginator;
+
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class UserTest extends UserTestCase
 {
-
-    protected $tableService;
-
-    protected $table;
-
-    protected $filterForm;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->tableService = app()->make(TableService::class);
-
-        $this->table = TableData::USERS;
-
-        $this->filterForm = $this->tableService->generateFilterForm($this->table['filterForm']);
-
-    }
 
     public function testGetTableData()
     {
