@@ -7,6 +7,7 @@ use App\Constant\UserStatus;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\ConstantService;
+use DB;
 
 class UserService extends BaseService
 {
@@ -25,12 +26,14 @@ class UserService extends BaseService
 
     public function getTable($filterData)
     {
-
         $filterElements = $filterData['filterElements'];
         $roles = $filterElements['role'];
         $statuses = $filterElements['status'];
         $sort = $filterData['sort'];
         $search = $filterData['search'];
+
+        $databaseName = DB::connection()->getDatabaseName();
+        dump('$databaseName');
 
         $users = $this->model->selectColumns(['id', 'role', 'status', 'email', 'username', 'image_url'])
             ->role($roles)
@@ -39,10 +42,9 @@ class UserService extends BaseService
             ->orderBy($sort['columnName'], $sort['type'])
             ->paginate($filterData['perPage']);
 
-        $users = ConstantService::mappingConstant(UserRole::class, 'role', $users);
+        $users = $this->constantService->mappingConstant(UserRole::class, 'role', $users);
 
-        $users = ConstantService::mappingConstant(UserStatus::class, 'status', $users);
-
+        $users = $this->constantService->mappingConstant(UserStatus::class, 'status', $users);
         return $users;
     }
 }

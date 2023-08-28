@@ -15,6 +15,6 @@ class SchoolYearService extends BaseService
     public function getSchoolYearJson() {
         $schoolYears = $this->model->selectColumns(['id as value', 'name'])->get();
 
-        return UtilService::getJsonData($schoolYears);
+        return $this->utilService->getJsonData($schoolYears);
     }
 }

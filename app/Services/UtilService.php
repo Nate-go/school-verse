@@ -9,7 +9,7 @@ use ReflectionClass;
 
 class UtilService
 {
-    public static function callMethod($className, $methodName, $args = [])
+    public function callMethod($className, $methodName, $args = [])
     {
         if (! class_exists($className)) {
             throw new Exception("Class $className does not exist.");
@@ -23,18 +23,17 @@ class UtilService
         $reflection_class = new ReflectionClass($model);
         $reflection_method = $reflection_class->getMethod($methodName);
         $result = $reflection_method->invokeArgs($model, $args);
-
         return $result;
     }
 
-    public static function randValues($args)
+    public function randValues($args)
     {
         $index = array_rand($args);
 
         return $args[$index];
     }
 
-    public static function getCurrentSchoolYear() {
+    public function getCurrentSchoolYear() {
         $currentTime = Carbon::now();
         $schoolYear = SchoolYear::where('start_at', '<=', $currentTime)
             ->where('end_at', '>=', $currentTime)
@@ -42,7 +41,7 @@ class UtilService
         return $schoolYear->id ?? null;
     }
 
-    public static function getJsonData($data) {
+    public function getJsonData($data) {
         $jsonData = [];
         foreach ($data as $item) {
             $temp = [];

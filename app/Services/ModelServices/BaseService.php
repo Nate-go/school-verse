@@ -1,14 +1,22 @@
 <?php
 
 namespace App\Services\ModelServices;
+use App\Services\ConstantService;
+use App\Services\UtilService;
 
 abstract class BaseService
 {
     protected $model;
 
+    protected $utilService;
+
+    protected $constantService;
+
     public function __construct()
     {
         $this->model = app()->make($this->getModel());
+        $this->utilService = app()->make(UtilService::class);
+        $this->constantService = app()->make(ConstantService::class);
     }
 
     abstract protected function getModel();

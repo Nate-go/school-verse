@@ -4,7 +4,13 @@ namespace App\Services;
 
 class FactoryService
 {
-    public static function calculatePercentage($array, $value)
+    private $utilService;
+
+    public function __construct(UtilService $utilService) {
+        $this->utilService = $utilService;
+    }
+
+    public function calculatePercentage($array, $value)
     {
         $totalCount = count($array);
         if ($totalCount === 0) {
@@ -22,18 +28,18 @@ class FactoryService
         return $percentage;
     }
 
-    public static function isValidPercent($percent, $range)
+    public function isValidPercent($percent, $range)
     {
         if ($percent >= $range[0] and $percent <= $range[1]) {
             return true;
         }
     }
 
-    public static function getValidValue($currentValues, $ranges, $values)
+    public function getValidValue($currentValues, $ranges, $values)
     {
         do {
-            $value = UtilService::randValues($values);
-        } while (self::isValidPercent(self::calculatePercentage($currentValues, $values), $ranges[$value]));
+            $value = $this->utilService->randValues($values);
+        } while ($this->isValidPercent($this->calculatePercentage($currentValues, $values), $ranges[$value]));
 
         return $value;
     }

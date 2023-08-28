@@ -2,23 +2,35 @@
 
 namespace App\Services\TableLivewireService;
 
+use App\Constant\TableSetting;
 use App\Services\UtilService;
+use App\Services\ConstantService;
+
 
 class TableService
 {
-    public static function generateFilterForm($filterForm)
+    private $utilService;
+
+    private $constantService;
+
+    public function __construct(UtilService $utilService, ConstantService $constantService) {
+        $this->utilService = $utilService;
+        $this->constantService = $constantService;
+    }
+
+    public function generateFilterForm($filterForm)
     {
-        $filterForm['filterElements'] = self::filterElemantsGenerate($filterForm['filterElements']);
+        $filterForm['filterElements'] = $this->filterElemantsGenerate($filterForm['filterElements']);
 
         return $filterForm;
     }
 
-    private static function filterElemantsGenerate($filterElements)
+    private function filterElemantsGenerate($filterElements)
     {
         $newFilterElements = [];
         foreach ($filterElements as $element) {
-            $data = self::generateItem($element['resource']);
-            $data = self::setDefaultFilter($data, $element['defaultValues']);
+            $data = $this->generateItem($element['resource']);
+            $data = $this->setDefaultFilter($data, $element['defaultValues']);
             $element['resource'] = $data;
             $newFilterElements[] = $element;
         }
@@ -26,9 +38,9 @@ class TableService
         return $newFilterElements;
     }
 
-    private static function generateItem($resource)
+    private function generateItem($resource)
     {
-        $data = UtilService::callMethod($resource['model'], $resource['method'], $resource['args']);
+        $data = $this->utilService->callMethod($resource['model'], $resource['method'], $resource['args']);
         $allItem = [
             'name' => 'All',
             'value' => -1,
@@ -38,7 +50,7 @@ class TableService
         return $data;
     }
 
-    private static function setDefaultFilter($data, $defaultValues)
+    private function setDefaultFilter($data, $defaultValues)
     {
         $newData = [];
         foreach ($data as $item) {
@@ -53,17 +65,17 @@ class TableService
         return $newData;
     }
 
-    private static function getAllFilterValues($filterElements)
+    private function getAllFilterValues($filterElements)
     {
         $allFilterValues = [];
         foreach ($filterElements as $element) {
-            $allFilterValues[$element['name']] = self::getFilterValue($element['resource']);
+            $allFilterValues[$element['name']] = $this->getFilterValue($element['resource']);
         }
 
         return $allFilterValues;
     }
 
-    private static function getFilterValue($resource)
+    private function getFilterValue($resource)
     {
         $filterValue = [];
         foreach ($resource as $item) {
@@ -78,22 +90,39 @@ class TableService
         return $filterValue;
     }
 
-    private static function getFilterData($filterForm)
+    private function getFilterData($filterForm)
     {
         $filterData = [];
         $filterData['perPage'] = $filterForm['perPage'];
         $filterData['sort'] = $filterForm['sort'];
-        $filterData['filterElements'] = self::getAllFilterValues($filterForm['filterElements']);
+        $filterData['filterElements'] = $this->getAllFilterValues($filterForm['filterElements']);
         $filterData['search'] = $filterForm['search'];
 
         return $filterData;
     }
 
-    public static function getDataTable($dataSource, $filterForm)
-    {
-        $filterData = self::getFilterData($filterForm);
-        $data = UtilService::callMethod($dataSource['model'], $dataSource['method'], [$filterData]);
+    public function getHeaderSearch($headers) {
+        for($i=0; $i < count($headers); $i++) {
+            if($headers[$i]['searchable']) {
+                $headers[$i]['searchType'] = $this->getTypeSearch($headers[$i]['searchType']);
+            }
+        }
+        return $headers;
+    }
 
+    private function getTypeSearch($types) {
+        $searchType = [];
+        foreach($types as $type) {
+            $name = $this->constantService->getNameConstant(TableSetting::class, $type);
+            $searchType[] = ['name' => $name, 'value' => $type];
+        }
+        return $searchType;
+    }
+
+    public function getDataTable($dataSource, $filterForm)
+    {
+        $filterData = $this->getFilterData($filterForm);
+        $data = $this->utilService->callMethod($dataSource['model'], $dataSource['method'], [$filterData]);
         return $data;
     }
 }

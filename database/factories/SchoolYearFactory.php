@@ -8,11 +8,6 @@ class SchoolYearFactory extends Factory
 {
     public $year = 2019;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         $this->year += 1;

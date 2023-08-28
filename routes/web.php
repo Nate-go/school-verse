@@ -23,8 +23,12 @@ Route::get('/not-permission', function () {
 
 Route::get('/', [UserController::class, 'index'])->name('index');
 
-Route::get('/change', function () {
-    return view('otherindex');
+Route::get('/debug-sentry', function () {
+    $e= [
+        'mesage'=> 'Test',
+        'age' => 123
+    ];
+    throw new Exception('My first Sentry error!');
 });
 
 Route::get('/homepage', function () {
