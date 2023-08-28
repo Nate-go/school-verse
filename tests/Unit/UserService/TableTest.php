@@ -4,10 +4,9 @@ namespace Tests\Unit;
 
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use Tests\Unit\UserService\UserTestCase;
 
-use Tests\TestCase;
-
-class UserTest extends UserTestCase
+class TableTest extends UserTestCase
 {
 
     public function testGetTableData()

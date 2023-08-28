@@ -6,12 +6,13 @@ use App\Constant\TableData;
 use App\Constant\TableSetting;
 use App\Services\ConstantService;
 use App\Services\TableLivewireService\TableService;
+use App\Traits\ServiceInjection\InjectionService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Table extends Component
 {
-    use WithPagination;
+    use WithPagination, InjectionService;
 
     public $actionIsOpen = false;
 
@@ -37,11 +38,9 @@ class Table extends Component
 
     protected $listeners = ['dataSent' => 'updateFilterForm', 'filter' => 'updateData'];
 
-    public function boot(TableService $tableService, ConstantService $constantService) 
+    public function boot() 
     {
-        $this->tableService = $tableService;
-        
-        $this->constantService = $constantService;
+        $this->setInjection([TableService::class, ConstantService::class]);
     }
 
     public function mount($tableSource)

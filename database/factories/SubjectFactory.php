@@ -3,18 +3,21 @@
 namespace Database\Factories;
 
 use App\Services\UtilService;
+use App\Traits\ServiceInjection\InjectionService;
 use DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subject>
- */
 class SubjectFactory extends Factory
 {
+    use InjectionService;
+    protected $utilService;
+
     public function definition(): array
     {
-        $cofficient = UtilService::randValues([2, 1, 1, 1, 1, 1]);
+        $this->setInjection([UtilService::class]);
+
+        $cofficient = $this->utilService->randValues([2, 1, 1, 1, 1, 1]);
 
         return [
             'grade_id' => DB::table('grades')->inRandomOrder()->value('id'),

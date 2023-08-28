@@ -4,14 +4,14 @@ namespace Database\Factories;
 
 use App\Models\Profile;
 use App\Services\FactoryService;
+use App\Traits\ServiceInjection\InjectionService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
+    use InjectionService;
+
     public $roles = [];
 
     public $roleRange = [[], [30, 35], [70, 75]];
@@ -20,14 +20,18 @@ class UserFactory extends Factory
 
     public $statusRange = [[10, 15], [80, 85], [5, 10]];
 
+    public $factoryService;
+
     public function definition(): array
     {
-        $role = FactoryService::getValidValue($this->roles, $this->roleRange, [1, 2]);
+        $this->setInjection([FactoryService::class]);
+
+        $role = $this->factoryService->getValidValue($this->roles, $this->roleRange, [1, 2]);
         $this->roles[] = $role;
 
         $profile = Profile::factory()->create();
 
-        $status = FactoryService::getValidValue($this->statuses, $this->statusRange, range(0, 2));
+        $status = $this->factoryService->getValidValue($this->statuses, $this->statusRange, range(0, 2));
         $this->statuses[] = $status;
 
         return [
