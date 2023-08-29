@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthenController;
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InsistenceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,28 +19,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/login', [AuthenController::class, 'index'])->name('login.index');
+
 Route::post('/login', [AuthenController::class, 'login'])->name('login');
+
 Route::get('/not-permission', function () {
-    return view('notPermission');
+    return view('error/page-not-permission');
 })->name('notPermission');
 
-Route::get('/', [UserController::class, 'index'])->name('index');
+Route::get('/not-found', function () {
+    return view('error/page-not-found');
+})->name('notFound');
 
-Route::get('/debug-sentry', function () {
-    $e= [
-        'mesage'=> 'Test',
-        'age' => 123
-    ];
-    throw new Exception('My first Sentry error!');
+Route::fallback(function () {
+    return redirect()->route('notFound');
 });
-
-Route::get('/homepage', function () {
-    return view('homepage');
-})->name('homepage');
 
 Route::group([
     'middleware' => ['auth'],
 ], function ($router) {
+
+    Route::get('/logout', [AuthenController::class, 'logout'])->name('logout');
+
+    Route::get('/', [HomeController::class, 'index'])->name('homepage');
+
     Route::resource('users', UserController::class);
 
     Route::resource('grades', GradeController::class);

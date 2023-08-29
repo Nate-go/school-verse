@@ -46,4 +46,13 @@ class InsistenceService extends BaseService
 
         return $insistences;
     }
+
+    public function getPageForAdmin() {
+        return view('admin/insistence/insistences', ['insistencesSource' => 'INSISTENCES']);
+    }
+
+    public function getPageForUser($id)
+    {
+        return view('admin/insistence/insistences', ['insistencesSource' => 'INSISTENCES']);
+    }
 }

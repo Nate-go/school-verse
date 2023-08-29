@@ -14,17 +14,14 @@ class HomeController extends Controller
     }
 
     public function index() {
-        if(auth()->check()) {
-            switch(auth()->user()->role) {
-                case UserRole::ADMIN:
-                    return route('insistences');
-                case UserRole::TEACHER:
-                    return route('rooms');
-                default:
-                    $url = $this->roomService->getUrlForStudent();
-                    return redirect($url);
-            }
+        switch (auth()->user()->role) {
+            case UserRole::ADMIN:
+                return redirect('/insistences');
+            case UserRole::TEACHER:
+                return redirect('/rooms');
+            default:
+                $url = $this->roomService->getUrlForStudent();
+                return redirect($url);
         }
-        return route('home');
     }
 }

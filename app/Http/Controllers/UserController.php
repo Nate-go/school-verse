@@ -12,18 +12,15 @@ class UserController extends Controller
 
     public function __construct(UserService $userService)
     {
-        // $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
         $this->userService = $userService;
     }
 
     public function index()
     {
-        return view('index', ['usersSource' => 'USERS', 'insistencesSource' => 'INSISTENCES']);
+        return $this->userService->getPageForAdmin();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -66,6 +63,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->userService->softDelete($id);
     }
 }

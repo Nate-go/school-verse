@@ -22,7 +22,7 @@ class Sidebar extends Component
 
     private function setUp() {
         $path = Request::path();
-        $this->page = explode('/', $path)[1];
+        $this->page = explode('/', $path)[0];
     }
 
     public function render()

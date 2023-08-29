@@ -12,7 +12,7 @@ use Livewire\WithPagination;
 
 class Table extends Component
 {
-    use WithPagination, InjectionService;
+    use WithPagination;
 
     public $actionIsOpen = false;
 
@@ -32,15 +32,18 @@ class Table extends Component
 
     public $selectedItems = [];
 
+    public $actions;
+
     private $tableService;
 
     private $constantService;
 
     protected $listeners = ['dataSent' => 'updateFilterForm', 'filter' => 'updateData'];
 
-    public function boot() 
+    public function boot(TableService $tableService, ConstantService $constantService) 
     {
-        $this->setInjection([TableService::class, ConstantService::class]);
+        $this->tableService = $tableService;
+        $this->constantService = $constantService;
     }
 
     public function mount($tableSource)
@@ -52,6 +55,7 @@ class Table extends Component
         $this->currentFilterForm = $this->filterForm;
         $this->search = $this->filterForm['search'];
         $this->dataSource = $table['dataSource'];
+        $this->actions = $table['actions'];
         $this->setTypesSearch();
     }
 

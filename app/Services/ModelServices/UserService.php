@@ -7,6 +7,7 @@ use App\Constant\UserStatus;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\ConstantService;
+use Carbon\Carbon;
 use DB;
 
 class UserService extends BaseService
@@ -43,5 +44,14 @@ class UserService extends BaseService
 
         $users = $this->constantService->mappingConstant(UserStatus::class, 'status', $users);
         return $users;
+    }
+
+    public function getPageForAdmin()
+    {
+        return view('admin/user/users', ['userSource' => 'USERS']);
+    }
+
+    public function softDelete($id) {
+        $this->model->update(['deleted_at' => Carbon::now()])->where('id', $id);
     }
 }
