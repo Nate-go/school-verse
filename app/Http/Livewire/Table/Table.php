@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Table;
 
 
+use App\Services\ConstantService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,9 +19,19 @@ class Table extends Component
 
     public $filterForm;
 
+    public $currentFilterForm;
+
     public $searchForm;
 
+    public $detailId;
+
     protected $listeners = ['dataSend' => 'updateFilterForm', 'filter' => 'updateData'];
+
+    protected $constantService;
+
+    public function boot(ConstantService $constantService) {
+        $this->constantService = $constantService;
+    }
 
     public function mount($tableSource)
     {
@@ -28,6 +39,7 @@ class Table extends Component
         $this->header = $tableSource['header'];
         $this->filterForm = $tableSource['filterForm'];
         $this->searchForm = $this->filterForm['search'];
+        $this->updateData();
     }
 
     public function delete($id) {
@@ -35,22 +47,29 @@ class Table extends Component
     }
 
     public function detail($id) {
-
+        $this->detailId = $id;
     }
 
     public function changeColumnSearch($value)
     {
-        
+        $this->searchForm['value']['element'] = $value;
+        $this->changeTypeSearch(0);
     }
 
     public function changeTypeSearch($value)
     {
-
+        $this->searchForm['value']['type'] = $value;
+        $this->filterForm['search'] = $this->searchForm;
     }
 
     public function changeData($value)
     {
-        
+        $this->searchForm['value']['value'] = $value;
+        $this->filterForm['search'] = $this->searchForm;
+    }
+
+    public function updateData() {
+        $this->currentFilterForm = $this->filterForm;
     }
 
     protected function getData() {
@@ -116,10 +135,12 @@ class Table extends Component
     }
 
     private function getSearchValue(){
-        $index = $this->searchForm['value']['element'];
+
+        $searchForm = $this->currentFilterForm['search'];
+        $index = $searchForm['value']['element'];
         $column = $this->header[$index]['attributesName'];
-        $type = $this->searchForm['elements'][$index]['types'][$this->searchForm['value']['type']]['value'];
-        $value = $this->searchForm['value']['value'];
+        $type = $searchForm['elements'][$index]['types'][$searchForm['value']['type']]['value'];
+        $value = $searchForm['value']['value'];
 
         return ['column' => $column, 'type' => $type, 'value' => $value];
     }

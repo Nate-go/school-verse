@@ -63,6 +63,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->userService->softDelete($id);
+        
     }
 }

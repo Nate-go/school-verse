@@ -88,10 +88,6 @@ class TableData
                 ]
             ]
         ],
-        'actions' => [
-            'detail' => '/users/',
-            'delete' => '/users/'
-        ]
     ];
 
     const ROOMS = [
