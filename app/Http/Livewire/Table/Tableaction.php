@@ -8,12 +8,9 @@ class Tableaction extends Component
 {
     public $filterForm;
 
-    public $selectedCount;
-
-    public function mount($filterForm, $selectedCount)
+    public function mount($filterForm)
     {
         $this->filterForm = $filterForm;
-        $this->selectedCount = $selectedCount;
     }
 
     public function perPageChange($value)
@@ -30,7 +27,7 @@ class Tableaction extends Component
 
     public function sendDataToParent()
     {
-        $this->emit('dataSent', $this->filterForm);
+        $this->emit('dataSend', $this->filterForm);
     }
 
     public function render()

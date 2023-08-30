@@ -2,11 +2,11 @@
 
 namespace App\Services\ModelServices;
 
+use App\Constant\TableData;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
 use App\Models\Profile;
 use App\Models\User;
-use App\Services\ConstantService;
 use Carbon\Carbon;
 use DB;
 
@@ -48,7 +48,9 @@ class UserService extends BaseService
 
     public function getPageForAdmin()
     {
-        return view('admin/user/users', ['userSource' => 'USERS']);
+        $data = TableData::USERS;
+        $this->tableService->setTableForm($data);
+        return view('admin/user/users', ['userSource' => $data]);
     }
 
     public function softDelete($id) {

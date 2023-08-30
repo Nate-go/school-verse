@@ -2,20 +2,8 @@
 
 namespace App\Constant;
 
-class TableSetting
+class CompareTypes
 {
-    const TEXT_TYPE = 0;
-
-    const IMG_TYPE = 1;
-
-    const TEXTARE_TYPE = 2;
-
-    const MIX_TYPE = 3;
-
-    const DECREASE_SORT = 'desc';
-
-    const INCREASE_SORT = 'asc';
-
     const CONTAIN = 'contains';
 
     const EQUAL = '=';

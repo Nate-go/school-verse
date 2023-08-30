@@ -5,6 +5,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InsistenceController;
 use App\Http\Controllers\UserController;
+use App\Services\TableService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/login', [AuthenController::class, 'index'])->name('login.index');
 
 Route::post('/login', [AuthenController::class, 'login'])->name('login');

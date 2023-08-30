@@ -14,25 +14,23 @@ class TableData
     const USERS = [
         'name' => 'users',
         'header' => [
-            ['name' => '', 'attributesName' => 'image_url', 'type' => TableSetting::USER_TYPE, 'sortable' => false, 'searchable' => false],
-            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::USER_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
-            ['name' => 'email', 'attributesName' => 'email', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
-            ['name' => 'role', 'attributesName' => 'role', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'status', 'attributesName' => 'status', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
+            ['name' => 'user', 'attributesName' => 'username', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'email', 'attributesName' => 'email', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'role', 'attributesName' => 'role', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'status', 'attributesName' => 'status', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
         ],
-        'dataSource' => ['model' => UserService::class, 'method' => 'getTable'],
         'filterForm' => [
             'search' => [
-                'columnName' => 'username',
-                'type' => TableSetting::CONTAIN,
-                'data' => '',
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                    ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => '']
             ],
             'perPage' => 10,
             'sort' => [
-                'columnName' => 'username',
-                'displayName' => 'username',
-                'type' => TableSetting::DECREASE_SORT,
-                'displayType' => 'Decrease',
+                'column' => 0,
+                'type' => SortTypes::DECREASE_SORT,
             ],
             'filterElements' => [
                 [
@@ -47,34 +45,29 @@ class TableData
                 ],
             ],
         ],
-        'actions' => [
-            'detail' => '/users/',
-            'delete' => '/users/'
-        ]
     ];
 
     const INSISTENCES = [
         'name' => 'insistences',
         'header' => [
-            ['name' => '', 'attributesName' => 'image_url', 'type' => TableSetting::USER_TYPE, 'sortable' => false, 'searchable' => false],
-            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::USER_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
-            ['name' => 'status', 'attributesName' => 'status', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'role', 'attributesName' => 'role', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'time', 'attributesName' => 'created_at', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::EQUAL, TableSetting::BETWEEN_INCLUDE, TableSetting::GREATER_EQUAL, TableSetting::SMALLER_EQUAL]],
+            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::USER_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+            ['name' => 'status', 'attributesName' => 'status', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
+            ['name' => 'role', 'attributesName' => 'role', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
+            ['name' => 'time', 'attributesName' => 'created_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::EQUAL, TableSetting::BETWEEN_INCLUDE, TableSetting::GREATER_EQUAL, TableSetting::SMALLER_EQUAL]],
             ['name' => 'content', 'attributesName' => 'content', 'type' => TableSetting::TEXTARE_TYPE, 'sortable' => false, 'searchable' => false],
         ],
         'dataSource' => ['model' => InsistenceService::class, 'method' => 'getTable'],
         'filterForm' => [
             'search' => [
                 'columnName' => 'username',
-                'type' => TableSetting::CONTAIN,
+                'type' => CompareTypes::CONTAIN,
                 'data' => '',
             ],
             'perPage' => 10,
             'sort' => [
                 'columnName' => 'created_at',
                 'displayName' => 'time',
-                'type' => TableSetting::DECREASE_SORT,
+                'type' => SortTypes::DECREASE_SORT,
                 'displayType' => 'Decrease',
             ],
             'filterElements' => [
@@ -105,24 +98,24 @@ class TableData
         'name' => 'rooms',
         'header' => [
             ['name' => '', 'attributesName' => 'image_url', 'type' => TableSetting::USER_TYPE, 'sortable' => false, 'searchable' => false],
-            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::USER_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::CONTAIN, TableSetting::EQUAL]],
-            ['name' => 'status', 'attributesName' => 'status', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'role', 'attributesName' => 'role', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'time', 'attributesName' => 'created_at', 'type' => TableSetting::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [TableSetting::EQUAL, TableSetting::BETWEEN_INCLUDE, TableSetting::GREATER_EQUAL, TableSetting::SMALLER_EQUAL]],
+            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::USER_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+            ['name' => 'status', 'attributesName' => 'status', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
+            ['name' => 'role', 'attributesName' => 'role', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
+            ['name' => 'time', 'attributesName' => 'created_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::EQUAL, TableSetting::BETWEEN_INCLUDE, TableSetting::GREATER_EQUAL, TableSetting::SMALLER_EQUAL]],
             ['name' => 'content', 'attributesName' => 'content', 'type' => TableSetting::TEXTARE_TYPE, 'sortable' => false, 'searchable' => false],
         ],
         'dataSource' => ['model' => InsistenceService::class, 'method' => 'getTable'],
         'filterForm' => [
             'search' => [
                 'columnName' => 'username',
-                'type' => TableSetting::CONTAIN,
+                'type' => CompareTypes::CONTAIN,
                 'data' => '',
             ],
             'perPage' => 10,
             'sort' => [
                 'columnName' => 'created_at',
                 'displayName' => 'time',
-                'type' => TableSetting::DECREASE_SORT,
+                'type' => SortTypes::DECREASE_SORT,
                 'displayType' => 'Decrease',
             ],
             'filterElements' => [

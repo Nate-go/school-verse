@@ -2,11 +2,7 @@
 
 namespace App\Http\Livewire\Table;
 
-use App\Constant\TableData;
-use App\Constant\TableSetting;
-use App\Services\ConstantService;
-use App\Services\TableLivewireService\TableService;
-use App\Traits\ServiceInjection\InjectionService;
+
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,96 +12,55 @@ class Table extends Component
 
     public $actionIsOpen = false;
 
-    public $tableName;
+    public $tableSource;
 
-    public $tableHeader;
+    public $header;
 
     public $filterForm;
 
-    public $search;
+    public $searchForm;
 
-    public $currentFilterForm;
-
-    public $dataSource;
-
-    public $types;
-
-    public $selectedItems = [];
-
-    public $actions;
-
-    private $tableService;
-
-    private $constantService;
-
-    protected $listeners = ['dataSent' => 'updateFilterForm', 'filter' => 'updateData'];
-
-    public function boot(TableService $tableService, ConstantService $constantService) 
-    {
-        $this->tableService = $tableService;
-        $this->constantService = $constantService;
-    }
+    protected $listeners = ['dataSend' => 'updateFilterForm', 'filter' => 'updateData'];
 
     public function mount($tableSource)
     {
-        $table = constant(TableData::class.'::'.$tableSource);
-        $this->tableName = $table['name'];
-        $this->tableHeader = $this->tableService->getHeaderSearch($table['header']);
-        $this->filterForm = $this->tableService->generateFilterForm($table['filterForm']);
-        $this->currentFilterForm = $this->filterForm;
-        $this->search = $this->filterForm['search'];
-        $this->dataSource = $table['dataSource'];
-        $this->actions = $table['actions'];
-        $this->setTypesSearch();
+        $this->tableSource = $tableSource;
+        $this->header = $tableSource['header'];
+        $this->filterForm = $tableSource['filterForm'];
+        $this->searchForm = $this->filterForm['search'];
+    }
+
+    public function delete($id) {
+        
+    }
+
+    public function detail($id) {
+
     }
 
     public function changeColumnSearch($value)
     {
-        $this->search['columnName'] = $value;
-        $this->setTypesSearch();
-        $this->search['type'] = reset($this->types);
-        $this->search['data'] = '';
+        
     }
 
     public function changeTypeSearch($value)
     {
-        $this->search['type'] = $value;
+
     }
 
     public function changeData($value)
     {
-        if (strpos($value, ',') !== false) {
-            $data = explode(',', $value);
-
-            $data = array_map('trim', $data);
-
-            $this->search['data'] = $data;
-        } else {
-            $this->search['data'] = $value;
-        }
-        $this->updateData();
+        
     }
 
-    public function setTypesSearch()
-    {
-        foreach ($this->tableHeader as $column) {
-            if ($this->search['columnName'] === $column['attributesName']) {
-                $this->types = $column['searchType'];
-            }
-        }
-    }
+    protected function getData() {
 
-    public function updateData()
-    {
-        $this->filterForm['search'] = $this->search;
-        $this->currentFilterForm = $this->filterForm;
-        $this->gotoPage(1);
     }
 
     public function render()
     {
         return view('livewire.table.table', [
-            'data' => $this->tableService->getDataTable($this->dataSource, $this->currentFilterForm),
+            'data' => $this->getData(),
         ]);
     }
 
@@ -116,46 +71,56 @@ class Table extends Component
 
     public function pageChange($page)
     {
-        $this->selectedItems = [];
         $this->gotoPage($page);
     }
 
-    public function updateFilterForm($filterForm)
-    {
-        $this->filterForm = $filterForm;
+    protected function getFilterValues() {
+        $filterValue = [];
+
+        $filterValue['perPage'] = $this->filterForm['perPage'];
+        $filterValue['search'] = $this->getSearchValue();
+        $filterValue['sort'] = $this->getSortValue();
+        $filterValue['filters'] = $this->getFilterElements();
+
+        return $filterValue;
     }
 
-    public function selectChange($itemId)
-    {
-        $index = array_search($itemId, $this->selectedItems);
-
-        if ($index !== false) {
-            unset($this->selectedItems[$index]);
-        } else {
-            $this->selectedItems[] = $itemId;
+    private function getFilterElements() {
+        $filters = [];
+        $filterElements = $this->filterForm['filterElements'];
+        foreach($filterElements as $filterElement) {
+            $filters[$filterElement['name']] = $this->getFilterResources($filterElement['resource']);
         }
+        return $filters;
     }
 
-    public function sort($name, $attributeName)
-    {
-        if ($this->filterForm['sort']['columnName'] === $attributeName) {
-            $this->filterForm['sort']['type'] = $this->constantService->getSortType($this->filterForm['sort']['type']);
-        } else {
-            $this->filterForm['sort']['columnName'] = $attributeName;
-            $this->filterForm['sort']['displayName'] = $name;
-            $this->filterForm['sort']['type'] = TableSetting::INCREASE_SORT;
+    private function getFilterResources($resources) {
+        $values = [];
+        foreach($resources as $resource) {
+            if($resource['isSelected']) {
+                if ($resource['name'] === 'All')
+                    return $values;
+                $values[] = $resource['value'];
+            }
         }
-        $this->filterForm['sort']['displayType'] = $this->constantService->getNameConstant(TableSetting::class, $this->filterForm['sort']['type']);
-        $this->updateData();
+        return $values;
     }
 
-    public function selectAll($all)
-    {
-        $this->selectedItems = $all;
+    private function getSortValue() {
+
+        $index = $this->filterForm['sort']['column'];
+        $column = $this->header[$index]['attributesName'];
+        $type = $this->filterForm['sort']['type'];
+
+        return ['column' => $column, 'type' =>$type];
     }
 
-    public function unselectAll()
-    {
-        $this->selectedItems = [];
+    private function getSearchValue(){
+        $index = $this->searchForm['value']['element'];
+        $column = $this->header[$index]['attributesName'];
+        $type = $this->searchForm['elements'][$index]['types'][$this->searchForm['value']['type']]['value'];
+        $value = $this->searchForm['value']['value'];
+
+        return ['column' => $column, 'type' => $type, 'value' => $value];
     }
 }

@@ -24,7 +24,7 @@
                         <i class="fa-solid fa-user-plus"></i>
                         <span>Add user</span>
                     </a>
-                    @livewire('table.table', ['tableSource' => $userSource])
+                    @livewire('table.usertable', ['tableSource' => $userSource])
                 </main>
             </div>
         </div>

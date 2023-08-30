@@ -49,9 +49,9 @@ trait ScopeTrait
 
     public function scopeSearch($query, $search)
     {
-        $column = $search['columnName'];
+        $column = $search['column'];
         $type = $search['type'];
-        $data = $search['data'];
+        $data = $search['value'];
         switch ($type) {
             case TableSetting::CONTAIN:
                 return $this->scopeContain($query, $column, $data);
