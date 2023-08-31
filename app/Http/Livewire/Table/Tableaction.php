@@ -6,7 +6,17 @@ use Livewire\Component;
 
 class Tableaction extends Component
 {
+    public $actionIsOpen = false;
+
     public $filterForm;
+
+    protected $listeners = [
+        'closeAll' => 'closeAction',
+    ];
+
+    public function closeAction() {
+        $this->actionIsOpen = false;
+    }
 
     public function mount($filterForm)
     {
@@ -33,5 +43,10 @@ class Tableaction extends Component
     public function render()
     {
         return view('livewire.table.tableaction');
+    }
+
+    public function openAction()
+    {
+        $this->actionIsOpen = !$this->actionIsOpen;
     }
 }

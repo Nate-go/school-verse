@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('link')->nullable();
             $table->integer('status');
             $table->timestamps();
-            $table->timestamp('delete_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
 
             $table->foreign('from_user_id')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');

@@ -8,7 +8,14 @@ class Notifytable extends Component
 {
     public $notifyIsOpen = false;
 
-    protected $listeners = ['displayNotify' => 'changeNotify'];
+    protected $listeners = [
+        'displayNotify' => 'changeNotify',
+        'closeAll' => 'closeNotify'
+    ];
+
+    public function closeNotify() {
+        $this->notifyIsOpen = false;
+    }
 
     public function render()
     {

@@ -1,13 +1,9 @@
 <div
     class="flex flex-col rounded-xl bg-white text-gray-700 shadow-md xl:col-span-2 overflow-visible">
-    <div class='relative flex'>
-        @if ($actionIsOpen)
-            @livewire('table.tableaction', ['filterForm' => $filterForm])
-        @endif
-    </div>
+
     
     <div
-        class="bg-clip-border rounded-xl bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
+        class="bg-clip-border rounded-xl bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6 overflow-visible">
         <div>
             <h6
                 class="capitalize block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">
@@ -19,8 +15,8 @@
         </div>
         <div class='flex gap-1'>
             <select class='capitalize antialiased border-2 rounded-md' wire:change="changeColumnSearch($event.target.value)"">
-                @foreach ($searchForm['elements'] as $element)
-                    @if ($searchForm['value']['element'] === $element['column'])
+                @foreach ($filterForm['search']['elements'] as $element)
+                    @if ($filterForm['search']['value']['element'] === $element['column'])
                         <option selected value="{{ $element['column'] }}" class='capitalize antialiased'>
                             {{$header[$element['column']]['name']}}
                         </option>
@@ -32,21 +28,15 @@
                 @endforeach
             </select>
             <select class='antialiased border-2 rounded-md' wire:change='changeTypeSearch($event.target.value)'>
-                @foreach ($searchForm['elements'][$searchForm['value']['element']]['types'] as $type)
-                    @if ($searchForm['value']['type'] === $loop->index)
-                        <option selected value={{$loop->index}}>
-                            {{ucfirst(strtolower($type['name'])) }}
-                        </option>
-                    @else
-                        <option value={{$loop->index}}>
-                            {{ucfirst(strtolower($type['name'])) }}
-                        </option>
-                    @endif
+                @foreach ($filterForm['search']['elements'][$filterForm['search']['value']['element']]['types'] as $type)
+                    <option {{$filterForm['search']['value']['type']===$loop->index ? 'selected' : ''}} value={{$loop->index}}>
+                        {{ucfirst(strtolower($type['name']))}}
+                    </option>
                 @endforeach
             </select>
 
             <div class="relative w-full min-w-[120px] h-10">
-                <input type="text" value='{{$searchForm['value']['value']}}' wire:input.debounce.1500ms='changeData($event.target.value)'
+                <input type="text" value='{{$filterForm['search']['value']['value']}}' wire:input.debounce.1500ms='changeData($event.target.value)'
                     class="border-4 peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-blue-500"
                     placeholder=" "><label
                     class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-blue-500 before:border-blue-gray-200 peer-focus:before:border-blue-500 after:border-blue-gray-200 peer-focus:after:border-blue-500">
@@ -54,10 +44,7 @@
             </div>
 
         </div>
-        <button
-            class="hover:bg-slate-100 relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
-            wire:click='openAction'><i class="fa-solid fa-ellipsis-vertical text-xl"></i>
-        </button>
+        @livewire('table.tableaction', ['filterForm' => $filterForm])
     </div>
     <div class=" overflow-x-auto px-0 pt-0 z-10 flex-col table-wrp block max-h-[32.5rem] rounded-b-xl">
         <table class="w-full min-w-[640px] table-autos">

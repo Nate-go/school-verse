@@ -16,15 +16,7 @@
             </div>
             <div class="flex items-center">
                 
-                <div>
-                    <button
-                        class="hover:bg-slate-200 text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400 active:text-blue-500"
-                        wire:click="$emit('displayUserInfo')" type="button"><i class="fa-solid fa-user"></i>
-                    </button>
-    
-                    <livewire:fregment.userinfomation />
-                </div>
-    
+                <livewire:fregment.userinfomation />
     
                 <button
                     class="hover:bg-slate-200 md:hidden text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xl hover:text-blue-400 active:text-blue-500"
@@ -35,15 +27,8 @@
                     <i class="fa-solid fa-bars"></i>
                     @endif
                 </button>
-    
-                <div class='flex relative'>
-                    <button
-                        class="hover:bg-slate-200 text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400 active:text-blue-500"
-                        wire:click.prevent="$emit('displayNotify')" type="button"><i class="fa-solid fa-bell"></i>
-                    </button>
-    
-                    <livewire:fregment.notifytable />
-                </div>
+
+                <livewire:fregment.notifytable />
     
             </div>
         </div>

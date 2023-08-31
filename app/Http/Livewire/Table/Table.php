@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Table;
 
-
 use App\Services\ConstantService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,8 +9,6 @@ use Livewire\WithPagination;
 class Table extends Component
 {
     use WithPagination;
-
-    public $actionIsOpen = false;
 
     public $tableSource;
 
@@ -21,13 +18,12 @@ class Table extends Component
 
     public $currentFilterForm;
 
-    public $searchForm;
-
     public $detailId;
 
     protected $listeners = ['dataSend' => 'updateFilterForm', 'filter' => 'updateData'];
 
     protected $constantService;
+
 
     public function boot(ConstantService $constantService) {
         $this->constantService = $constantService;
@@ -38,7 +34,6 @@ class Table extends Component
         $this->tableSource = $tableSource;
         $this->header = $tableSource['header'];
         $this->filterForm = $tableSource['filterForm'];
-        $this->searchForm = $this->filterForm['search'];
         $this->updateData();
     }
 
@@ -50,26 +45,44 @@ class Table extends Component
         $this->detailId = $id;
     }
 
+    public function sort($index) {
+        
+        if($this->filterForm['sort']['column'] === $index) {
+            foreach($this->filterForm['sort']['allTypes'] as $type){
+                if($type['value'] !== $this->filterForm['sort']['type']) {
+                    $this->filterForm['sort']['type'] = $type['value'];
+                }
+            }
+        }
+        $this->filterForm['sort']['column'] = $index;
+        $this->updateData(); 
+    }
+
     public function changeColumnSearch($value)
     {
-        $this->searchForm['value']['element'] = $value;
+        $this->filterForm['search']['value']['element'] = intval($value);
         $this->changeTypeSearch(0);
     }
 
     public function changeTypeSearch($value)
     {
-        $this->searchForm['value']['type'] = $value;
-        $this->filterForm['search'] = $this->searchForm;
+        $this->filterForm['search']['value']['type'] = intval($value);
     }
 
     public function changeData($value)
     {
-        $this->searchForm['value']['value'] = $value;
-        $this->filterForm['search'] = $this->searchForm;
+        $this->filterForm['search']['value']['value'] = $value;
+        $this->updateData();
+    }
+
+    public function updateFilterForm($filterForm) {
+        $this->filterForm['perPage'] = $filterForm['perPage'];
+        $this->filterForm['filterElements'] = $filterForm['filterElements'];
     }
 
     public function updateData() {
         $this->currentFilterForm = $this->filterForm;
+        $this->gotoPage(1);
     }
 
     protected function getData() {
@@ -83,11 +96,6 @@ class Table extends Component
         ]);
     }
 
-    public function openAction()
-    {
-        $this->actionIsOpen = ! $this->actionIsOpen;
-    }
-
     public function pageChange($page)
     {
         $this->gotoPage($page);
@@ -96,7 +104,7 @@ class Table extends Component
     protected function getFilterValues() {
         $filterValue = [];
 
-        $filterValue['perPage'] = $this->filterForm['perPage'];
+        $filterValue['perPage'] = $this->currentFilterForm['perPage'];
         $filterValue['search'] = $this->getSearchValue();
         $filterValue['sort'] = $this->getSortValue();
         $filterValue['filters'] = $this->getFilterElements();
@@ -106,7 +114,7 @@ class Table extends Component
 
     private function getFilterElements() {
         $filters = [];
-        $filterElements = $this->filterForm['filterElements'];
+        $filterElements = $this->currentFilterForm['filterElements'];
         foreach($filterElements as $filterElement) {
             $filters[$filterElement['name']] = $this->getFilterResources($filterElement['resource']);
         }
@@ -127,9 +135,9 @@ class Table extends Component
 
     private function getSortValue() {
 
-        $index = $this->filterForm['sort']['column'];
+        $index = $this->currentFilterForm['sort']['column'];
         $column = $this->header[$index]['attributesName'];
-        $type = $this->filterForm['sort']['type'];
+        $type = $this->currentFilterForm['sort']['type'];
 
         return ['column' => $column, 'type' =>$type];
     }

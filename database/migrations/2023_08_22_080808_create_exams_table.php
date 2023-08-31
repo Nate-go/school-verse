@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('room_teacher_id');
             $table->integer('type');
             $table->timestamps();
-            $table->timestamp('delete_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
 
             $table->foreign('room_teacher_id')->references('id')->on('room_teachers');
         });

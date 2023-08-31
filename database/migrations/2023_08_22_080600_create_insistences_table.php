@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('feedback')->nullable();
             $table->integer('status');
             $table->timestamps();
-            $table->timestamp('delete_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
         });

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phonenumber')->nullable();
             $table->timestamp('date_of_birth')->nullable();
             $table->timestamps();
-            $table->timestamp('delete_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

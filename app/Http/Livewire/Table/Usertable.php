@@ -26,10 +26,11 @@ class Usertable extends Table
             ->orderBy($sort['column'], $sort['type'])
             ->paginate($filterValues['perPage']);
 
+        
         $users = $this->constantService->mappingConstant(UserRole::class, 'role', $users);
 
         $users = $this->constantService->mappingConstant(UserStatus::class, 'status', $users);
-
+        //dd($search);
         return $users;
     }
 
