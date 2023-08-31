@@ -5,11 +5,11 @@
     </button>
     @if ($actionIsOpen)
         <div
-            class="w-fit absolute top-6 right-6 bg-white min-w-[180px] p-3 border border-blue-gray-50 rounded-md shadow-lg shadow-blue-gray-500/10 font-sans text-sm font-normal text-blue-gray-500 overflow-auto focus:outline-none z-[999]">
+            class="w-full absolute top-6 right-6 bg-white min-w-[240px] p-3 border border-blue-gray-50 rounded-md shadow-lg shadow-blue-gray-500/10 font-sans text-sm font-normal text-blue-gray-500 overflow-auto focus:outline-none z-[999]">
             <ul>
                 <li class="flex-col justify-between w-full pt-2 text-start leading-tight transition-all">
                     <p class='text-center antialiased pb-1 text-base font-bold rounded-md bg-blue-100 my-2'>Filter form</p>
-                    <ul class='flex-col'>
+                    <ul class='flex-col w-full'>
                         <li class='rounded-md bg-blue-100 my-2 px-2'>
                             <div class='py-1 flex items-center'>
                                 <p class='pr-2'>Row per page </p>
@@ -19,8 +19,8 @@
                             </div>
                         </li>
         
-                        <li>
-                            <ul class='overflow-y-auto max-h-[210px] rounded-md bg-blue-100 mt-2 px-2'>
+                        <li class="w-full">
+                            <ul class='overflow-y-auto max-h-[210px] rounded-md bg-blue-100 mt-2 px-2 w-full'>
                                 @foreach ($filterForm['filterElements'] as $element)
                                 <li class='py-1'>
                                     <p class='text-bold pb-1 text-center capitalize font-bold'>{{ $element['name'] }}</p>

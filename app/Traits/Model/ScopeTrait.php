@@ -36,13 +36,13 @@ trait ScopeTrait
 
     public function scopeInSchoolYears($query, $time, $schoolYears) {
         if (empty($schoolYears)) {
-            $currentTime = str(Carbon::now());
-            $currentSchoolYear = SchoolYear::where('start_at', '<=', $currentTime)->where('end_at', '>=', $currentTime)->first();
-            $schoolYear[] = [$currentSchoolYear->start_at, $currentSchoolYear->end_at];
+            return $query;
         }
 
-        foreach($schoolYears as $schoolYear) {
-            $query = $query->whereBetween($time, $schoolYear);
+        $schoolYears = SchoolYear::whereIn('id', $schoolYears)->get();
+        $query->where(false);
+        foreach ($schoolYears as $schoolYear) {
+            $query->orWhereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
         }
         return $query;
     }

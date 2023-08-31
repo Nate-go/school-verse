@@ -3,7 +3,6 @@
 namespace App\Services\ModelServices;
 
 use App\Models\SchoolYear;
-use App\Services\UtilService;
 use Carbon\Carbon;
 
 class SchoolYearService extends BaseService

@@ -3,11 +3,9 @@
 namespace App\Constant;
 
 use App\Services\ConstantService;
-use App\Services\ModelServices\InsistenceService;
-use App\Services\ModelServices\RoomService;
+use App\Services\ModelServices\GradeService;
 use App\Services\ModelServices\SchoolYearService;
-use App\Services\ModelServices\UserService;
-use App\Services\UtilService;
+
 
 class TableData
 {
@@ -50,31 +48,30 @@ class TableData
     const INSISTENCES = [
         'name' => 'insistences',
         'header' => [
-            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::USER_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
-            ['name' => 'status', 'attributesName' => 'status', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'role', 'attributesName' => 'role', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'time', 'attributesName' => 'created_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::EQUAL, TableSetting::BETWEEN_INCLUDE, TableSetting::GREATER_EQUAL, TableSetting::SMALLER_EQUAL]],
-            ['name' => 'content', 'attributesName' => 'content', 'type' => TableSetting::TEXTARE_TYPE, 'sortable' => false, 'searchable' => false],
+            ['name' => 'user', 'attributesName' => 'username', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'content', 'attributesName' => 'content', 'type' => HeaderTypes::TEXTARE_TYPE, 'sortable' => false],
+            ['name' => 'time', 'attributesName' => 'created_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'role', 'attributesName' => 'role', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'status', 'attributesName' => 'status', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
         ],
-        'dataSource' => ['model' => InsistenceService::class, 'method' => 'getTable'],
         'filterForm' => [
             'search' => [
-                'columnName' => 'username',
-                'type' => CompareTypes::CONTAIN,
-                'data' => '',
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                    ['column' => 2, 'types' => [CompareTypes::GREATER_EQUAL, CompareTypes::EQUAL, CompareTypes::SMALLER_EQUAL]]
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => '']
             ],
-            'perPage' => 10,
+            'perPage' => 8,
             'sort' => [
-                'columnName' => 'created_at',
-                'displayName' => 'time',
+                'column' => 2,
                 'type' => SortTypes::DECREASE_SORT,
-                'displayType' => 'Decrease',
             ],
             'filterElements' => [
                 [
-                    'name' => 'schoolYear',
-                    'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
-                    'defaultValues' => [],
+                    'name' => 'role',
+                    'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [UserRole::class]],
+                    'defaultValues' => [UserRole::STUDENT, UserRole::TEACHER],
                 ],
                 [
                     'name' => 'status',
@@ -82,59 +79,131 @@ class TableData
                     'defaultValues' => [Insistence::PENDING],
                 ],
                 [
-                    'name' => 'role',
-                    'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [UserRole::class]],
-                    'defaultValues' => [UserRole::STUDENT, UserRole::TEACHER],
+                    'name' => 'school year',
+                    'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
+                    'defaultValues' => [],
                 ]
-            ]
+            ],
         ],
     ];
 
     const ROOMS = [
         'name' => 'rooms',
         'header' => [
-            ['name' => '', 'attributesName' => 'image_url', 'type' => TableSetting::USER_TYPE, 'sortable' => false, 'searchable' => false],
-            ['name' => 'username', 'attributesName' => 'username', 'type' => TableSetting::USER_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
-            ['name' => 'status', 'attributesName' => 'status', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'role', 'attributesName' => 'role', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => false],
-            ['name' => 'time', 'attributesName' => 'created_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true, 'searchable' => true, 'searchType' => [CompareTypes::EQUAL, TableSetting::BETWEEN_INCLUDE, TableSetting::GREATER_EQUAL, TableSetting::SMALLER_EQUAL]],
-            ['name' => 'content', 'attributesName' => 'content', 'type' => TableSetting::TEXTARE_TYPE, 'sortable' => false, 'searchable' => false],
+            ['name' => 'name', 'attributesName' => 'name', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'homeroom teacher', 'attributesName' => 'homeroom_teacher', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'number of members', 'attributesName' => 'number_of_members', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'school year', 'attributesName' => 'school_year', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'missed teachers', 'attributesName' => 'missed_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
         ],
-        'dataSource' => ['model' => InsistenceService::class, 'method' => 'getTable'],
         'filterForm' => [
             'search' => [
-                'columnName' => 'username',
-                'type' => CompareTypes::CONTAIN,
-                'data' => '',
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                    ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => '']
             ],
-            'perPage' => 10,
+            'perPage' => 8,
             'sort' => [
-                'columnName' => 'created_at',
-                'displayName' => 'time',
+                'column' => 4,
                 'type' => SortTypes::DECREASE_SORT,
-                'displayType' => 'Decrease',
             ],
             'filterElements' => [
                 [
-                    'name' => 'schoolYear',
+                    'name' => 'grade',
+                    'resource' => ['model' => GradeService::class, 'method' => 'getGradesJson', 'args' => []],
+                    'defaultValues' => [-1],
+                ],
+                [
+                    'name' => 'school year',
                     'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
                     'defaultValues' => [],
-                ],
-                [
-                    'name' => 'status',
-                    'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [Insistence::class]],
-                    'defaultValues' => [Insistence::PENDING],
-                ],
-                [
-                    'name' => 'role',
-                    'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [UserRole::class]],
-                    'defaultValues' => [UserRole::STUDENT, UserRole::TEACHER],
                 ]
-            ]
+            ],
         ],
-        'actions' => [
-            'detail' => '/users/',
-            'delete' => '/users/'
-        ]
+    ];
+
+    const SCHOOLYEARS = [
+        'name' => 'school years',
+        'header' => [
+            ['name' => 'name', 'attributesName' => 'name', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'start', 'attributesName' => 'start_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'end', 'attributesName' => 'end_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'total rooms', 'attributesName' => 'total_rooms', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'total students', 'attributesName' => 'total_students', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'total teacher', 'attributesName' => 'total_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true]
+        ],
+        'filterForm' => [
+            'search' => [
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+            ],
+            'perPage' => 4,
+            'sort' => [
+                'column' => 1,
+                'type' => SortTypes::DECREASE_SORT,
+            ],
+            'filterElements' => [
+            
+            ],
+        ],
+    ];
+
+    const GRADES = [
+        'name' => 'grades',
+        'header' => [
+            ['name' => 'name', 'attributesName' => 'name', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'number of subjects', 'attributesName' => 'number_of_subjects', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'number of teachers', 'attributesName' => 'number_of_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true]
+        ],
+        'filterForm' => [
+            'search' => [
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+            ],
+            'perPage' => 8,
+            'sort' => [
+                'column' => 1,
+                'type' => SortTypes::INCREASE_SORT,
+            ],
+            'filterElements' => [
+                
+            ],
+        ],
+    ];
+
+    const SUBJECTS = [
+        'name' => 'subjects',
+        'header' => [
+            ['name' => 'name', 'attributesName' => 'name', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'number of lessons', 'attributesName' => 'number_of_lessons', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'coefficient', 'attributesName' => 'coefficient', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'number of teachers', 'attributesName' => 'number_of_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+        ],
+        'filterForm' => [
+            'search' => [
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+            ],
+            'perPage' => 8,
+            'sort' => [
+                'column' => 0,
+                'type' => SortTypes::INCREASE_SORT,
+            ],
+            'filterElements' => [
+                [
+                    'name' => 'grade',
+                    'resource' => ['model' => GradeService::class, 'method' => 'getGradesJson', 'args' => []],
+                    'defaultValues' => [-1],
+                ],
+            ],
+        ],
     ];
 }

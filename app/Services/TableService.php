@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Constant\CompareTypes;
 use App\Constant\SortTypes;
-use App\Constant\TableSetting;
 use App\Services\UtilService;
 use App\Services\ConstantService;
 
@@ -14,6 +13,7 @@ class TableService
     private $utilService;
 
     private $constantService;
+
 
     public function __construct(UtilService $utilService, ConstantService $constantService) {
         $this->utilService = $utilService;
@@ -47,6 +47,9 @@ class TableService
 
     private function setResourceFilterElements(&$filterElements) {
         foreach($filterElements as &$filterElement) {
+            if($filterElement['name'] === 'school year') {
+                $filterElement['defaultValues'][] = $this->utilService->getCurrentSchoolYear() ?? -1;
+            }
             $this->setResourceItems($filterElement['resource'], $filterElement['defaultValues']);
         }
     }

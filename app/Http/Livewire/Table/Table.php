@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Table;
 use App\Services\ConstantService;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Request;
 
 class Table extends Component
 {
@@ -18,7 +19,7 @@ class Table extends Component
 
     public $currentFilterForm;
 
-    public $detailId;
+    public $detailUrl;
 
     protected $listeners = ['dataSend' => 'updateFilterForm', 'filter' => 'updateData'];
 
@@ -34,15 +35,12 @@ class Table extends Component
         $this->tableSource = $tableSource;
         $this->header = $tableSource['header'];
         $this->filterForm = $tableSource['filterForm'];
+        $this->detailUrl = '/' . Request::path() . '/';
         $this->updateData();
     }
 
     public function delete($id) {
         
-    }
-
-    public function detail($id) {
-        $this->detailId = $id;
     }
 
     public function sort($index) {
@@ -51,6 +49,7 @@ class Table extends Component
             foreach($this->filterForm['sort']['allTypes'] as $type){
                 if($type['value'] !== $this->filterForm['sort']['type']) {
                     $this->filterForm['sort']['type'] = $type['value'];
+                    break;
                 }
             }
         }

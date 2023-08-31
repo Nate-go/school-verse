@@ -100,7 +100,7 @@
                                             @php
                                                 $img_url = $column['attributesName'] . '_image_url';
                                             @endphp
-                                            <img src="{{ $data->$img_url ?? ''}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md z-0">
+                                            <img src="{{ $item->$img_url ?? ''}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md z-0">
                                             <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">{{ $value ?? 'null'}}
                                             </p>
                                         </div>
@@ -111,10 +111,12 @@
                             </td>
                         @endforeach
                         <td class="py-3 px-5 flex justify-center items-center">
-                            <button
-                                class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
-                                wire:click="detail({{$item->id}})" type="button"><i class="fa-solid fa-eye"></i>
-                            </button>
+                            <a href="{{$detailUrl . $item->id}}">
+                                <button
+                                    class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                    type="button"><i class="fa-solid fa-eye"></i>
+                                </button>
+                            </a>
                             <button
                                 class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
                                 wire:click="delete({{$item->id}})" type="button"><i class="fa-solid fa-eraser"></i>

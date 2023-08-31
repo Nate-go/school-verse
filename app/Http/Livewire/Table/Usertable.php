@@ -30,7 +30,6 @@ class Usertable extends Table
         $users = $this->constantService->mappingConstant(UserRole::class, 'role', $users);
 
         $users = $this->constantService->mappingConstant(UserStatus::class, 'status', $users);
-        //dd($search);
         return $users;
     }
 

@@ -35,7 +35,6 @@ class Header extends Component
 
     private function setUp() {
         $path = Request::path();
-
         $this->urls = $this->utilService->getUrls($path);
     }
 
