@@ -18,7 +18,7 @@ class Insistencetable extends Table
 
         $schoolYears = $filters['school year'];
 
-        $insistences = Insistence::selectColumns(['insistences.id as id', 'username', 'role', 'insistences.status as status', 'content', 'insistences.created_at as created_at', 'image_url as username_image_url'])
+        $insistences = Insistence::selectColumns(['insistences.id as id', 'username', 'role', 'insistences.status', 'content', 'insistences.created_at', 'image_url as username_image_url'])
             ->join('users', 'insistences.user_id', 'users.id')
             ->filter('insistences.status', $statuses)
             ->filter('role', $roles)

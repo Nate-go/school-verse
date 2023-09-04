@@ -28,7 +28,15 @@
                 @endforeach
             </select>
             <select class='antialiased border-2 rounded-md' wire:change='changeTypeSearch($event.target.value)'>
-                @foreach ($filterForm['search']['elements'][$filterForm['search']['value']['element']]['types'] as $type)
+                @php
+                    $elementTypes;
+                    foreach ($filterForm['search']['elements'] as $element) {
+                        if($filterForm['search']['value']['element'] === $element['column']) {
+                            $elementTypes = $element['types'];
+                        }
+                    }
+                @endphp
+                @foreach ($elementTypes as $type)
                     <option {{$filterForm['search']['value']['type']===$loop->index ? 'selected' : ''}} value={{$loop->index}}>
                         {{ucfirst(strtolower($type['name']))}}
                     </option>
@@ -100,7 +108,7 @@
                                             @php
                                                 $img_url = $column['attributesName'] . '_image_url';
                                             @endphp
-                                            <img src="{{ $item->$img_url ?? ''}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md z-0">
+                                            <img src="{{ $item->$img_url ?? 'halo'}}" class="inline-block relative object-cover object-center w-9 h-9 rounded-md z-0">
                                             <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">{{ $value ?? 'null'}}
                                             </p>
                                         </div>

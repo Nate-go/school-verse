@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
 use App\Services\ModelServices\RoomService;
+use Auth;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -18,7 +19,14 @@ class RoomController extends Controller
 
     public function index()
     {
-        //
+        switch(Auth::user()->role) {
+            case UserRole::ADMIN:
+                return $this->roomService->getPageForAdmin();
+            case UserRole::TEACHER:
+                return $this->roomService->getPageForTeacher(Auth::user()->id);
+            default:
+                return $this->roomService->getPageForStudent(Auth::user()->id);
+        }
     }
 
     /**

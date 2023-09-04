@@ -90,8 +90,8 @@ class TableData
     const ROOMS = [
         'name' => 'rooms',
         'header' => [
-            ['name' => 'name', 'attributesName' => 'name', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
-            ['name' => 'homeroom teacher', 'attributesName' => 'homeroom_teacher', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'name', 'attributesName' => 'room_name', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'homeroom teacher', 'attributesName' => 'username', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
             ['name' => 'number of members', 'attributesName' => 'number_of_members', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
             ['name' => 'school year', 'attributesName' => 'school_year', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
             ['name' => 'missed teachers', 'attributesName' => 'missed_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
@@ -99,10 +99,9 @@ class TableData
         'filterForm' => [
             'search' => [
                 'elements' => [
-                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
                     ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
                 ],
-                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+                'value' => ['element' => 1, 'type' => 0, 'value' => '']
             ],
             'perPage' => 8,
             'sort' => [

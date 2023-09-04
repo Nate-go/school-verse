@@ -10,4 +10,10 @@ class GradeService extends BaseService
     {
         return Grade::class;
     }
+
+    public function getGradesJson() {
+        $grades = $this->model->selectColumns(['id as value', 'name'])->get();
+
+        return $this->utilService->getJsonData($grades);
+    }
 }

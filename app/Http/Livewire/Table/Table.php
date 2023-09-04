@@ -146,7 +146,11 @@ class Table extends Component
         $searchForm = $this->currentFilterForm['search'];
         $index = $searchForm['value']['element'];
         $column = $this->header[$index]['attributesName'];
-        $type = $searchForm['elements'][$index]['types'][$searchForm['value']['type']]['value'];
+        foreach($searchForm['elements'] as $element) {
+            if($element['column'] === $index) {
+                $type = $element['types'][$searchForm['value']['type']]['value'];
+            }
+        }
         $value = $searchForm['value']['value'];
 
         return ['column' => $column, 'type' => $type, 'value' => $value];

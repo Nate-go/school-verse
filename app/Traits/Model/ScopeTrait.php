@@ -40,7 +40,7 @@ trait ScopeTrait
         }
 
         $schoolYears = SchoolYear::whereIn('id', $schoolYears)->get();
-        $query->where(false);
+        $query->where(true, false);
         foreach ($schoolYears as $schoolYear) {
             $query->orWhereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
         }

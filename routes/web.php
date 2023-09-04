@@ -4,8 +4,8 @@ use App\Http\Controllers\AuthenController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InsistenceController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
-use App\Services\TableService;
 use Illuminate\Support\Facades\Route;
 
 /*
