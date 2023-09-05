@@ -8,7 +8,7 @@
                 class="capitalize antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-dark text-center justify-content-between flex">
                 @foreach ($urls as $url)
                     @if (!$loop->last)
-                        <a href={{$url['url']}}><p class="pt-1.5 text-slate-300 hover:text-slate-400 cursor-pointer">{{$url['name']}}/</p></a>
+                        <a href={{'/' . $url['url']}}><p class="pt-1.5 text-slate-400 hover:text-blue-600 cursor-pointer">{{$url['name']}}/</p></a>
                     @else
                         <p class="pt-1.5">{{$url['name']}}</p>
                     @endif

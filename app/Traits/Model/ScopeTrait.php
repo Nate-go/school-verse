@@ -26,12 +26,18 @@ trait ScopeTrait
         return $query;
     }
 
-    public function scopeFilter($query, $columnName, $values) {
-        if (empty($values)) {
+    public function scopeFilter($query, $filterElements) {
+        if (empty($filterElements)) {
             return $query;
         }
+        
+        foreach($filterElements as $filterElement) {
+            if(!empty($filterElement['values'])) {
+                $query->havingRaw($filterElement['column'] . ' IN (' . implode(',', $filterElement['values']) . ')');
+            }
+        }
 
-        return $query->whereIn($columnName, $values);
+        return $query;
     }
 
     public function scopeInSchoolYears($query, $time, $schoolYears) {
@@ -40,7 +46,6 @@ trait ScopeTrait
         }
 
         $schoolYears = SchoolYear::whereIn('id', $schoolYears)->get();
-        $query->where(true, false);
         foreach ($schoolYears as $schoolYear) {
             $query->orWhereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
         }
@@ -70,12 +75,12 @@ trait ScopeTrait
 
     public function scopeContain($query, $column, $data)
     {
-        return $query->where($column, 'like', '%'.$data.'%');
+        return $query->havingRaw($column . " like '%".$data."%'");
     }
 
     public function scopeNormalCompare($query, $column, $type, $data)
     {
-        return $query->where($column, $type, $data);
+        return $query->havingRaw($column . $type . "'%" . $data . "%'");
     }
 
     public function scopeBetweenNotInclude($query, $column, $data)

@@ -5,6 +5,8 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InsistenceController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,7 +48,7 @@ Route::group([
 
     Route::resource('grades', GradeController::class);
 
-    Route::resource('semters', SemesterController::class);
+    Route::resource('school-years', SchoolYearController::class);
     Route::resource('subjects', SubjectController::class);
     Route::resource('insistences', InsistenceController::class);
     Route::resource('rooms', RoomController::class);

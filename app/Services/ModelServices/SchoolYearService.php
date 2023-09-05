@@ -2,6 +2,7 @@
 
 namespace App\Services\ModelServices;
 
+use App\Constant\TableData;
 use App\Models\SchoolYear;
 use Carbon\Carbon;
 
@@ -18,20 +19,11 @@ class SchoolYearService extends BaseService
         return $this->utilService->getJsonData($schoolYears);
     }
 
-    public function getRange($schoolYearId) {
-        $schoolYear = $this->model->find($schoolYearId);
-
-        return $schoolYear ? [$schoolYear->start_at, $schoolYear->end_at] : null;
-    }
-
-    public function getRanges($schoolYearIds) {
-        $schoolYears = $this->model->whereIn('id', $schoolYearIds)->get();
-
-        $schoolYearRanges = [];
-        foreach($schoolYears as $schoolYear) {
-            $schoolYearRanges[] = [$schoolYear->start_at, $schoolYear->end_at];
-        }
-        return $schoolYearRanges;
+    public function getPageForAdmin()
+    {
+        $data = TableData::SCHOOLYEARS;
+        $this->tableService->setTableForm($data);
+        return view('admin/school-year/school-years', ['tableSource' => $data]);
     }
 
     public function getCurrentSchoolYear() {

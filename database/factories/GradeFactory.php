@@ -7,10 +7,13 @@ use Str;
 
 class GradeFactory extends Factory
 {
+    public $grade = 5;
+
     public function definition(): array
     {
+        $this->grade += 1;
         return [
-            'name' => Str::random(2),
+            'name' => Str($this->grade),
         ];
     }
 }

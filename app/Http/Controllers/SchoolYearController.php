@@ -3,27 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
-use App\Services\ModelServices\SubjectService;
+use App\Services\ModelServices\SchoolYearService;
 use Illuminate\Http\Request;
 
-class SubjectController extends Controller
+class SchoolYearController extends Controller
 {
-    protected $subjectService;
+    protected $schoolYearService;
 
-    public function __construct(SubjectService $subjectService)
+    public function __construct(SchoolYearService $schoolYearService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('show');
-        $this->subjectService = $subjectService;
+        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
+        $this->schoolYearService = $schoolYearService;
     }
 
     public function index()
     {
-        return $this->subjectService->getPageForAdmin();
+        return $this->schoolYearService->getPageForAdmin();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -66,6 +63,6 @@ class SubjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
     }
 }

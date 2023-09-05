@@ -99,9 +99,10 @@ class TableData
         'filterForm' => [
             'search' => [
                 'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
                     ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
                 ],
-                'value' => ['element' => 1, 'type' => 0, 'value' => '']
+                'value' => ['element' => 0, 'type' => 0, 'value' => '']
             ],
             'perPage' => 8,
             'sort' => [
@@ -131,7 +132,6 @@ class TableData
             ['name' => 'end', 'attributesName' => 'end_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
             ['name' => 'total rooms', 'attributesName' => 'total_rooms', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
             ['name' => 'total students', 'attributesName' => 'total_students', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
-            ['name' => 'total teacher', 'attributesName' => 'total_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true]
         ],
         'filterForm' => [
             'search' => [
@@ -140,7 +140,7 @@ class TableData
                 ],
                 'value' => ['element' => 0, 'type' => 0, 'value' => '']
             ],
-            'perPage' => 4,
+            'perPage' => 6,
             'sort' => [
                 'column' => 1,
                 'type' => SortTypes::DECREASE_SORT,
@@ -179,8 +179,9 @@ class TableData
     const SUBJECTS = [
         'name' => 'subjects',
         'header' => [
-            ['name' => 'name', 'attributesName' => 'name', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
-            ['name' => 'number of lessons', 'attributesName' => 'number_of_lessons', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'name', 'attributesName' => 'subject_name', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'number of lessons', 'attributesName' => 'number_lesson', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'grade', 'attributesName' => 'grade_name', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
             ['name' => 'coefficient', 'attributesName' => 'coefficient', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
             ['name' => 'number of teachers', 'attributesName' => 'number_of_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
         ],

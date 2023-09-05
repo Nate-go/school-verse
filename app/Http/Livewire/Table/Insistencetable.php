@@ -20,8 +20,7 @@ class Insistencetable extends Table
 
         $insistences = Insistence::selectColumns(['insistences.id as id', 'username', 'role', 'insistences.status', 'content', 'insistences.created_at', 'image_url as username_image_url'])
             ->join('users', 'insistences.user_id', 'users.id')
-            ->filter('insistences.status', $statuses)
-            ->filter('role', $roles)
+            ->filter($this->getElementFilters(['insistences.status', 'role'], [$statuses, $roles]))
             ->inSchoolYears('insistences.created_at', $schoolYears)
             ->search($search)
             ->orderBy($sort['column'], $sort['type'])
@@ -35,6 +34,6 @@ class Insistencetable extends Table
     }
 
     public function delete($userId) {
-        
+        $this->notify('error', 'You do not have permisson to delelete this item');
     }
 }

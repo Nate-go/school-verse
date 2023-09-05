@@ -23,9 +23,9 @@ class RoomController extends Controller
             case UserRole::ADMIN:
                 return $this->roomService->getPageForAdmin();
             case UserRole::TEACHER:
-                return $this->roomService->getPageForTeacher(Auth::user()->id);
+                return $this->roomService->getPageForTeacher();
             default:
-                return $this->roomService->getPageForStudent(Auth::user()->id);
+                return $this->roomService->getPageForStudent();
         }
     }
 

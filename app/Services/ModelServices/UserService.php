@@ -31,4 +31,8 @@ class UserService extends BaseService
         $this->tableService->setTableForm($data);
         return view('admin/user/users', ['userSource' => $data]);
     }
+
+    public function getInitizationForm() {
+        return view('admin/user/users-initialization');
+    }
 }

@@ -146,6 +146,7 @@ class Table extends Component
         $searchForm = $this->currentFilterForm['search'];
         $index = $searchForm['value']['element'];
         $column = $this->header[$index]['attributesName'];
+        $type = -1;
         foreach($searchForm['elements'] as $element) {
             if($element['column'] === $index) {
                 $type = $element['types'][$searchForm['value']['type']]['value'];
@@ -154,5 +155,13 @@ class Table extends Component
         $value = $searchForm['value']['value'];
 
         return ['column' => $column, 'type' => $type, 'value' => $value];
+    }
+
+    protected function getElementFilters($columns, $valuesList) {
+        $elements = [];
+        for($i = 0; $i < count($columns); $i++) {
+            $elements[] = ['column' => $columns[$i], 'values' => $valuesList[$i]];
+        }
+        return $elements;
     }
 }

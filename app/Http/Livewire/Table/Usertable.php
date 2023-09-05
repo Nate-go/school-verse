@@ -20,8 +20,7 @@ class Usertable extends Table
         $search = $filterValues['search'];
 
         $users = User::selectColumns(['id', 'role', 'status', 'email', 'username', 'image_url as username_image_url'])
-            ->filter('role', $roles)
-            ->filter('status', $statuses)
+            ->filter($this->getElementFilters(['role', 'status'], [$roles, $statuses]))
             ->search($search)
             ->orderBy($sort['column'], $sort['type'])
             ->paginate($filterValues['perPage']);
