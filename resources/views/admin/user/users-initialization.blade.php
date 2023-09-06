@@ -10,7 +10,7 @@
             <div class="p-4 md:ml-72">
                 @livewire('fregment.header')
                 <main class='overflow-x-hidden mt-6 flex flex-col gap-4 overflow-visible min-h-screen'>
-                    @livewire('initialization.user')
+                    @livewire('initialization.userinit')
                 </main>
             </div>
         </div>

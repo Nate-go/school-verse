@@ -65,4 +65,11 @@ class UtilService
         }
         return $urls;
     }
+
+    function freshString($str)
+    {
+        $pattern = '/^[^a-zA-ZÀ-ỹ0-9\s]+|[^a-zA-ZÀ-ỹ0-9\s]+$/u';
+        $str = preg_replace($pattern, '', $str);
+        return $str;
+    }
 }
