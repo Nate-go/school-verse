@@ -15,16 +15,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, ScopeTrait, SoftDeletes;
 
-    protected $fillable = [
-        'id',
-        'email',
-        'role',
-        'password',
-        'username',
-        'profile_id',
-        'image_url',
-        'status'
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
         'password',

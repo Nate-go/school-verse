@@ -61,7 +61,7 @@
                     </div>
                     
                     <div class="md:col-span-2">
-                        <button
+                        <button wire:click='addAndNext'
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center">
                             <i class="fa-solid fa-caret-right fa-xl"></i>
                             <p>Add and next</p>
@@ -101,7 +101,7 @@
 
     <div class="bg-transparent h-10"></div>
 
-    @if ($isProfileOpen)
+    <div {{ $isProfileOpen ? '' : 'hidden'}}>
         <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
             <div wire:click='profileFormGenerate'
                 class="absolute top-5 right-1 flex items-center bg-white rounded-full p-1 hover:text-blue-600 cursor-pointer">
@@ -130,19 +130,21 @@
                             <select name="gender" id="" wire:model='gender'
                                 class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                                 @foreach ($genders as $gender)
-                                    <option {{ $gender['value'] === $gender ? 'selected' : ''}} value="{{ $gender['value'] }}">{{$gender['name']}}</option>
+                                <option {{ $gender['value']===$gender ? 'selected' : '' }} value="{{ $gender['value'] }}">
+                                    {{$gender['name']}}</option>
                                 @endforeach
                             </select>
                         </div>
         
                         <div class="md:col-span-3">
-                            <label >Phonenumber</label>
+                            <label>Phonenumber</label>
                             <input type="text" name="phonenumber" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                wire:model='phoneNumber' class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
+                                wire:model='phoneNumber' class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                placeholder="" />
                         </div>
         
                         <div class="md:col-span-2">
-                            <label >Date of birth</label>
+                            <label>Date of birth</label>
                             <input type="date" name="dateOfBirth" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                 wire:model='dateOfDate' placeholder="" />
                         </div>
@@ -154,9 +156,9 @@
         </div>
         
         <div class="bg-transparent h-6"></div>
-    @endif
+    </div>
     
-    @if ($isMoreActionOpen)
+    <div {{ $isMoreActionOpen ? '' : 'hidden'}}>
         <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
             <div wire:click='moreactionFormGenerate'
                 class="absolute top-5 right-1 flex items-center bg-white rounded-full p-1 hover:text-blue-600 cursor-pointer">
@@ -176,7 +178,8 @@
         
                         <div class="md:col-span-1 flex-col">
                             <label for="full_name">Role</label>
-                            <input disabled type="text" name="address" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{ $isTeacher ? 'Teacher' : 'Student'}}" />
+                            <input disabled type="text" name="address" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                value="{{ $isTeacher ? 'Teacher' : 'Student'}}" />
                         </div>
         
                         <div class="md:col-span-2">
@@ -185,51 +188,52 @@
                                 class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                                 <option hidden selected>{{ implode(', ', $selectedGradeNames) }}</option>
                                 @foreach ($grades as $grade)
-                                    <option class="{{ in_array($grade['id'], $selectedGrades) ? 'bg-green-500' : '' }}" value="{{$grade['id']}}">{{$grade['name']}}</option>
+                                <option class="{{ in_array($grade['id'], $selectedGrades) ? 'bg-green-500' : '' }}"
+                                    value="{{$grade['id']}}">{{$grade['name']}}</option>
                                 @endforeach
                             </select>
                         </div>
-
+        
                         @if ($isTeacher)
-                            <div class="md:col-span-2">
-                                <label for="country">Subjects</label>
-                                <select wire:change="selectSubject($event.target.value)"
-                                    name="" id="" class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
-                                    @if (empty($selectedGrades))
-                                        <option hidden selected>{{'Select grade(s) to select subject'}}</option>
-                                    @else
-                                        <option hidden selected>{{ implode(', ', $selectedSubjectNames) }}</option>
-                                        @foreach ($subjects as $subject)
-                                            <option
-                                                class="{{ in_array($subject['id'], $selectedSubjects) ? 'bg-green-500' : '' }}" value="{{$subject['id']}}">
-                                                {{$subject['name']}}
-                                            </option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
+                        <div class="md:col-span-2">
+                            <label for="country">Subjects</label>
+                            <select wire:change="selectSubject($event.target.value)" name="" id=""
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                @if (empty($selectedGrades))
+                                <option hidden selected>{{'Select grade(s) to select subject'}}</option>
+                                @else
+                                <option hidden selected>{{ implode(', ', $selectedSubjectNames) }}</option>
+                                @foreach ($subjects as $subject)
+                                <option class="{{ in_array($subject['id'], $selectedSubjects) ? 'bg-green-500' : '' }}"
+                                    value="{{$subject['id']}}">
+                                    {{$subject['name']}}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
                         @else
-                            
-                            <div class="md:col-span-2">
-                                <label for="country">Room</label>
-                                <select wire:change='selectRoom($event.target.value)' name="" id="" class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
-                                    @if (empty($selectedGrades))
-                                        <option hidden selected>{{'Select grade to select room'}}</option>
-                                    @else
-                                        @foreach ($rooms as $room)
-                                            <option value="{{$room['id']}}" {{($selectedRoom == $room['id']) ? "selected" : ''}}>
-                                                {{$room['name']}}
-                                            </option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
+        
+                        <div class="md:col-span-2">
+                            <label for="country">Room</label>
+                            <select wire:change='selectRoom($event.target.value)' name="" id=""
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                @if (empty($selectedGrades))
+                                <option hidden selected>{{'Select grade to select room'}}</option>
+                                @else
+                                @foreach ($rooms as $room)
+                                <option value="{{$room['id']}}" {{($selectedRoom==$room['id']) ? "selected" : '' }}>
+                                    {{$room['name']}}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
-    @endif
-    
+    </div>
 </div>
 

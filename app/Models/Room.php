@@ -11,10 +11,5 @@ class Room extends Model
 {
     use HasFactory, ScopeTrait, SoftDeletes;
 
-    protected $fillable = [];
-
-    public function semester()
-    {
-        return $this->belongsTo(Semester::class);
-    }
+    protected $guarded = [];
 }

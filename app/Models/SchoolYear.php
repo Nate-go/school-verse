@@ -10,5 +10,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SchoolYear extends Model
 {
     use HasFactory, ScopeTrait, SoftDeletes;
-    protected $fillable = [];
+    protected $guarded = [];
 }

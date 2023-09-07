@@ -10,6 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Teacher extends Model
 {
     use HasFactory, ScopeTrait, SoftDeletes;
-    protected $fillable = [];
+    protected $guarded = [];
 
 }

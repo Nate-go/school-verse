@@ -70,10 +70,10 @@ class Userinit extends Component
         $this->profileFormGenerate();
         $this->moreactionFormGenerate();
         $this->isTeacher = false;
+        $this->accountFormGenerate();
         $this->getStatuses();
         $this->getGenders();
-        $this->getGrades();
-        $this->accountFormGenerate();
+        $this->getGrades();  
     }
 
     public function boot(ConstantService $constantService, UtilService $utilService) {
@@ -217,9 +217,13 @@ class Userinit extends Component
             'username',
             'status',
         ];
-        $cleanData = $this->getCleanData([$this->password, 
-                    $this->isTeacher ? UserRole::TEACHER : UserRole::STUDENT, $this->username,
-                    $this->status]);
+
+        $cleanData = $this->getCleanData([
+                    $this->password, 
+                    $this->isTeacher ? UserRole::TEACHER : UserRole::STUDENT, 
+                    $this->username,
+                    $this->status
+                ]);
         
         array_unshift($cleanData, trim($this->email));
         
@@ -233,24 +237,26 @@ class Userinit extends Component
         $user['status'] = intval($user['status']);
 
         $result = $this->isUserValid($user);
+
         if(!$result['isValid']) {
-            $this->alert('error', $result['message']);
+            $this->notify('error', $result['message']);
         } else {
             $profile = [
                 'gender' => $this->gender,
                 'address' => $this->address,
                 'phoneNumber' => $this->phoneNumber,
-                'date' => $this->dateOfDate
+                'date_of_birth' => $this->dateOfDate
             ];
 
             $object = [
                 'moreAction' => $this->isMoreActionOpen,
                 'subjectIds' => $this->selectedSubjects,
-                'gradeId' => $this->selectedGrades[0] ?? -1,
+                'gradeId' => $this->selectedGrades[0] ?? null,
                 'roomId' => $this->selectedRoom
             ];
 
             $success = DB::transaction(function () use ($user, $profile, $object) {
+
                 $newProfile = Profile::create($profile);
 
                 $host = url('/');
@@ -261,10 +267,9 @@ class Userinit extends Component
                 $user['profile_id'] = $newProfile->id;
                 $user['password'] = Hash::make($user['password']);
 
-                //dd($user);
                 $newUser = User::create($user);
 
-                if($object['moreAction']) {
+                if($object['moreAction'] and $object['gradeId']) {
                     if($newUser->role == UserRole::TEACHER) {
                         foreach($object['subjectIds'] as $subjectId) {
                             Teacher::create(['user_id' => $newUser->id, 'subject_id' => $subjectId]);
@@ -283,16 +288,26 @@ class Userinit extends Component
             });
 
             if($success) {
-                $this->alert('success', 'create account successfull');
+                $this->notify('success', 'create account successfull');
             } else {
-                $this->alert('error', 'create account fail');
+                $this->notify('error', 'create account fail');
             }
         }
+    }
+
+    public function addAndNext() {
+        $this->createAccount();
+        $this->profileFormGenerate();
+        $this->accountFormGenerate();
     }
 
     private function isUserValid($user) {
         if(!filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
             return ['isValid' => false, 'message' => 'Invalid email'];
+        }
+
+        if($this->isUserEmailExist($user['email'])) {
+            return ['isValid' => false, 'message' => 'Email exist'];
         }
 
         foreach ($user as $var) {
@@ -308,6 +323,10 @@ class Userinit extends Component
             $cleanData[] = trim($this->utilService->freshString($str));
         }
         return $cleanData;
+    }
+
+    private function isUserEmailExist($email) {
+        return User::where('email', $email)->exists();
     }
 
 }

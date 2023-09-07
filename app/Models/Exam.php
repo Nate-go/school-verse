@@ -10,5 +10,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Exam extends Model
 {
     use HasFactory, ScopeTrait, SoftDeletes;
-    protected $fillable = [];
+    protected $guarded = [];
 }

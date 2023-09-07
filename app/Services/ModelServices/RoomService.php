@@ -50,4 +50,9 @@ class RoomService extends BaseService
         $this->tableService->setTableForm($data);
         return view('admin/room/rooms', ['tableSource' => $data]);
     }
+
+    public function getInitizationForm()
+    {
+        return view('admin/room/rooms-initialization');
+    }
 }

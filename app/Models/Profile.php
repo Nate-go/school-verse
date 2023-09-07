@@ -12,7 +12,7 @@ class Profile extends Model
 {
     use HasFactory, ScopeTrait, SoftDeletes;
 
-    protected $fillable = ['id', 'username', 'image_url', 'user_id'];
+    protected $guarded = [];
 
     public function user(): BelongsTo
     {
