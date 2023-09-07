@@ -51,4 +51,25 @@ class UtilService
         }
         return $jsonData;
     }
+
+    public function getUrls($path){
+        $parts = explode('/', $path);
+        $currentUrl = '';
+
+        $urls = [];
+        foreach($parts as $part) {
+            if($part !== '') {
+                $currentUrl .= $part;
+                $urls[] = ['name' => $part, 'url' => $currentUrl];
+            }
+        }
+        return $urls;
+    }
+
+    function freshString($str)
+    {
+        $pattern = '/^[^a-zA-ZÀ-ỹ0-9\s]+|[^a-zA-ZÀ-ỹ0-9\s]+$/u';
+        $str = preg_replace($pattern, '', $str);
+        return $str;
+    }
 }

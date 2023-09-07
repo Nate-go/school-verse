@@ -5,19 +5,11 @@ namespace App\Models;
 use App\Traits\Model\ScopeTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Insistence extends Model
 {
-    use HasFactory, ScopeTrait;
+    use HasFactory, ScopeTrait, SoftDeletes;
 
     protected $fillable = [];
-
-    public function scopeStatus($query, $statuses)
-    {
-        if (empty($statuses)) {
-            return $query;
-        }
-
-        return $query->whereIn('status', $statuses);
-    }
 }

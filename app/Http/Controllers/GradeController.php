@@ -18,7 +18,7 @@ class GradeController extends Controller
 
     public function index()
     {
-        //
+        return $this->gradeService->getPageForAdmin();
     }
 
     /**

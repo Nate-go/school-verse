@@ -18,7 +18,7 @@ class SubjectController extends Controller
 
     public function index()
     {
-        //
+        return $this->subjectService->getPageForAdmin();
     }
 
     /**

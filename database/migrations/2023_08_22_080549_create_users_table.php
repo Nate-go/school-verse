@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('username');
             $table->string('image_url')->nullable();
             $table->integer('status');
+            $table->rememberToken()->nullable();
             $table->unsignedBigInteger('profile_id')->unique();
             $table->timestamps();
-            $table->timestamp('delete_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
 
             $table->foreign('profile_id')->references('id')->on('profiles');
         });

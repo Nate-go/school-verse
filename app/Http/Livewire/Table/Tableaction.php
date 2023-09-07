@@ -6,14 +6,21 @@ use Livewire\Component;
 
 class Tableaction extends Component
 {
+    public $actionIsOpen = false;
+
     public $filterForm;
 
-    public $selectedCount;
+    protected $listeners = [
+        'closeAll' => 'closeAction',
+    ];
 
-    public function mount($filterForm, $selectedCount)
+    public function closeAction() {
+        $this->actionIsOpen = false;
+    }
+
+    public function mount($filterForm)
     {
         $this->filterForm = $filterForm;
-        $this->selectedCount = $selectedCount;
     }
 
     public function perPageChange($value)
@@ -30,11 +37,16 @@ class Tableaction extends Component
 
     public function sendDataToParent()
     {
-        $this->emit('dataSent', $this->filterForm);
+        $this->emit('dataSend', $this->filterForm);
     }
 
     public function render()
     {
         return view('livewire.table.tableaction');
+    }
+
+    public function openAction()
+    {
+        $this->actionIsOpen = !$this->actionIsOpen;
     }
 }

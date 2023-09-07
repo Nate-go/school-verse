@@ -185,4 +185,7 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'config' => [
+        'constants' => config_path('constants.php'),
+    ],
 ];

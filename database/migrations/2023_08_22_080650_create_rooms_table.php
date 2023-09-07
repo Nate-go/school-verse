@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image_url')->nullable();
             $table->timestamps();
-            $table->timestamp('delete_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
 
             $table->foreign('grade_id')->references('id')->on('grades');
             $table->foreign('school_year_id')->references('id')->on('school_years');

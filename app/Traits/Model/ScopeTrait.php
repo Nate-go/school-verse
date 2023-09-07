@@ -3,6 +3,8 @@
 namespace App\Traits\Model;
 
 use App\Constant\TableSetting;
+use App\Models\SchoolYear;
+use Carbon\Carbon;
 use Schema;
 
 trait ScopeTrait
@@ -24,11 +26,37 @@ trait ScopeTrait
         return $query;
     }
 
+    public function scopeFilter($query, $filterElements) {
+        if (empty($filterElements)) {
+            return $query;
+        }
+        
+        foreach($filterElements as $filterElement) {
+            if(!empty($filterElement['values'])) {
+                $query->havingRaw($filterElement['column'] . ' IN (' . implode(',', $filterElement['values']) . ')');
+            }
+        }
+
+        return $query;
+    }
+
+    public function scopeInSchoolYears($query, $time, $schoolYears) {
+        if (empty($schoolYears)) {
+            return $query;
+        }
+
+        $schoolYears = SchoolYear::whereIn('id', $schoolYears)->get();
+        foreach ($schoolYears as $schoolYear) {
+            $query->orWhereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
+        }
+        return $query;
+    }
+
     public function scopeSearch($query, $search)
     {
-        $column = $search['columnName'];
+        $column = $search['column'];
         $type = $search['type'];
-        $data = $search['data'];
+        $data = $search['value'];
         switch ($type) {
             case TableSetting::CONTAIN:
                 return $this->scopeContain($query, $column, $data);
@@ -47,12 +75,12 @@ trait ScopeTrait
 
     public function scopeContain($query, $column, $data)
     {
-        return $query->where($column, 'like', '%'.$data.'%');
+        return $query->havingRaw($column . " like '%".$data."%'");
     }
 
     public function scopeNormalCompare($query, $column, $type, $data)
     {
-        return $query->where($column, $type, $data);
+        return $query->havingRaw($column . $type . "'%" . $data . "%'");
     }
 
     public function scopeBetweenNotInclude($query, $column, $data)

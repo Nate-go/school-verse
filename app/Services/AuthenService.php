@@ -12,16 +12,20 @@ class AuthenService
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
         ]);
 
+        $email = $request->get('email');
+
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return view('login', ['email' => $email, 'errors' => $validator->errors()->all()]);
         }
 
         $credentials = $validator->validate();
 
-        if (Auth::attempt($credentials)) {
+        $rememberme = $request->has('rememberme');
+
+        if (Auth::attempt($credentials, $rememberme)) {
             if ($request->session()->has('previousUrl')) {
                 $previousUrl = $request->session()->get('previousUrl');
                 $request->session()->forget('previousUrl');
@@ -29,20 +33,17 @@ class AuthenService
 
                 return redirect($previousUrl);
             }
-            $request->session()->regenerate();
 
             return redirect()->route('homepage');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return view('login', ['email' => $email, 'errors' => ['Login information is incorrect']]);
     }
 
     public function logout()
     {
         auth()->logout();
 
-        return route('login.index');
+        return redirect()->route('login.index');
     }
 }

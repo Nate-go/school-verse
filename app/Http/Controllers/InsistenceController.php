@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
 use App\Services\ModelServices\InsistenceService;
+use Auth;
 use Illuminate\Http\Request;
 
 class InsistenceController extends Controller
@@ -18,7 +19,10 @@ class InsistenceController extends Controller
 
     public function index()
     {
-        //
+        if(Auth::user()->role === UserRole::ADMIN) {
+            return $this->insistenceService->getPageForAdmin();
+        }
+        return $this->insistenceService->getPageForUser(Auth::user()->id);
     }
 
     /**

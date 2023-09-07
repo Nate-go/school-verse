@@ -2,36 +2,33 @@
 
 namespace App\Services\ModelServices;
 
+use App\Constant\TableData;
 use App\Constant\UserRole;
 use App\Models\Insistence;
 
 class InsistenceService extends BaseService
 {
+    protected $schoolYearService;
+    
+    public function __construct(SchoolYearService $schoolYearService)
+    {
+        parent::__construct();
+        $this->schoolYearService = $schoolYearService;
+    }
+
     public function getModel()
     {
         return Insistence::class;
     }
 
-    public function getTable($filterData)
+    public function getPageForAdmin() {
+        $data = TableData::INSISTENCES;
+        $this->tableService->setTableForm($data);
+        return view('admin/insistence/insistences', ['tableSource' => $data]);
+    }
+
+    public function getPageForUser($id)
     {
-        $filterElements = $filterData['filterElements'];
-        $statuses = $filterElements['status'];
-        $roles = $filterElements['role'];
-        $sort = $filterData['sort'];
-        $search = $filterData['search'];
-
-        $insistences = $this->model->selectColumns(['insistences.id', 'username','role', 'insistences.status', 'content', 'insistences.created_at', 'image_url'])
-            ->join('users', 'insistences.user_id', 'users.id')
-            ->whereIn('insistences.status', $statuses)
-            ->whereIn('role', $roles)
-            ->search($search)
-            ->orderBy($sort['columnName'], $sort['type'])
-            ->paginate($filterData['perPage']);
-
-        $insistences = $this->constantService->mappingConstant(UserRole::class, 'role', $insistences);
-
-        $insistences = $this->constantService->mappingConstant(\App\Constant\Insistence::class, 'status', $insistences);
-
-        return $insistences;
+        return view('admin/insistence/insistences', ['insistencesSource' => 'INSISTENCES']);
     }
 }

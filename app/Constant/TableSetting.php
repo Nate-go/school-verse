@@ -10,7 +10,7 @@ class TableSetting
 
     const TEXTARE_TYPE = 2;
 
-    const USER_TYPE = 3;
+    const MIX_TYPE = 3;
 
     const DECREASE_SORT = 'desc';
 

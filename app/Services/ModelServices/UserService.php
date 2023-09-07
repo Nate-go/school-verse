@@ -2,11 +2,12 @@
 
 namespace App\Services\ModelServices;
 
+use App\Constant\TableData;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
 use App\Models\Profile;
 use App\Models\User;
-use App\Services\ConstantService;
+use Carbon\Carbon;
 use DB;
 
 class UserService extends BaseService
@@ -24,27 +25,14 @@ class UserService extends BaseService
         return User::class;
     }
 
-    public function getTable($filterData)
+    public function getPageForAdmin()
     {
-        $filterElements = $filterData['filterElements'];
-        $roles = $filterElements['role'];
-        $statuses = $filterElements['status'];
-        $sort = $filterData['sort'];
-        $search = $filterData['search'];
+        $data = TableData::USERS;
+        $this->tableService->setTableForm($data);
+        return view('admin/user/users', ['userSource' => $data]);
+    }
 
-        $databaseName = DB::connection()->getDatabaseName();
-        dump('$databaseName');
-
-        $users = $this->model->selectColumns(['id', 'role', 'status', 'email', 'username', 'image_url'])
-            ->role($roles)
-            ->status($statuses)
-            ->search($search)
-            ->orderBy($sort['columnName'], $sort['type'])
-            ->paginate($filterData['perPage']);
-
-        $users = $this->constantService->mappingConstant(UserRole::class, 'role', $users);
-
-        $users = $this->constantService->mappingConstant(UserStatus::class, 'status', $users);
-        return $users;
+    public function getInitizationForm() {
+        return view('admin/user/users-initialization');
     }
 }
