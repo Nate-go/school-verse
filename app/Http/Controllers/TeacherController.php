@@ -12,13 +12,13 @@ class TeacherController extends Controller
 
     public function __construct(TeacherService $teacherService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('show');
+        $this->middleware('author:'.json_encode([UserRole::ADMIN]));
         $this->teacherService = $teacherService;
     }
 
     public function index()
     {
-        //
+        return $this->teacherService->getPageForAdmin();
     }
 
     /**
@@ -26,7 +26,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        return $this->teacherService->getInitizationForm();
     }
 
     /**

@@ -11,12 +11,13 @@ class Settingbutton extends Component
     public $headerIsLocked = false;
 
     protected $listeners = [
-        'changeHeaderLock' => 'changeLock', 
+        'changeHeaderLock' => 'changeLock',
         'scrollToTop' => 'scrollToTop',
-        'closeAll' => 'deactive'
+        'closeAll' => 'deactive',
     ];
 
-    public function deactive() {
+    public function deactive()
+    {
         $this->isActive = false;
     }
 

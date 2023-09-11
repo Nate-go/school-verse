@@ -3,12 +3,8 @@
 namespace App\Services\ModelServices;
 
 use App\Constant\TableData;
-use App\Constant\UserRole;
-use App\Constant\UserStatus;
 use App\Models\Profile;
 use App\Models\User;
-use Carbon\Carbon;
-use DB;
 
 class UserService extends BaseService
 {
@@ -29,10 +25,12 @@ class UserService extends BaseService
     {
         $data = TableData::USERS;
         $this->tableService->setTableForm($data);
+
         return view('admin/user/users', ['userSource' => $data]);
     }
 
-    public function getInitizationForm() {
+    public function getInitizationForm()
+    {
         return view('admin/user/users-initialization');
     }
 }

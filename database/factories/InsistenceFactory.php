@@ -11,6 +11,7 @@ use Str;
 class InsistenceFactory extends Factory
 {
     use InjectionService;
+
     public $statuses = [];
 
     public $statusRanges = [[30, 35], [20, 25], [45, 50]];

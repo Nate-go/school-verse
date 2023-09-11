@@ -6,7 +6,6 @@ use App\Services\ConstantService;
 use App\Services\ModelServices\GradeService;
 use App\Services\ModelServices\SchoolYearService;
 
-
 class TableData
 {
     const USERS = [
@@ -21,9 +20,9 @@ class TableData
             'search' => [
                 'elements' => [
                     ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
-                    ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
+                    ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
                 ],
-                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
             ],
             'perPage' => 10,
             'sort' => [
@@ -58,9 +57,9 @@ class TableData
             'search' => [
                 'elements' => [
                     ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
-                    ['column' => 2, 'types' => [CompareTypes::GREATER_EQUAL, CompareTypes::EQUAL, CompareTypes::SMALLER_EQUAL]]
+                    ['column' => 2, 'types' => [CompareTypes::GREATER_EQUAL, CompareTypes::EQUAL, CompareTypes::SMALLER_EQUAL]],
                 ],
-                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
             ],
             'perPage' => 8,
             'sort' => [
@@ -82,7 +81,7 @@ class TableData
                     'name' => 'school year',
                     'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
                     'defaultValues' => [],
-                ]
+                ],
             ],
         ],
     ];
@@ -100,9 +99,9 @@ class TableData
             'search' => [
                 'elements' => [
                     ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
-                    ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
+                    ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
                 ],
-                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
             ],
             'perPage' => 8,
             'sort' => [
@@ -119,7 +118,7 @@ class TableData
                     'name' => 'school year',
                     'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
                     'defaultValues' => [],
-                ]
+                ],
             ],
         ],
     ];
@@ -136,9 +135,9 @@ class TableData
         'filterForm' => [
             'search' => [
                 'elements' => [
-                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]]
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
                 ],
-                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
             ],
             'perPage' => 6,
             'sort' => [
@@ -146,7 +145,7 @@ class TableData
                 'type' => SortTypes::DECREASE_SORT,
             ],
             'filterElements' => [
-            
+
             ],
         ],
     ];
@@ -156,14 +155,14 @@ class TableData
         'header' => [
             ['name' => 'name', 'attributesName' => 'name', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
             ['name' => 'number of subjects', 'attributesName' => 'number_of_subjects', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
-            ['name' => 'number of teachers', 'attributesName' => 'number_of_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true]
+            ['name' => 'number of teachers', 'attributesName' => 'number_of_teachers', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
         ],
         'filterForm' => [
             'search' => [
                 'elements' => [
                     ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
                 ],
-                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
             ],
             'perPage' => 8,
             'sort' => [
@@ -171,7 +170,7 @@ class TableData
                 'type' => SortTypes::INCREASE_SORT,
             ],
             'filterElements' => [
-                
+
             ],
         ],
     ];
@@ -190,7 +189,7 @@ class TableData
                 'elements' => [
                     ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
                 ],
-                'value' => ['element' => 0, 'type' => 0, 'value' => '']
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
             ],
             'perPage' => 8,
             'sort' => [
@@ -202,6 +201,72 @@ class TableData
                     'name' => 'grade',
                     'resource' => ['model' => GradeService::class, 'method' => 'getGradesJson', 'args' => []],
                     'defaultValues' => [-1],
+                ],
+            ],
+        ],
+    ];
+
+    const TEACHERS = [
+        'name' => 'teachers',
+        'header' => [
+            ['name' => 'name', 'attributesName' => 'username', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'number of subject', 'attributesName' => 'number_of_subjects', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'number of room', 'attributesName' => 'number_of_rooms', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'number of homeroom', 'attributesName' => 'number_of_homerooms', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'school year', 'attributesName' => 'school_year', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+        ],
+        'filterForm' => [
+            'search' => [
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
+            ],
+            'perPage' => 8,
+            'sort' => [
+                'column' => 0,
+                'type' => SortTypes::DECREASE_SORT,
+            ],
+            'filterElements' => [
+                [
+                    'name' => 'school year',
+                    'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
+                    'defaultValues' => [],
+                ],
+            ],
+        ],
+    ];
+
+    const STUDENTS = [
+        'name' => 'students',
+        'header' => [
+            ['name' => 'name', 'attributesName' => 'username', 'type' => HeaderTypes::MIX_TYPE, 'sortable' => true],
+            ['name' => 'room', 'attributesName' => 'room', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'school year', 'attributesName' => 'school_year', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+        ],
+        'filterForm' => [
+            'search' => [
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                    ['column' => 1, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
+            ],
+            'perPage' => 10,
+            'sort' => [
+                'column' => 0,
+                'type' => SortTypes::DECREASE_SORT,
+            ],
+            'filterElements' => [
+                [
+                    'name' => 'grade',
+                    'resource' => ['model' => GradeService::class, 'method' => 'getGradesJson', 'args' => []],
+                    'defaultValues' => [-1],
+                ],
+                [
+                    'name' => 'school year',
+                    'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
+                    'defaultValues' => [],
                 ],
             ],
         ],

@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Fregment;
 
+use App\Constant\UserRole;
 use App\Services\UtilService;
 use Livewire\Component;
 use Request;
 
 class Sidebar extends Component
 {
+    public $adminRole = UserRole::ADMIN;
+
     public $sidebarIsDisplay = false;
 
     public $page;
@@ -16,11 +19,13 @@ class Sidebar extends Component
 
     private $utilService;
 
-    public function boot(UtilService $utilService) {
+    public function boot(UtilService $utilService)
+    {
         $this->setUp();
     }
 
-    private function setUp() {
+    private function setUp()
+    {
         $path = Request::path();
         $this->page = explode('/', $path)[0];
     }

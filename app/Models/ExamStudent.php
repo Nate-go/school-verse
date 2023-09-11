@@ -10,5 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ExamStudent extends Model
 {
     use HasFactory, ScopeTrait, SoftDeletes;
+
     protected $guarded = [];
 }

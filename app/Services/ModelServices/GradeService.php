@@ -12,7 +12,8 @@ class GradeService extends BaseService
         return Grade::class;
     }
 
-    public function getGradesJson() {
+    public function getGradesJson()
+    {
         $grades = $this->model->selectColumns(['id as value', 'name'])->get();
 
         return $this->utilService->getJsonData($grades);
@@ -22,6 +23,12 @@ class GradeService extends BaseService
     {
         $data = TableData::GRADES;
         $this->tableService->setTableForm($data);
+
         return view('admin/grade/grades', ['tableSource' => $data]);
+    }
+
+    public function getInitizationForm()
+    {
+        return view('admin/grade/grades-initialization');
     }
 }

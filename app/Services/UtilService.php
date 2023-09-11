@@ -23,6 +23,7 @@ class UtilService
         $reflection_class = new ReflectionClass($model);
         $reflection_method = $reflection_class->getMethod($methodName);
         $result = $reflection_method->invokeArgs($model, $args);
+
         return $result;
     }
 
@@ -33,15 +34,18 @@ class UtilService
         return $args[$index];
     }
 
-    public function getCurrentSchoolYear() {
+    public function getCurrentSchoolYear()
+    {
         $currentTime = Carbon::now();
         $schoolYear = SchoolYear::where('start_at', '<=', $currentTime)
             ->where('end_at', '>=', $currentTime)
             ->first();
+
         return $schoolYear->id ?? null;
     }
 
-    public function getJsonData($data) {
+    public function getJsonData($data)
+    {
         $jsonData = [];
         foreach ($data as $item) {
             $temp = [];
@@ -49,27 +53,31 @@ class UtilService
             $temp['value'] = $item->value;
             $jsonData[] = $temp;
         }
+
         return $jsonData;
     }
 
-    public function getUrls($path){
+    public function getUrls($path)
+    {
         $parts = explode('/', $path);
         $currentUrl = '';
 
         $urls = [];
-        foreach($parts as $part) {
-            if($part !== '') {
+        foreach ($parts as $part) {
+            if ($part !== '') {
                 $currentUrl .= $part;
                 $urls[] = ['name' => $part, 'url' => $currentUrl];
             }
         }
+
         return $urls;
     }
 
-    function freshString($str)
+    public function freshString($str)
     {
         $pattern = '/^[^a-zA-ZÀ-ỹ0-9\s]+|[^a-zA-ZÀ-ỹ0-9\s]+$/u';
         $str = preg_replace($pattern, '', $str);
+
         return $str;
     }
 }

@@ -10,5 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RoomTeacher extends Model
 {
     use HasFactory, ScopeTrait, SoftDeletes;
+
     protected $guarded = [];
 }

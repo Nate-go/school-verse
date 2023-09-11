@@ -12,7 +12,7 @@ class UserController extends Controller
 
     public function __construct(UserService $userService)
     {
-        $this->middleware('author:' . json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
+        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
         $this->userService = $userService;
     }
 
@@ -63,6 +63,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        
+
     }
 }

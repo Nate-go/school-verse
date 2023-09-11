@@ -6,12 +6,10 @@ use App\Constant\TableData;
 use App\Services\ModelServices\UserService;
 use App\Services\TableLivewireService\TableService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
 class UserTestCase extends TestCase
 {
-
     //use RefreshDatabase;
     protected $tableService;
 

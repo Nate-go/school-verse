@@ -39,7 +39,8 @@ class Roominit extends Component
         $this->getGrades();
     }
 
-    public function formGenerate() {
+    public function formGenerate()
+    {
         $this->name = '';
         $this->image = null;
         $this->selectedGrade = null;
@@ -59,9 +60,19 @@ class Roominit extends Component
         return view('livewire.initialization.roominit');
     }
 
-    public function updatedTeacherName($value) {
+    public function updatedTeacherName($value)
+    {
         $this->getTeachers();
-        $this->selectedTeacher = null;
+
+        $selectedTeacherTemp = null;
+        foreach ($this->teachers as $teacher) {
+            if ($this->selectedTeacher == $teacher['id']) {
+                $selectedTeacherTemp = $teacher['id'];
+                break;
+            }
+        }
+
+        $this->selectedTeacher = $selectedTeacherTemp;
     }
 
     private function getGrades()
@@ -82,10 +93,12 @@ class Roominit extends Component
         foreach ($data as $item) {
             $result[] = ['name' => $item->name, 'id' => $item->id];
         }
+
         return $result;
     }
 
-    public function create() {
+    public function create()
+    {
 
         $room = [
             'grade_id' => $this->selectedGrade,
@@ -96,8 +109,9 @@ class Roominit extends Component
 
         $result = $this->isValidData($room);
 
-        if (!$result['isValid']) {
+        if (! $result['isValid']) {
             $this->notify('error', $result['message']);
+
             return;
         }
 
@@ -105,23 +119,24 @@ class Roominit extends Component
 
         $newRoom = Room::create($room);
 
-        if($newRoom) {
+        if ($newRoom) {
             $this->notify('success', 'Create room successful');
         } else {
             $this->notify('error', 'Create room fail');
         }
     }
 
-    private function isValidData($room) {
-        if($room['name'] === '') {
+    private function isValidData($room)
+    {
+        if ($room['name'] === '') {
             return ['isValid' => false, 'message' => 'Name is invalid'];
         }
 
-        if(!$room['grade_id']) {
+        if (! $room['grade_id']) {
             return ['isValid' => false, 'message' => 'Grade have not been selected'];
         }
 
-        if (!$room['homeroom_teacher_id']) {
+        if (! $room['homeroom_teacher_id']) {
             return ['isValid' => false, 'message' => 'Homeroom teacher have not been selected'];
         }
 
@@ -130,23 +145,28 @@ class Roominit extends Component
             ->where('school_year_id', $room['school_year_id'])
             ->exists();
 
-        if($roomExists) {
+        if ($roomExists) {
             return ['isValid' => false, 'message' => 'This room has been exist'];
         }
 
         return ['isValid' => true];
     }
 
-    public function saveImage() {
-        if($this->image) {
-            $imageName = time() . '.' . $this->image->extension();
+    public function saveImage()
+    {
+        if ($this->image) {
+            $imageName = time().'.'.$this->image->extension();
             $this->image->storeAs('public/images', $imageName);
-            $url = asset('storage/images/' . $imageName);
+            $url = asset('storage/images/'.$imageName);
+
             return $url;
-        } else return asset('storage/images/default-image.png');
+        } else {
+            return asset('storage/images/default-image.png');
+        }
     }
 
-    public function addAndNext() {
+    public function addAndNext()
+    {
         $this->create();
         $this->formGenerate();
     }

@@ -6,7 +6,8 @@ class FactoryService
 {
     private $utilService;
 
-    public function __construct(UtilService $utilService) {
+    public function __construct(UtilService $utilService)
+    {
         $this->utilService = $utilService;
     }
 

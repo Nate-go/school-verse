@@ -36,7 +36,8 @@ class UserFactory extends Factory
         $host = url('/');
         $port = env('APP_PORT', 8000);
 
-        $fullUrl = $host . ':' . $port;
+        $fullUrl = $host.':'.$port;
+
         return [
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('123456'),
@@ -44,7 +45,7 @@ class UserFactory extends Factory
             'username' => fake()->userName(),
             'profile_id' => $profile->id,
             'status' => $status,
-            'image_url' => $fullUrl . '/img/default-user-' . str(random_int(0, 5)) . '.png'
+            'image_url' => $fullUrl.'/img/default-user-'.str(random_int(0, 5)).'.png',
         ];
     }
 }

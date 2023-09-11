@@ -26,7 +26,7 @@ class GradeController extends Controller
      */
     public function create()
     {
-        //
+        return $this->gradeService->getInitizationForm();
     }
 
     /**

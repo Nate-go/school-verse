@@ -28,12 +28,14 @@ class Header extends Component
 
     protected $utilService;
 
-    public function boot(UtilService $utilService){
+    public function boot(UtilService $utilService)
+    {
         $this->utilService = $utilService;
         $this->setUp();
     }
 
-    private function setUp() {
+    private function setUp()
+    {
         $path = Request::path();
         $this->urls = $this->utilService->getUrls($path);
     }

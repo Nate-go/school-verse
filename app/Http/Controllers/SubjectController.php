@@ -26,7 +26,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        return $this->subjectService->getInitizationForm();
     }
 
     /**
