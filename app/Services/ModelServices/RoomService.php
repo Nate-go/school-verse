@@ -58,4 +58,9 @@ class RoomService extends BaseService
     {
         return view('admin/room/rooms-initialization');
     }
+
+    public function getDetailPageForAdmin($id)
+    {
+        return view('admin/room/rooms-detail', ['id' => $id]);
+    }
 }

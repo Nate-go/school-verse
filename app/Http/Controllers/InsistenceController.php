@@ -47,7 +47,7 @@ class InsistenceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->insistenceService->getDetailPageForAdmin($id);
     }
 
     /**

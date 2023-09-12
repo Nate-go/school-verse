@@ -118,7 +118,7 @@
                                 @endswitch
                             </td>
                         @endforeach
-                        <td class="py-3 px-5 flex justify-center items-center">
+                        <td class="py-3 px-5 flex justify-center items-center h-max">
                             <a href="{{$detailUrl . $item->id}}">
                                 <button
                                     class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
@@ -138,7 +138,9 @@
             </tbody>
             <tfoot class="sticky bg-slate-200 rounded-b-md bottom-0">
                 <tr>
-                    <th colspan="100%" class="items-center py-1">{{ $data->links('livewire.table.pagination') }}</th>
+                    <th colspan="100%" class="items-center py-1">{{ $data->links('livewire.table.pagination') }}
+                        
+                    </th>
                 </tr>
             </tfoot>
         </table>

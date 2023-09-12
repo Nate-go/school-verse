@@ -32,4 +32,8 @@ class InsistenceService extends BaseService
     {
         return view('admin/insistence/insistences', ['insistencesSource' => 'INSISTENCES']);
     }
+
+    public function getDetailPageForAdmin($id) {
+        return view('admin/insistence/insistences-detail', ['id' => $id]);
+    }
 }
