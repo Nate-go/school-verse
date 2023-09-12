@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Livewire\Table;
+
 use App\Constant\UserRole;
 use App\Models\Insistence;
 
-
 class Insistencetable extends Table
 {
-    protected function getData() {
+    protected function getData()
+    {
         $filterValues = $this->getFilterValues();
-        
+
         $filters = $filterValues['filters'];
         $roles = $filters['role'];
         $statuses = $filters['status'];
@@ -31,9 +32,5 @@ class Insistencetable extends Table
         $insistences = $this->constantService->mappingConstant(\App\Constant\Insistence::class, 'status', $insistences);
 
         return $insistences;
-    }
-
-    public function delete($userId) {
-        $this->notify('error', 'You do not have permisson to delelete this item');
     }
 }

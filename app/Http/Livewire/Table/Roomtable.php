@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Http\Livewire\Table;
-use App\Constant\UserRole;
-use App\Constant\UserStatus;
-use App\Models\Profile;
+
 use App\Models\Room;
-use App\Models\User;
-use App\Services\ConstantService;
 use DB;
 
 class Roomtable extends Table
@@ -22,8 +18,6 @@ class Roomtable extends Table
 
         $schoolYears = $filters['school year'];
 
-        $grades = [0, 1, 2];
-
         $results = Room::select(
             'rooms.id',
             DB::raw('CONCAT(grades.name, "", rooms.name) as room_name'),
@@ -31,7 +25,7 @@ class Roomtable extends Table
             'school_years.name as school_year',
             'school_year_id',
             'users.username',
-            'rooms.grade_id as grade_id', 
+            'rooms.grade_id as grade_id',
             'users.image_url as username_image_url',
             DB::raw('(SELECT COUNT(id) FROM students WHERE room_id = rooms.id) as number_of_members'),
             DB::raw('(SELECT COUNT(id) FROM room_teachers WHERE room_id = rooms.id) - (SELECT COUNT(id) FROM subjects WHERE grade_id = grades.id) as missed_teachers')

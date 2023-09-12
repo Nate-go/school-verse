@@ -3,13 +3,12 @@
 namespace App\Services\ModelServices;
 
 use App\Constant\TableData;
-use App\Constant\UserRole;
 use App\Models\Insistence;
 
 class InsistenceService extends BaseService
 {
     protected $schoolYearService;
-    
+
     public function __construct(SchoolYearService $schoolYearService)
     {
         parent::__construct();
@@ -21,9 +20,11 @@ class InsistenceService extends BaseService
         return Insistence::class;
     }
 
-    public function getPageForAdmin() {
+    public function getPageForAdmin()
+    {
         $data = TableData::INSISTENCES;
         $this->tableService->setTableForm($data);
+
         return view('admin/insistence/insistences', ['tableSource' => $data]);
     }
 

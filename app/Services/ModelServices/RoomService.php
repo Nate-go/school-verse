@@ -4,8 +4,6 @@ namespace App\Services\ModelServices;
 
 use App\Constant\TableData;
 use App\Models\Room;
-use App\Models\Semester;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class RoomService extends BaseService
@@ -23,17 +21,20 @@ class RoomService extends BaseService
         return Room::class;
     }
 
-    public function getUrlForStudent() {
+    public function getUrlForStudent()
+    {
         $currentSchoolYearId = $this->schoolYearService->getCurrentSchoolYear();
 
         $room = $this->model->selectColumns(['room_id'])->where('user_id', Auth::user()->id)->where('school_year_id', $currentSchoolYearId)->first();
 
-        return '/rooms/' . str($room->id);
+        return '/rooms/'.str($room->id);
     }
 
-    public function getPageForAdmin() {
+    public function getPageForAdmin()
+    {
         $data = TableData::ROOMS;
         $this->tableService->setTableForm($data);
+
         return view('admin/room/rooms', ['tableSource' => $data]);
     }
 
@@ -41,6 +42,7 @@ class RoomService extends BaseService
     {
         $data = TableData::ROOMS;
         $this->tableService->setTableForm($data);
+
         return view('admin/room/rooms', ['tableSource' => $data]);
     }
 
@@ -48,6 +50,7 @@ class RoomService extends BaseService
     {
         $data = TableData::ROOMS;
         $this->tableService->setTableForm($data);
+
         return view('admin/room/rooms', ['tableSource' => $data]);
     }
 

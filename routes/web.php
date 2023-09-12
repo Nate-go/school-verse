@@ -6,7 +6,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InsistenceController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +56,6 @@ Route::group([
     Route::resource('rooms', RoomController::class);
 
     Route::resource('rooms.exams', ExamsController::class)->shallow();
-    Route::resource('rooms.teachers', TeachersController::class)->shallow();
-    Route::resource('rooms.students', StudentsController::class)->shallow();
+    Route::resource('teachers', TeacherController::class);
+    Route::resource('students', StudentController::class);
 });

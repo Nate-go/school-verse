@@ -14,7 +14,8 @@ class Tableaction extends Component
         'closeAll' => 'closeAction',
     ];
 
-    public function closeAction() {
+    public function closeAction()
+    {
         $this->actionIsOpen = false;
     }
 
@@ -47,6 +48,6 @@ class Tableaction extends Component
 
     public function openAction()
     {
-        $this->actionIsOpen = !$this->actionIsOpen;
+        $this->actionIsOpen = ! $this->actionIsOpen;
     }
 }

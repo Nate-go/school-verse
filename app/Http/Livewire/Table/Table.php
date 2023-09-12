@@ -25,8 +25,8 @@ class Table extends Component
 
     protected $constantService;
 
-
-    public function boot(ConstantService $constantService) {
+    public function boot(ConstantService $constantService)
+    {
         $this->constantService = $constantService;
     }
 
@@ -35,26 +35,28 @@ class Table extends Component
         $this->tableSource = $tableSource;
         $this->header = $tableSource['header'];
         $this->filterForm = $tableSource['filterForm'];
-        $this->detailUrl = '/' . Request::path() . '/';
+        $this->detailUrl = '/'.Request::path().'/';
         $this->updateData();
     }
 
-    public function delete($id) {
-        
+    public function delete($id)
+    {
+        $this->notify('error', 'You do not have permisson to delelete this item');
     }
 
-    public function sort($index) {
-        
-        if($this->filterForm['sort']['column'] === $index) {
-            foreach($this->filterForm['sort']['allTypes'] as $type){
-                if($type['value'] !== $this->filterForm['sort']['type']) {
+    public function sort($index)
+    {
+
+        if ($this->filterForm['sort']['column'] === $index) {
+            foreach ($this->filterForm['sort']['allTypes'] as $type) {
+                if ($type['value'] !== $this->filterForm['sort']['type']) {
                     $this->filterForm['sort']['type'] = $type['value'];
                     break;
                 }
             }
         }
         $this->filterForm['sort']['column'] = $index;
-        $this->updateData(); 
+        $this->updateData();
     }
 
     public function changeColumnSearch($value)
@@ -74,17 +76,20 @@ class Table extends Component
         $this->updateData();
     }
 
-    public function updateFilterForm($filterForm) {
+    public function updateFilterForm($filterForm)
+    {
         $this->filterForm['perPage'] = $filterForm['perPage'];
         $this->filterForm['filterElements'] = $filterForm['filterElements'];
     }
 
-    public function updateData() {
+    public function updateData()
+    {
         $this->currentFilterForm = $this->filterForm;
         $this->gotoPage(1);
     }
 
-    protected function getData() {
+    protected function getData()
+    {
 
     }
 
@@ -100,7 +105,8 @@ class Table extends Component
         $this->gotoPage($page);
     }
 
-    protected function getFilterValues() {
+    protected function getFilterValues()
+    {
         $filterValue = [];
 
         $filterValue['perPage'] = $this->currentFilterForm['perPage'];
@@ -111,44 +117,51 @@ class Table extends Component
         return $filterValue;
     }
 
-    private function getFilterElements() {
+    private function getFilterElements()
+    {
         $filters = [];
         $filterElements = $this->currentFilterForm['filterElements'];
-        foreach($filterElements as $filterElement) {
+        foreach ($filterElements as $filterElement) {
             $filters[$filterElement['name']] = $this->getFilterResources($filterElement['resource']);
         }
+
         return $filters;
     }
 
-    private function getFilterResources($resources) {
+    private function getFilterResources($resources)
+    {
         $values = [];
-        foreach($resources as $resource) {
-            if($resource['isSelected']) {
-                if ($resource['name'] === 'All')
+        foreach ($resources as $resource) {
+            if ($resource['isSelected']) {
+                if ($resource['name'] === 'All') {
                     return $values;
+                }
                 $values[] = $resource['value'];
             }
         }
+
         return $values;
     }
 
-    private function getSortValue() {
+    private function getSortValue()
+    {
 
         $index = $this->currentFilterForm['sort']['column'];
         $column = $this->header[$index]['attributesName'];
         $type = $this->currentFilterForm['sort']['type'];
 
-        return ['column' => $column, 'type' =>$type];
+        return ['column' => $column, 'type' => $type];
     }
 
-    private function getSearchValue(){
+    private function getSearchValue()
+    {
 
         $searchForm = $this->currentFilterForm['search'];
         $index = $searchForm['value']['element'];
         $column = $this->header[$index]['attributesName'];
         $type = -1;
-        foreach($searchForm['elements'] as $element) {
-            if($element['column'] === $index) {
+        foreach ($searchForm['elements'] as $element) {
+            if ($element['column'] === $index) {
                 $type = $element['types'][$searchForm['value']['type']]['value'];
             }
         }
@@ -157,11 +170,13 @@ class Table extends Component
         return ['column' => $column, 'type' => $type, 'value' => $value];
     }
 
-    protected function getElementFilters($columns, $valuesList) {
+    protected function getElementFilters($columns, $valuesList)
+    {
         $elements = [];
-        for($i = 0; $i < count($columns); $i++) {
+        for ($i = 0; $i < count($columns); $i++) {
             $elements[] = ['column' => $columns[$i], 'values' => $valuesList[$i]];
         }
+
         return $elements;
     }
 }

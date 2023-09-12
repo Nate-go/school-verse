@@ -9,11 +9,13 @@ class HomeController extends Controller
 {
     protected $roomService;
 
-    public function __construct(RoomService $roomService) {
+    public function __construct(RoomService $roomService)
+    {
         $this->roomService = $roomService;
     }
 
-    public function index() {
+    public function index()
+    {
         switch (auth()->user()->role) {
             case UserRole::ADMIN:
                 return redirect('/insistences');
@@ -21,6 +23,7 @@ class HomeController extends Controller
                 return redirect('/rooms');
             default:
                 $url = $this->roomService->getUrlForStudent();
+
                 return redirect($url);
         }
     }

@@ -16,6 +16,12 @@ class SubjectService extends BaseService
     {
         $data = TableData::SUBJECTS;
         $this->tableService->setTableForm($data);
+
         return view('admin/subject/subjects', ['tableSource' => $data]);
+    }
+
+    public function getInitizationForm()
+    {
+        return view('admin/subject/subjects-initialization');
     }
 }

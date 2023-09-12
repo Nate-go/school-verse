@@ -12,6 +12,7 @@ use Str;
 class NotificationFactory extends Factory
 {
     use InjectionService;
+
     public $statuses = [];
 
     public $statusRanges = [[20, 35], [65, 80]];
@@ -23,7 +24,7 @@ class NotificationFactory extends Factory
     public function definition(): array
     {
         $this->setInjection([FactoryService::class, UtilService::class]);
-        
+
         $status = $this->factoryService->getValidValue($this->statuses, $this->statusRanges, range(0, 1));
         $this->statuses[] = $status;
 

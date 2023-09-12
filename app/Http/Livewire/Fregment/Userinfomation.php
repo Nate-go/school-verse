@@ -10,10 +10,11 @@ class Userinfomation extends Component
 
     protected $listeners = [
         'displayUserInfo' => 'changeUserInfo',
-        'closeAll' => 'closeInfo'
+        'closeAll' => 'closeInfo',
     ];
 
-    public function closeInfo() {
+    public function closeInfo()
+    {
         $this->userInfoIsOpen = false;
     }
 

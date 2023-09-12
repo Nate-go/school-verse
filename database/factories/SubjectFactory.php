@@ -11,6 +11,7 @@ use Str;
 class SubjectFactory extends Factory
 {
     use InjectionService;
+
     protected $utilService;
 
     public function definition(): array

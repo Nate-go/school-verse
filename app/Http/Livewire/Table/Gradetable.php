@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Livewire\Table;
+
 use App\Models\Grade;
 use DB;
 
 class Gradetable extends Table
 {
-    protected function getData() {
+    protected function getData()
+    {
         $filterValues = $this->getFilterValues();
 
         $sort = $filterValues['sort'];
@@ -22,11 +24,6 @@ class Gradetable extends Table
             ->orderBy($sort['column'], $sort['type'])
             ->paginate($filterValues['perPage']);
 
-
         return $results;
-    }
-
-    public function delete($userId) {
-        
     }
 }

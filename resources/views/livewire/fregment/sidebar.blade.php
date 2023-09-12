@@ -21,8 +21,7 @@
                             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
                                 Rooms</p>
                         </button></a></li>
-                @if (true) 
-                {{-- Auth::user()->role === config(constants.ADMIN) --}}
+                @if (Auth::user()->role === $adminRole) 
                     <li><a class="" href="/users"><button
                                 class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'users' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
                                 <i class="fa-solid fa-users"></i>
@@ -47,6 +46,18 @@
                                 <i class="fa-solid fa-book"></i>
                                 <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
                                     Subjects</p>
+                            </button></a></li>
+                    <li><a class="" href="/teachers"><button
+                                class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'teachers' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                    Teachers</p>
+                            </button></a></li>
+                    <li><a class="" href="/students"><button
+                                class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-3 rounded-lg {{ $page === 'students' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : 'hover:bg-blue-300'}}  w-full flex items-center gap-4 px-4 capitalize">
+                                <i class="fa-solid fa-user-graduate"></i>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+                                    Students</p>
                             </button></a></li>
                 @endif
             </ul>

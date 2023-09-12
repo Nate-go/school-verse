@@ -19,9 +19,10 @@ class InsistenceController extends Controller
 
     public function index()
     {
-        if(Auth::user()->role === UserRole::ADMIN) {
+        if (Auth::user()->role === UserRole::ADMIN) {
             return $this->insistenceService->getPageForAdmin();
         }
+
         return $this->insistenceService->getPageForUser(Auth::user()->id);
     }
 
