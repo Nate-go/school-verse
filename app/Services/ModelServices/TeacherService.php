@@ -24,4 +24,9 @@ class TeacherService extends BaseService
     {
         return view('admin/teacher/teachers-initialization');
     }
+
+    public function getDetailPageForAdmin($id)
+    {
+        return view('admin/teacher/teachers-detail', ['id' => $id]);
+    }
 }

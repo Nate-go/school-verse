@@ -24,4 +24,9 @@ class StudentService extends BaseService
     {
         return view('admin/student/students-initialization');
     }
+
+    public function getDetailPageForAdmin($id)
+    {
+        return view('admin/student/students-detail', ['id' => $id]);
+    }
 }

@@ -42,7 +42,7 @@ class GradeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->gradeService->getDetailPageForAdmin($id);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
 use App\Services\ModelServices\UserService;
+use Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -39,7 +40,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if(Auth::user()->role == UserRole::ADMIN or Auth::user()->id == $id) {
+            return $this->userService->getDetailPage($id);
+        }
+        return redirect()->route('notPermission');
     }
 
     /**

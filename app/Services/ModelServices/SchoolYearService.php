@@ -40,4 +40,9 @@ class SchoolYearService extends BaseService
     {
         return view('admin/school-year/school-years-initialization');
     }
+
+    public function getDetailPageForAdmin($id)
+    {
+        return view('admin/school-year/school-years-detail', ['id' => $id]);
+    }
 }

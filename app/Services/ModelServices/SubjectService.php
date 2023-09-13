@@ -24,4 +24,9 @@ class SubjectService extends BaseService
     {
         return view('admin/subject/subjects-initialization');
     }
+
+    public function getDetailPageForAdmin($id)
+    {
+        return view('admin/subject/subjects-detail', ['id' => $id]);
+    }
 }

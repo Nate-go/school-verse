@@ -42,7 +42,7 @@ class TeacherController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->teacherService->getDetailPageForAdmin($id);
     }
 
     /**

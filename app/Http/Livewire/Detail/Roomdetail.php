@@ -11,10 +11,15 @@ use App\Models\Teacher;
 use App\Models\User;
 use DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Roomdetail extends Component
 {
+    use WithFileUploads;
+    
     public $schoolYear;
+
+    public $image;
 
     public $imageUrl;
 
@@ -23,6 +28,8 @@ class Roomdetail extends Component
     public $schoolYearId;
 
     public $name;
+
+    public $grade;
 
     public $teacherName;
 
@@ -177,11 +184,12 @@ class Roomdetail extends Component
 
     public function initData() {
         $data = Room::select(
-            DB::raw('CONCAT(grades.name, "", rooms.name) as room_name'),
+            'rooms.name as room_name',
             'rooms.image_url as image_url',
             'school_years.name as school_year',
             'grades.id as grade_id',
-            'rooms.school_year_id'
+            'rooms.school_year_id',
+            'grades.name as grade_name'
         )
             ->join('grades', 'rooms.grade_id', '=', 'grades.id')
             ->join('school_years', 'rooms.school_year_id', '=', 'school_years.id')
@@ -192,6 +200,7 @@ class Roomdetail extends Component
         $this->name = $data->room_name;
         $this->gradeId = $data->grade_id;
         $this->schoolYearId = $data->school_year_id;
+        $this->grade = $data->grade_name;
 
         $subject = Subject::selectColumns(['id', 'name'])->where('grade_id', $this->gradeId)->get();
 
@@ -306,17 +315,63 @@ class Roomdetail extends Component
     }
 
     public function save() {
-        if(!$this->selectedTeacher) {
-            $this->notify('error', 'You have not select homeroom teacher');
+
+        $room = [
+            'homeroom_teacher_id' => $this->selectedTeacher,
+            'name' => $this->name,
+        ];
+
+        $result = $this->isValidData($room);
+
+        if (!$result['isValid']) {
+            $this->notify('error', $result['message']);
+
             return;
         }
 
-        $result = Room::where('id', $this->itemId)->update(['homeroom_teacher_id' => $this->selectedTeacher]);
+        $room['image_url'] = $this->saveImage();
+
+        $result = Room::where('id', $this->itemId)->update($room);
 
         if ($result) {
-            $this->notify('success', 'Change homeroom teacher successfully');
+            $this->notify('success', 'Change room detail successfully');
         } else {
-            $this->notify('error', 'Change homeroom teacher fail');
+            $this->notify('error', 'Change room detail fail');
+        }
+    }
+
+    private function isValidData($data) {
+        if ($data['name'] === '') {
+            return ['isValid' => false, 'message' => 'Name is invalid'];
+        }
+
+        if (!$data['homeroom_teacher_id']) {
+            return ['isValid' => false, 'message' => 'Homeroom teacher have not been selected'];
+        }
+
+        $nameExists = Room::where('grade_id', $this->gradeId)
+            ->where('name', $data['name'])
+            ->where('school_year_id', $this->schoolYearId)
+            ->where('id', '<>', $this->itemId)
+            ->exists();
+
+        if ($nameExists) {
+            return ['isValid' => false, 'message' => 'This room name has been exist'];
+        }
+
+        return ['isValid' => true];
+    }
+
+    public function saveImage()
+    {
+        if ($this->image) {
+            $imageName = time() . '.' . $this->image->extension();
+            $this->image->storeAs('public/images', $imageName);
+            $url = asset('storage/images/' . $imageName);
+
+            return $url;
+        } else {
+            return $this->imageUrl;
         }
     }
 

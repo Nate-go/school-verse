@@ -7,30 +7,42 @@
                         class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
                         Room detail</h6>
                 </div>
-                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-3">
-                    <div class="md:col-span-1 md:row-span-2">
-                        <label>School year: {{ $schoolYear }}</label>
+                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
+                    <div class="md:col-span-2 md:row-span-2">
                         <div>
                             <div class="grid grid-cols-1 gap-3">
                                 <div class="shrink-0 col-span-1 flex items-center justify-center">
-                                    <img id='preview_img' class="h-24 w-24 object-cover rounded-full" src="{{ $imageUrl ?? asset('storage/images/default-image.png')}}"
+                                    <img id='preview_img' class="h-24 w-24 object-cover rounded-full"
+                                        src="{{ $image ? $image->temporaryUrl() : $imageUrl}}"
                                         alt="Current profile photo" />
                                 </div>
                                 <label class="col-span-1 flex items-center justify-center">
-                                    <div>{{ $name }}</div>
+                                    <input type="file" wire:model="image" class="cursor-pointer block w-56 text-sm text-slate-500
+                                                            file:mr-4 file:py-2 file:px-4
+                                                            file:rounded-full file:border-0
+                                                            file:text-sm file:font-semibold
+                                                            file:bg-violet-50 file:text-violet-700
+                                                            hover:file:bg-violet-100
+                                                            " />
                                 </label>
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="md:col-span-2">
-                        <label>Search teacher's name contain</label>
-                        <input type="text" placeholder="Find teacher's name you want"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model.debounce.1500ms='teacherName' />
+                        <label>Name</label>
+                        <input type="text" placeholder="Your room name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            wire:model='name' />
                     </div>
-
+                    
                     <div class="md:col-span-2">
-                        <label>Homeroom teacher</label>
+                        <label>Grade</label>
+                        <input type="text" readonly class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            wire:model='grade' />
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label>Teacher</label>
                         <select wire:model='selectedTeacher'
                             class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                             @if (!$selectedTeacher)
@@ -41,6 +53,12 @@
                                 {{$teacher['name']}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label>Search teacher's name contain</label>
+                        <input type="text" placeholder="Find teacher's name you want"
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model.debounce.1500ms='teacherName' />
                     </div>
                     
                 </div>
