@@ -8,6 +8,16 @@ use Schema;
 
 trait ScopeTrait
 {
+    public function scopeWhereOrAll($query, $columns, $values)
+    {
+        for($i = 0; $i < count($columns); $i++) {
+            if($values[$i] != -1) {
+                $query->where($columns[$i], $values[$i]);
+            }
+        }
+        return $query;
+    }
+
     public function scopeSelectColumns($query, $columns = ['*'])
     {
         return $query->select($columns);

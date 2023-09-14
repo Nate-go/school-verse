@@ -3,6 +3,7 @@
 namespace App\Services\ModelServices;
 
 use App\Constant\TableData;
+use App\Constant\UserRole;
 use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,5 +63,19 @@ class RoomService extends BaseService
     public function getDetailPageForAdmin($id)
     {
         return view('admin/room/rooms-detail', ['id' => $id]);
+    }
+
+    public function getHomeroomPage($roomId) {
+        if(Auth::user()->role == UserRole::ADMIN or $this->isHomeroomTeacher($roomId)) {
+            return view('teacher/room/homerooms-detail', ['id' => $roomId]);
+        }
+        return redirect()->route('notPermission');
+    }
+
+    private function isHomeroomTeacher($roomId) {
+        $result = $this->model->where('homeroom_teacher_id', Auth::user()->id)
+                        ->where('id', $roomId)->exists();
+        
+        return $result;
     }
 }

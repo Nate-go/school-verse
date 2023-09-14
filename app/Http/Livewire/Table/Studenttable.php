@@ -25,6 +25,7 @@ class Studenttable extends Table
             'users.image_url as username_image_url',
             'school_years.name as school_year',
             'rooms.school_year_id',
+            'students.grade_id',
             DB::raw('CONCAT(grades.name, "", rooms.name) as room'),
         )
             ->join('students', 'users.id', '=', 'students.user_id')

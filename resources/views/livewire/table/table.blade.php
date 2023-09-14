@@ -60,16 +60,16 @@
                 <tr class='bg-slate-100'>
                     @foreach ($header as $column)
                         @if ($column['sortable'])
-                            <th class="border-b border-blue-gray-50 py-3 px-6 text-left cursor-pointer" wire:click="sort({{$loop->index}})">
-                                <div class='flex items-center justify-center'>
+                            <th class="pl-6 border-b border-blue-gray-50 py-3 px-6 cursor-pointer" wire:click="sort({{$loop->index}})">
+                                <div class='flex'>
                                     <i class="fa-solid fa-sort pr-2"></i>
-                                    <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                                    <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
                                         {{$column['name']}}</p>
                                 </div>
                             </th>
                         @else
-                            <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                                <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                            <th class="pl-10 border-b border-blue-gray-50 py-3 px-6 text-left">
+                                <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
                                     {{$column['name']}}</p>
                             </th>
                         @endif
@@ -85,16 +85,16 @@
                     $count = 0;
                 @endphp
                 @foreach ($data as $item)
-                    <tr class='{{ $count%2 === 1 ? 'bg-slate-100' : '' }}  cursor-pointer hover:bg-blue-100 items-center justify-between'>
+                    <tr class='{{ $count%2 === 1 ? 'bg-slate-100' : '' }} hover:bg-blue-100'>
                         @foreach ($header as $column)
-                            <td class="py-3 px-5 border-b border-blue-gray-50">
+                            <td class="pl-10 py-3 px-5 border-b border-blue-gray-50">
                                 @php
                                     $attributeName = $column['attributesName'];
                                     $value = $item->$attributeName;
                                 @endphp
                                 @switch($column['type'])
                                     @case(App\Constant\HeaderTypes::TEXT_TYPE)
-                                        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">{{ $value ?? 'null'}}
+                                        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">{{ $value ?? 'null'}}
                                         </p>
                                     @break
                                     @case(App\Constant\HeaderTypes::TEXTARE_TYPE)
@@ -104,7 +104,7 @@
                                 
                                     @break
                                     @case(App\Constant\HeaderTypes::MIX_TYPE)
-                                        <div class="flex gap-1 items-center justify-center">
+                                        <div class="flex gap-2 items-center">
                                             @php
                                                 $img_url = $column['attributesName'] . '_image_url';
                                             @endphp
