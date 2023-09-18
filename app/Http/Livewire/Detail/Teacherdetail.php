@@ -173,6 +173,15 @@ class Teacherdetail extends Component
         }
     }
 
+    private function getTeacherId($userId, $subjectId) {
+        $result = Teacher::selectColumns(['id'])
+                        ->where('user_id', $userId)
+                        ->where('subject_id', $subjectId)
+                        ->first();
+        
+        return $result ? $result->id : null;
+    }
+
     public function render()
     {
         return view('livewire.detail.teacherdetail');

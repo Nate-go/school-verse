@@ -74,7 +74,7 @@
 
                     </div>
                     <div class="p-6 flex items-center justify-between py-4 px-1">
-                        <a href="">
+                        <a href="{{ '/students/' . $itemId . '/rooms/' . $room['id'] }}">
                             <button
                                 class="middle none font-sans font-bold center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-4 rounded-lg border border-blue-500 text-blue-500 hover:opacity-75 focus:ring focus:ring-blue-200 active:opacity-[0.85]"
                                 type="button">view room</button></a>

@@ -64,7 +64,7 @@ class Studentdetail extends Component
         $this->displayRooms = [];
 
         $data = Student::select(
-            'students.id',
+            'rooms.id',
             'rooms.image_url as room_image',
             'users.username as teacher_name',
             'users.image_url as teacher_image',

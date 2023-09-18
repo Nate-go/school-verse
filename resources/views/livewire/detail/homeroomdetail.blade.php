@@ -9,6 +9,7 @@
                 </div>
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-8">
                     <div class="md:col-span-3 md:row-span-3">
+                        <label> School year: {{ $room['schoolYearName'] }}</label><br>
                         <label> Class: {{ $room['roomName'] }}</label>
                         <div>
                             <div class="grid grid-cols-1 gap-3">
@@ -109,9 +110,10 @@
                             @endforeach
                         </select>
                     </div>
-                    
-                    <div class="md:col-span-3">
-                        @if (!empty($header) and !empty($body))
+
+                    @if ($selectedTypeView == self::TOTAL_SCORE)
+                        <div class="md:col-span-3 overflow-auto">
+                            @if (!empty($header) and !empty($body))
                             <table class="w-full min-w-[640px] table-autos">
                                 <thead class="sticky top-0 z-20">
                                     <tr class='bg-slate-100'>
@@ -119,26 +121,28 @@
                                             <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
                                                 Student</p>
                                         </th>
+
                                         @foreach ($header as $column)
-                            
-                                        <th class="border-b border-blue-gray-50 py-3 px-2 text-left">
+                        
+                                        <th class="cursor-pointer border-b border-blue-gray-50 py-3 px-2 text-left" wire:click="changeToSubjectView({{$column['value']}})">
                                             <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                                                {{$column['name'] . ' ('. $column['coefficient'] . ')'}}</p>
+                                                {{$column['name']}}</p>
                                         </th>
                                         @endforeach
                                         <th class="border-b border-blue-gray-50 py-3 px-2 text-center">
-                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                                            <p
+                                                class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
                                                 Final score</p>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="overflow-y-auto">
                                     @php
-                                    $count = 0;
+                                        $count = 0;
                                     @endphp
                                     @foreach ($body as $item)
                                     <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
-                                        <td class="pl-2 py-3 px-5 border-b border-blue-gray-50">
+                                        <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50" wire:click="changeToStudentView({{$item['student']['studentId']}})">
                                             <div class="flex gap-2s">
                                                 <img class="w-6 h-6 rounded-full"
                                                     src="{{$item['student']['studentImage'] ?? asset('storage/images/default-image.png')}}">
@@ -146,7 +150,7 @@
                                                     {{ $item['student']['studentName'] ?? 'null'}}
                                                 </p>
                                             </div>
-                            
+                        
                                         </td>
                                         @foreach ($item['totalScores'] as $score)
                                         <td class="py-3 px-5 border-b border-blue-gray-50">
@@ -155,18 +159,232 @@
                                             </p>
                                         </td>
                                         @endforeach
-                            
+                        
                                     </tr>
                                     @php
                                     $count += 1;
                                     @endphp
                                     @endforeach
                                 </tbody>
-                            </table>                            
-                        @else
+                            </table>
+                            @else
                             <div>Data is empty</div>
-                        @endif
-                    </div>
+                            @endif
+                        </div>
+                    @endif
+
+                    @if ($selectedTypeView == self::BY_SUBJECT)
+                        <div class="md:col-span-1 overflow-auto">
+                            <label>Subject</label>
+                            <select wire:model='selectedSubject'
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                @if (!$selectedSubject)
+                                    <option selected hidden>You haven't selected yet</option>
+                                @endif
+                                @foreach ($subjects as $subject)
+                                <Option {{ $selectedSubject==$subject['value'] ? 'selected' : '' }} value="{{$subject['value']}}">
+                                    {{$subject['name']}}
+                                </Option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="md:col-span-3">
+                            @if (!empty($header) and !empty($body) and $selectedSubject != null)
+                            <table class="w-full min-w-[640px] table-autos">
+                                <thead class="sticky top-0 z-20">
+                                    <tr class='bg-slate-100'>
+                                        <th class="pl-2 border-b border-blue-gray-50 py-3 px-2 text-left">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                Student</p>
+                                        </th>
+
+                                        @foreach ($header as $column)
+                                            <th class="border-b border-blue-gray-50 py-3 px-2 text-left">
+                                                <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                    {{$column['name']}}</p>
+                                            </th>
+                                        @endforeach
+
+                                        <th class="border-b border-blue-gray-50 py-3 px-2 text-center">
+                                            <p
+                                                class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                                                Final score</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="overflow-y-auto">
+                                    @php
+                                        $count = 0;
+                                    @endphp
+                                    @foreach ($body as $item)
+                                    <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
+                                        <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50" wire:click="changeToStudentView({{$item['student']['studentId']}})">
+                                            <div class="flex gap-2s">
+                                                <img class="w-6 h-6 rounded-full"
+                                                    src="{{$item['student']['studentImage'] ?? asset('storage/images/default-image.png')}}">
+                                                <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                    {{ $item['student']['studentName'] ?? 'null'}}
+                                                </p>
+                                            </div>
+                        
+                                        </td>
+                                        @foreach ($header as $column)
+                                            <td class="py-3 px-5 border-b border-blue-gray-50">
+                                                @if (empty($item['scores']))
+                                                    <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                        
+                                                    </p>
+                                                @else
+                                                    <div class="flex gap-1">
+                                                        @foreach ($item['scores'] as $score)
+                                                        @if ($score['type'] == $column['value'])
+                                                        <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer">
+                                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                                {{ $score['score'] }}
+                                                            </p>
+                                                        </div>
+                                                        @endif
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                                
+                                            </td>
+                                        @endforeach
+                                        
+                                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                {{ $item['totalScore'] }}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    @php
+                                    $count += 1;
+                                    @endphp
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                            <div>Data is empty</div>
+                            @endif
+                        </div>
+                    @endif
+
+                    @if ($selectedTypeView == self::BY_STUDENT)
+                        <div class="md:col-span-1 overflow-auto">
+                            <label>Student</label>
+                            <select wire:model='selectedStudent'
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                @if (!$selectedStudent)
+                                    <option selected hidden>You haven't selected yet</option>
+                                @endif
+                                @foreach ($students as $student)
+                                <Option {{ $selectedStudent==$student['studentId'] ? 'selected' : '' }} value="{{$student['studentId']}}">
+                                    {{$student['studentName']}}
+                                </Option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="md:col-span-1">
+                            <label>Search student's name contain</label>
+                            <input type="text" placeholder="Find student's name you want"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model.debounce.1500ms='studentName' />
+                        </div>
+
+                        <div class="md:col-span-3">
+                            @if (!empty($header) and !empty($body) and $selectedStudent != null)
+                            <table class="w-full min-w-[640px] table-autos">
+                                <thead class="sticky top-0 z-20">
+                                    <tr class='bg-slate-100'>
+                                        <th class="pl-2 border-b border-blue-gray-50 py-3 px-2 text-left">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                Subject</p>
+                                        </th>
+                        
+                                        @foreach ($header as $column)
+                                        <th class="border-b border-blue-gray-50 py-3 px-2 text-left">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                {{$column['name']}}</p>
+                                        </th>
+                                        @endforeach
+                        
+                                        <th class="border-b border-blue-gray-50 py-3 px-2 text-center">
+                                            <p
+                                                class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                                                Final score</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="overflow-y-auto">
+                                    @php
+                                        $count = 0;
+                                        $subjectScores = $body['subjectScores'];
+                                    @endphp
+                                    @foreach ($subjectScores as $item)
+                                    <tr class='{{ $count%2 == 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
+                                        <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50" wire:click="changeToSubjectView({{$item['subject']['value']}})">
+                                            <div class="flex gap-2s">
+                                                <img class="w-6 h-6 rounded-full"
+                                                    src="{{$item['subject']['imageUrl'] ?? asset('storage/images/default-image.png')}}">
+                                                <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                    {{ $item['subject']['name'] ?? 'null'}}
+                                                </p>
+                                            </div>
+                        
+                                        </td>
+                                        @foreach ($header as $column)
+                                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                                            @if (empty($item['scores']))
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                        
+                                            </p>
+                                            @else
+                                                <div class="flex gap-1">
+                                                    @foreach ($item['scores'] as $score)
+                                                        @if ($score['type'] == $column['value'])
+                                                        <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer">
+                                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                                {{ $score['score'] }}
+                                                            </p>
+                                                        </div>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                        
+                                        </td>
+                                        @endforeach
+                        
+                                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
+                                                {{ $item['totalScore'] }}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $count += 1;
+                                    @endphp
+                                    @endforeach
+                                    <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
+                                        <td class="py-3 px-5 border-b border-blue-gray-50" colspan="7">
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
+                                                Final score
+                                            </p>
+                                        </td>
+                                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
+                                                {{ $body['finalScore'] }}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @else
+                            <div>Data is empty</div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
