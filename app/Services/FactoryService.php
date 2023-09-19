@@ -44,4 +44,11 @@ class FactoryService
 
         return $value;
     }
+
+    public function randValues($args)
+    {
+        $index = array_rand($args);
+
+        return $args[$index];
+    }
 }

@@ -98,7 +98,7 @@
                                         </p>
                                     @break
                                     @case(App\Constant\HeaderTypes::TEXTARE_TYPE)
-                                        <div class='h-20 w-full'>
+                                        <div class='h-24 w-full'>
                                             <textarea class="h-full w-full resize-none bg-transparent" readonly>{{$value ?? 'null'}}</textarea>
                                         </div>
                                 

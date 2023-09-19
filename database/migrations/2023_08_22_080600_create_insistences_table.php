@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('insistences', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('content');
-            $table->string('feedback')->nullable();
+            $table->text('content');
+            $table->text('feedback')->nullable();
             $table->integer('status');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
