@@ -42,6 +42,8 @@ class Teacherroomdetail extends Component
 
     public $selectedStudent;
 
+    protected $listeners = ['updateScore' => 'setBody'];
+
     public function boot(ConstantService $constantService)
     {
         $this->constantService = $constantService;
@@ -147,7 +149,7 @@ class Teacherroomdetail extends Component
         $this->header = $this->constantService->getConstantsJson(ExamType::class);
     }
 
-    private function setBody()
+    public function setBody()
     {
         $this->body = [];
 
@@ -179,6 +181,7 @@ class Teacherroomdetail extends Component
             ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
             ->where('exam_students.student_id', $studentId)
             ->where('teachers.subject_id', $subjectId)
+            ->whereAllDeletedNull(['exam_students', 'room_teachers', 'teachers', 'subjects'])
             ->get();
 
         $data = [];
@@ -284,14 +287,6 @@ class Teacherroomdetail extends Component
     }
 
     private function getExamId() {
-        $result = Exam::selectColumns(['id'])
-                    ->where('room_teacher_id', $this->itemId)
-                    ->where('type', $this->selectedExamType)
-                    ->first();
-
-        if($result) {
-            return $result->id;
-        }
         $newExam = Exam::create([
             'room_teacher_id' => $this->itemId,
             'type' => $this->selectedExamType

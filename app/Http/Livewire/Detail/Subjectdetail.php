@@ -37,10 +37,17 @@ class Subjectdetail extends Component
 
     public function formGenerate()
     {
-        $result = Subject::selectColumns(['subjects.name', 'number_lesson', 'coefficient', 'image_url', 'grades.name as grade_name', 'grade_id'])
-                            ->join('grades', 'grades.id', '=', 'subjects.grade_id')
-                            ->where('subjects.id', $this->itemId)
-                            ->first();
+        $result = Subject::selectColumns([
+            'subjects.name', 
+            'number_lesson', 
+            'coefficient', 
+            'image_url', 
+            'grades.name as grade_name', 
+            'grade_id'
+            ])
+            ->join('grades', 'grades.id', '=', 'subjects.grade_id')
+            ->where('subjects.id', $this->itemId)
+            ->first();
 
         $this->name = $result->name;
         $this->coefficient = $result->coefficient;

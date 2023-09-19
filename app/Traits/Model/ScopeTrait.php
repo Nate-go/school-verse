@@ -8,6 +8,12 @@ use Schema;
 
 trait ScopeTrait
 {
+    public function scopeWhereAllDeletedNull($query, $tables) {
+        foreach($tables as $table) {
+            $query->whereNull($table . '.deleted_at');
+        }
+    }
+
     public function scopeWhereOrAll($query, $columns, $values)
     {
         for($i = 0; $i < count($columns); $i++) {
