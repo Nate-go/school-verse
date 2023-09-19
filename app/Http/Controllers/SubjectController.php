@@ -42,7 +42,7 @@ class SubjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->subjectService->getDetailPageForAdmin($id);
     }
 
     /**

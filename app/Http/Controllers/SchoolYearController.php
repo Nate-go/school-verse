@@ -39,7 +39,7 @@ class SchoolYearController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->schoolYearService->getDetailPageForAdmin($id);
     }
 
     /**

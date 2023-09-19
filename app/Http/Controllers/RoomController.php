@@ -50,7 +50,7 @@ class RoomController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->roomService->getDetailPageForAdmin($id);
     }
 
     /**

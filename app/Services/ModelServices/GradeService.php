@@ -31,4 +31,9 @@ class GradeService extends BaseService
     {
         return view('admin/grade/grades-initialization');
     }
+
+    public function getDetailPageForAdmin($id)
+    {
+        return view('admin/grade/grades-detail', ['id' => $id]);
+    }
 }

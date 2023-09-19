@@ -23,9 +23,9 @@ class Teachertable extends Table
             'users.username',
             'users.image_url as username_image_url',
             'school_years.name as school_year',
-            DB::raw('COUNT(teachers.subject_id) as number_of_subjects'),
-            DB::raw('COUNT(room_teachers.room_id) as number_of_rooms'),
-            DB::raw('(SELECT COUNT(rooms.id) FROM rooms WHERE rooms.homeroom_teacher_id = users.id) as number_of_homerooms'),
+            DB::raw('COUNT(DISTINCT teachers.id) as number_of_subjects'),
+            DB::raw('COUNT(DISTINCT room_teachers.room_id) as number_of_rooms'),
+            DB::raw('(SELECT COUNT(DISTINCT rooms.id) FROM rooms WHERE rooms.homeroom_teacher_id = users.id) as number_of_homerooms'),
         )
             ->join('teachers', 'users.id', '=', 'teachers.user_id')
             ->join('room_teachers', 'room_teachers.teacher_id', '=', 'teachers.id')

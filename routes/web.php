@@ -58,4 +58,9 @@ Route::group([
     Route::resource('rooms.exams', ExamsController::class)->shallow();
     Route::resource('teachers', TeacherController::class);
     Route::resource('students', StudentController::class);
+
+    Route::get('/teachers/homerooms/{id}', [HomeController::class, 'homeroom']);
+    Route::get('/teachers/room-teachers/{roomTeacherId}', [HomeController::class, 'teacherRoom']);
+
+    Route::get('/students/{userId}/rooms/{roomId}', [HomeController::class, 'studentRoom']);
 });

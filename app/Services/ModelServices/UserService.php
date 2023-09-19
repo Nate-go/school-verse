@@ -33,4 +33,9 @@ class UserService extends BaseService
     {
         return view('admin/user/users-initialization');
     }
+
+    public function getDetailPage($id)
+    {
+        return view('user/users-detail', ['id' => $id]);
+    }
 }

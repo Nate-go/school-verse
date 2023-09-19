@@ -42,7 +42,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('123456'),
             'role' => $role,
-            'username' => fake()->userName(),
+            'username' => fake()->name(),
             'profile_id' => $profile->id,
             'status' => $status,
             'image_url' => $fullUrl.'/img/default-user-'.str(random_int(0, 5)).'.png',

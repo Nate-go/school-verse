@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
 use App\Services\ModelServices\RoomService;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -26,5 +27,17 @@ class HomeController extends Controller
 
                 return redirect($url);
         }
+    }
+
+    public function homeroom($id) {
+        return $this->roomService->getHomeroomPage($id);
+    }
+
+    public function studentRoom($userId, $roomId) {
+        return $this->roomService->getStudentRoom($userId, $roomId);
+    }
+
+    public function teacherRoom($roomTeacherId) {
+        return $this->roomService->getTeacherRoom($roomTeacherId);
     }
 }
