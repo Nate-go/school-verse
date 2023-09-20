@@ -17,7 +17,6 @@
         <livewire:fregment.settingbutton/>
     </div>
     @livewireScripts
-    @livewire('livewire-ui-modal')
     @livewire('foot')
 </body>
 </html>

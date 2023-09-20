@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             TeacherSeeder::class,
             RoomSeeder::class,
-            StudentSeeder::class,
             RoomTeacherSeeder::class,
+            StudentSeeder::class,
             ExamSeeder::class,
             ExamStudentsSeeder::class,
         ]);

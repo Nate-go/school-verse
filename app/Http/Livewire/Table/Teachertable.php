@@ -32,12 +32,12 @@ class Teachertable extends Table
             ->join('rooms', 'rooms.id', '=', 'room_teachers.room_id')
             ->join('school_years', 'school_years.id', '=', 'rooms.school_year_id')
             ->where('users.role', UserRole::TEACHER)
+            ->whereAllDeletedNull(['teachers', 'room_teachers', 'rooms', 'school_years'])
             ->groupBy('users.id', 'rooms.school_year_id')
             ->filter($this->getElementFilters(['rooms.school_year_id'], [$schoolYears]))
             ->search($search)
             ->orderBy($sort['column'], $sort['type'])
             ->paginate($filterValues['perPage']);
-
         return $results;
     }
 }

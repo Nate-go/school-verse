@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
+use App\Constant\SortTypes;
 use App\Models\Exam;
 use App\Models\ExamStudent;
 use App\Models\Room;
@@ -18,7 +19,7 @@ class Teacherroomdetail extends Component
 {
     const MAXNUMBERLENGTH = 2;
 
-    const ALL_STUDENT = -1;
+    const ALL = -1;
 
     public $room;
 
@@ -40,9 +41,15 @@ class Teacherroomdetail extends Component
 
     public $selectedExamType;
 
-    public $selectedStudent;
+    public $selectedStudents;
 
-    protected $listeners = ['updateScore' => 'setBody'];
+    public $selectedExam;
+
+    public $exams;
+
+    public $content;
+
+    protected $listeners = ['updateScore' => 'setBody', 'updateExamList' => 'setExam'];
 
     public function boot(ConstantService $constantService)
     {
@@ -52,6 +59,8 @@ class Teacherroomdetail extends Component
     public function mount($itemId)
     {
         $this->itemId = $itemId;
+        $this->selectedStudent = [];
+        $this->selectedExamType = self::ALL;
         $this->formGenerate();
         $this->setTeacher();
         $this->setRoomTeacher();
@@ -59,8 +68,15 @@ class Teacherroomdetail extends Component
         $this->examTypes = $this->constantService->getConstantsJson(ExamType::class);
         $this->students = $this->getStudents();
 
-        $this->selectedExamType = null;
-        $this->selectedStudent = null;
+        $this->selectedExam = null;
+    }
+
+    public function changeExam($value) {
+        if($this->selectedExam == $value) {
+            $this->selectedExam = null;
+        } else {
+            $this->selectedExam = $value;
+        }
     }
 
     public function formGenerate()
@@ -95,6 +111,36 @@ class Teacherroomdetail extends Component
 
         $this->setHeader();
         $this->setBody();
+        $this->setExam();
+        $this->content = '';
+    }
+
+    public function setExam() {
+        $data = Exam::selectColumns([
+            'id',
+            'content',
+            'type',
+            DB::raw('(select count(id) from exam_students where exam_id = exams.id and deleted_at is null) as member')
+        ])
+        ->where('room_teacher_id', $this->itemId)
+        ->whereOrAll(['type'], [$this->selectedExamType])
+        ->sort(['columnName' => 'created_at', 'type' => SortTypes::DECREASE_SORT])
+        ->get();
+
+        $this->exams = [];
+
+        foreach($data as $item) {
+            $this->exams[] = [
+                'id' => $item->id,
+                'content' => $item->content,
+                'type' => ['value' => $item->type, 'name' => $this->constantService->getNameConstant(ExamType::class, $item->type)],
+                'member' => $item->member
+            ];
+        }
+    }
+
+    public function updatedSelectedExamType($value) {
+        $this->setExam();
     }
 
     public function setTeacher() {
@@ -170,6 +216,7 @@ class Teacherroomdetail extends Component
     private function getExamBySubject($subjectId, $studentId)
     {
         $exams = Exam::selectColumns([
+            'exams.id as exam_id',
             'exam_students.id',
             'score',
             'exams.type',
@@ -188,6 +235,7 @@ class Teacherroomdetail extends Component
 
         foreach ($exams as $exam) {
             $data[] = [
+                'examId' => $exam->exam_id,
                 'id' => $exam->id,
                 'score' => $exam->score,
                 'type' => $exam->type,
@@ -206,9 +254,8 @@ class Teacherroomdetail extends Component
         foreach ($exams as $exam) {
             $coef = ExamTypeCoefficient::COEFFICIENT[$exam['type']];
             $totalCoefficient += $coef;
-            $totalScore = $exam['score'] * $coef;
+            $totalScore += $exam['score'] * $coef;
         }
-
         return $totalCoefficient > 0 ? round($totalScore / $totalCoefficient, self::MAXNUMBERLENGTH) : 0;
     }
 
@@ -238,52 +285,40 @@ class Teacherroomdetail extends Component
     }
 
     public function createExam() {
-        if($this->selectedExamType == null or $this->selectedStudent == null) {
-            $this->notify('error', 'Complete your selection before create');
+        if($this->selectedExamType == null or $this->selectedExamType == -1) {
+            $this->notify('error', 'Select an exam type before create');
             return;
         }
 
-        $examId = $this->getExamId();
-
-        if(!$examId) {
+        $this->content = trim($this->content);
+        if ($this->content == '') {
+            $this->notify('error', 'Content can not be empty');
             return;
-        } 
+        }
 
-        if($this->selectedStudent != self::ALL_STUDENT) {
-            $newExamStudent =  ExamStudent::create([
-                'exam_id' => $examId,
-                'student_id' => $this->selectedStudent,
-                'score' => 0,
-                'review' => ''
-            ]);
+        $exist = Exam::where('room_teacher_id', $this->itemId)
+                ->where('content', $this->content)
+                ->where('type', $this->selectedExamType)
+                ->exists();
 
-            if($newExamStudent) {
-                $this->notify('success', 'Create exam successfully');
-                return;
-            }
-            $this->notify('error', 'Create exam fail');
+        if ($exist) {
+            $this->notify('error', 'Content has exist in your exam list');
+            return;
+        }
+
+        $newExam = Exam::create([
+            'content' => $this->content,
+            'room_teacher_id' => $this->itemId,
+            'type' => $this->selectedExamType
+        ]);
+
+        if ($newExam) {
+            $this->notify('success', 'Create exam successfully');
         } else {
-            $students = $this->students;
-
-            try {
-                DB::transaction(function () use($students, $examId) {
-                    foreach($students as $student) {
-                        ExamStudent::create([
-                            'exam_id' => $examId,
-                            'student_id' => $student['studentId'],
-                            'score' => 0,
-                            'review' => ''
-                        ]);
-                    }
-
-                    $this->notify('success', 'Create exam successfully');
-                });
-            } catch (Exception $e) {
-                $this->notify('error', 'Create exam fail');
-            }
+            $this->notify('error', 'Create exam fail');
         }
-
-        $this->setBody();
+        
+        $this->setExam();
     }
 
     private function getExamId() {

@@ -37,9 +37,10 @@ class ExamStudentsSeeder extends Seeder
                                 ->where('room_id', $exam->room_id)
                                 ->get();
             
-            $reviewIndex = random_int(0, count($this->feedbackArray) - 1);
+            
             foreach($students as $student) {
-                Exam::create([
+                $reviewIndex = random_int(0, count($this->feedbackArray) - 1);
+                ExamStudent::create([
                     'exam_id' => $exam->id,
                     'student_id' => $student->id,
                     'score' => random_int(0, 100),

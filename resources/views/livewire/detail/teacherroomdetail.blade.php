@@ -88,7 +88,7 @@
     </div>
 
     <div class="bg-transparent h-10"></div>
-
+    
     <div class="flex-col">
         <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
@@ -96,41 +96,34 @@
                     <div class="text-center pb-4">
                         <h6
                             class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
-                            Exam create</h6>
+                            Exam list</h6>
                     </div>
-                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
+                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-3">
     
-                        <div class="md:col-span-2">
+                        <div class="md:col-span-1">
                             <label>Exam Type</label>
                             <select wire:model='selectedExamType'
                                 class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                                 @if (!$selectedExamType)
                                 <option selected hidden>You haven't selected yet</option>
                                 @endif
+                                <option {{ $selectedExamType== self::ALL ? 'selected' : '' }} value={{self::ALL}}>
+                                    ALL</option>
                                 @foreach ($examTypes as $examType)
-                                <option {{ $selectedExamType==$examType['value'] ? 'selected' : '' }} value="{{$examType['value']}}">
+                                <option {{ $selectedExamType==$examType['value'] ? 'selected' : '' }}
+                                    value="{{$examType['value']}}">
                                     {{$examType['name']}}</option>
                                 @endforeach
                             </select>
                         </div>
-    
-                        <div class="md:col-span-2">
-                            <label>Student(s)</label>
-                            <select wire:model='selectedStudent'
-                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
-                                @if (!$selectedStudent)
-                                <option selected hidden>You haven't selected yet</option>
-                                @endif
-                                <option {{ $selectedStudent==-1 ? 'selected' : '' }} value="-1">
-                                    All</option>
-                                @foreach ($students as $student)
-                                <option {{ $selectedStudent==$student['studentId'] ? 'selected' : '' }} value="{{$student['studentId']}}">
-                                    {{$student['studentName']}}</option>
-                                @endforeach
-                            </select>
+
+                        <div class="md:col-span-1">
+                            <label>Content</label>
+                            <input wire:model='content'
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full pl-2">
                         </div>
-    
-                        <div class="md:col-span-2">
+
+                        <div class="md:col-span-1">
                             <label>Action</label>
                             <button wire:click='createExam'
                                 class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center h-10 border mt-1">
@@ -139,8 +132,74 @@
                             </button>
                         </div>
     
+                        <div class="md:col-span-3 max-h-80 overflow-auto">
+                            <table class="w-full min-w-[640px] table-autos">
+                                <thead class="sticky top-0 z-20">
+                                    <tr class='bg-slate-100'>
+                                        <th class="pl-2 border-b border-blue-gray-50 py-3 px-2 text-left">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                Content</p>
+                                        </th>
+                                        <th class="pl-2 border-b border-blue-gray-50 py-3 px-2 text-left">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                Type</p>
+                                        </th>
+                                        <th class="pl-2 border-b border-blue-gray-50 py-3 px-2 text-left">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                Number of student</p>
+                                        </th>
+                                        <th class="pl-2 border-b border-blue-gray-50 py-3 px-2 text-center">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                                                Action</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="overflow-y-auto">
+                                    @php
+                                        $count = 0;
+                                    @endphp
+                                    @foreach ($exams as $exam)
+                                    <tr 
+                                        class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} {{ $exam['id'] == $selectedExam ? 'bg-green-600 text-white' : 'hover:bg-blue-100'}} '>
+                                        
+                                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                {{ $exam['content'] }}
+                                            </p>
+                                        </td>
+
+                                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                {{ $exam['type']['name'] }}
+                                            </p>
+                                        </td>
+
+                                        <td class="py-3 px-5 border-b border-blue-gray-50">
+                                            <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                                                {{ $exam['member'] }}
+                                            </p>
+                                        </td>
+                                        <td class="py-3 px-5 flex justify-center items-center h-max">
+                                            <button wire:click='$emit("openModal", "detail.examactiondetail", @json(["exam" => $exam, "roomTeacherId" => $itemId]))'
+                                                class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                                type="button"><i class="fa-solid fa-eye"></i>
+                                            </button>
+                                            <button
+                                                class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                                wire:click="changeExam({{$exam['id']}})" type="button"><i class="fa-regular fa-square-check fa-lg"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $count += 1;
+                                    @endphp
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+    
                     </div>
-                
+    
                 </div>
             </div>
         </div>
@@ -190,7 +249,7 @@
                                 <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                     <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50"
                                         wire:click="changeToStudentView({{$item['student']['studentId']}})">
-                                        <div class="flex gap-2s">
+                                        <div class="flex gap-2 items-center">
                                             <img class="w-6 h-6 rounded-full"
                                                 src="{{$item['student']['studentImage'] ?? asset('storage/images/default-image.png')}}">
                                             <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
@@ -209,7 +268,7 @@
                                         <div class="flex gap-1">
                                             @foreach ($item['scores'] as $score)
                                                 @if ($score['type'] == $column['value'])
-                                                <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer hover:bg-blue-700 hover:text-white" 
+                                                <div class="py-1 px-1.5 rounded-md cursor-pointer hover:bg-blue-700 hover:text-white {{ $score['examId'] == $selectedExam ? 'bg-green-500 text-white' : 'bg-blue-300'}}" 
                                                     wire:click='$emit("openModal", "detail.examdetail", @json(["examStudentId" => $score["id"], "roomTeacherId" => $itemId]))'>
                                                     <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
                                                         {{ $score['score'] }}

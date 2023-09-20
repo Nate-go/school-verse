@@ -16,19 +16,12 @@ class RoomTeacherSeeder extends Seeder
      */
     public function run(): void
     {
-        $grades = Grade::selectColumns(['id'])->get();
-
-        $subjects = [];
-        foreach($grades as $grade) {
-            $subjects[$grade->id] = Subject::selectColumns(['id'])->where('grade_id', $grade->id);
-        }
-
         $rooms = Room::selectColumns(['id', 'grade_id'])->get();
 
         foreach($rooms as $room) {
-            $roomsSubjects = $subjects[$room->grade_id];
-            foreach($roomsSubjects as $roomSubject) {
-                $teachers = Teacher::selectColumns(['id'])->where('subject_id', $roomSubject->subject_id);
+            $subjects = Subject::selectColumns(['id'])->where('grade_id', $room->grade_id)->get();
+            foreach($subjects as $subject) {
+                $teachers = Teacher::selectColumns(['id'])->where('subject_id', $subject->id)->get();
                 $teacherIndex = random_int(0, count($teachers) - 1);
 
                 RoomTeacher::create([

@@ -36,6 +36,17 @@
                     </div>
 
                     <div class="md:col-span-2">
+                        <label>Content</label>
+                        <input type="text" readonly class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{$data['examContent']}}" />
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label>Type</label>
+                        <input type="text" readonly class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            value="{{$data['examType']}}" />
+                    </div>
+
+                    <div class="md:col-span-2">
                         <label>Subject</label>
                         <div class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 flex gap-2 items-center">
                             <img class="w-6 h-6 rounded-full" src="{{$data['subjectImage'] ?? asset('storage/images/default-image.png')}}">
@@ -43,12 +54,6 @@
                                 {{ $data['subjectName'] }}
                             </p>
                         </div>
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label>Type</label>
-                        <input type="text" readonly class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            value="{{$data['examType']}}" />
                     </div>
 
                     <div class="md:col-span-2">

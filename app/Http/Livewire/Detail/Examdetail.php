@@ -33,7 +33,7 @@ class Examdetail extends ModalComponent
     public function mount($examStudentId, $roomTeacherId) {
         $this->examStudentId = $examStudentId;
         $this->formGenerate();
-        if(auth()->user()->role == UserRole::STUDENT) {
+        if(auth()->user()->role == UserRole::STUDENT or !$roomTeacherId) {
             $this->isPermissionDelete = false;
             $this->isPermissionUpdate = false;
         } else {
@@ -53,7 +53,8 @@ class Examdetail extends ModalComponent
             'score',
             'review',
             'exams.type as exam_type',
-            'room_teacher_id'
+            'room_teacher_id',
+            'exams.content as exam_content'
         ])
             ->join('students', 'students.id', '=', 'exam_students.student_id')
             ->join('users as student_info', 'students.user_id', '=', 'student_info.id')
@@ -74,7 +75,8 @@ class Examdetail extends ModalComponent
             'subjectName' => $result->subject_name,
             'subjectImage' => $result->subject_image,
             'examType' =>  $this->constantService->getNameConstant(ExamType::class, $result->exam_type),
-            'roomTeacherId' => $result->room_teacher_id
+            'roomTeacherId' => $result->room_teacher_id,
+            'examContent' => $result->exam_content
         ];
 
         $this->score = $result->score;
