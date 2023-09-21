@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('room_teacher_id');
+            $table->string('content');
             $table->integer('type');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

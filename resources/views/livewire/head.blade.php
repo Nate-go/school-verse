@@ -10,5 +10,6 @@
     {{-- @vite('resources/css/app.css') --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="{{ asset('img/icon-tab.png') }}">
+    @livewireStyles
     @csrf
 </head>

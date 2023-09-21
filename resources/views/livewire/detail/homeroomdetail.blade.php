@@ -143,7 +143,7 @@
                                     @foreach ($body as $item)
                                     <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                         <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50" wire:click="changeToStudentView({{$item['student']['studentId']}})">
-                                            <div class="flex gap-2s">
+                                            <div class="flex gap-2 items-center">
                                                 <img class="w-6 h-6 rounded-full"
                                                     src="{{$item['student']['studentImage'] ?? asset('storage/images/default-image.png')}}">
                                                 <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
@@ -220,7 +220,7 @@
                                     @foreach ($body as $item)
                                     <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                         <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50" wire:click="changeToStudentView({{$item['student']['studentId']}})">
-                                            <div class="flex gap-2s">
+                                            <div class="flex gap-2 items-center">
                                                 <img class="w-6 h-6 rounded-full"
                                                     src="{{$item['student']['studentImage'] ?? asset('storage/images/default-image.png')}}">
                                                 <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
@@ -239,7 +239,8 @@
                                                     <div class="flex gap-1">
                                                         @foreach ($item['scores'] as $score)
                                                         @if ($score['type'] == $column['value'])
-                                                        <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer">
+                                                        <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer"
+                                                            wire:click='$emit("openModal", "detail.examdetail", @json(["examStudentId" => $score["id"], "roomTeacherId" => null]))'>
                                                             <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
                                                                 {{ $score['score'] }}
                                                             </p>
@@ -324,7 +325,7 @@
                                     @foreach ($subjectScores as $item)
                                     <tr class='{{ $count%2 == 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                         <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50" wire:click="changeToSubjectView({{$item['subject']['value']}})">
-                                            <div class="flex gap-2s">
+                                            <div class="flex gap-2 items-center">
                                                 <img class="w-6 h-6 rounded-full"
                                                     src="{{$item['subject']['imageUrl'] ?? asset('storage/images/default-image.png')}}">
                                                 <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
@@ -343,7 +344,8 @@
                                                 <div class="flex gap-1">
                                                     @foreach ($item['scores'] as $score)
                                                         @if ($score['type'] == $column['value'])
-                                                        <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer">
+                                                        <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer"
+                                                            wire:click='$emit("openModal", "detail.examdetail", @json(["examStudentId" => $score["id"], "roomTeacherId" => null]))'>
                                                             <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
                                                                 {{ $score['score'] }}
                                                             </p>
@@ -367,7 +369,7 @@
                                     @endphp
                                     @endforeach
                                     <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
-                                        <td class="py-3 px-5 border-b border-blue-gray-50" colspan="7">
+                                        <td class="py-3 px-5 border-b border-blue-gray-50" colspan="6">
                                             <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
                                                 Final score
                                             </p>

@@ -18,7 +18,7 @@ class Homeroomdetail extends Component
 {
     use WithFileUploads;
 
-    const MAXNUMBERLENGTH = 2;
+    const MAXNUMBERLENGTH = 0;
 
     public $image;
 
@@ -331,7 +331,7 @@ class Homeroomdetail extends Component
         foreach ($exams as $exam) {
             $coef = ExamTypeCoefficient::COEFFICIENT[$exam['type']];
             $totalCoefficient += $coef;
-            $totalScore = $exam['score']*$coef;
+            $totalScore += $exam['score']*$coef;
         }
 
         return $totalCoefficient > 0 ? round($totalScore / $totalCoefficient, self::MAXNUMBERLENGTH) : 0;

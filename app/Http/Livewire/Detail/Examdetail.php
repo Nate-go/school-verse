@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
+use App\Constant\OtherConstant;
 use App\Constant\UserRole;
 use App\Models\ExamStudent;
 use App\Services\ConstantService;
@@ -26,6 +27,8 @@ class Examdetail extends ModalComponent
 
     protected $constantService;
 
+    public $enable;
+
     public function boot(ConstantService $constantService) {
         $this->constantService = $constantService;  
     }
@@ -33,13 +36,24 @@ class Examdetail extends ModalComponent
     public function mount($examStudentId, $roomTeacherId) {
         $this->examStudentId = $examStudentId;
         $this->formGenerate();
-        if(auth()->user()->role == UserRole::STUDENT) {
+        if(auth()->user()->role == UserRole::STUDENT or !$roomTeacherId) {
             $this->isPermissionDelete = false;
             $this->isPermissionUpdate = false;
         } else {
             $this->isPermissionUpdate = $roomTeacherId == $this->data['roomTeacherId'];
             $this->isPermissionDelete = true; 
         }        
+    }
+
+    public function isEnable() {
+        $startTime = ExamStudent::selectColumns(['exams.created_at'])
+                    ->join('exams', 'exams.id', '=', 'exam_students.exam_id')
+                    ->where('exam_students.id', $this->examStudentId)
+                    ->first();
+
+        $createdTimestamp = strtotime($startTime->created_at);
+        $currentTimestamp = time();
+        return $currentTimestamp - $createdTimestamp <= OtherConstant::LIMIT_TIME_SECOND;
     }
 
     public function formGenerate() {
@@ -53,7 +67,8 @@ class Examdetail extends ModalComponent
             'score',
             'review',
             'exams.type as exam_type',
-            'room_teacher_id'
+            'room_teacher_id',
+            'exams.content as exam_content'
         ])
             ->join('students', 'students.id', '=', 'exam_students.student_id')
             ->join('users as student_info', 'students.user_id', '=', 'student_info.id')
@@ -74,11 +89,13 @@ class Examdetail extends ModalComponent
             'subjectName' => $result->subject_name,
             'subjectImage' => $result->subject_image,
             'examType' =>  $this->constantService->getNameConstant(ExamType::class, $result->exam_type),
-            'roomTeacherId' => $result->room_teacher_id
+            'roomTeacherId' => $result->room_teacher_id,
+            'examContent' => $result->exam_content
         ];
 
         $this->score = $result->score;
         $this->review = $result->review;
+        $this->enable = $this->isEnable();
     }
 
     public function updatedScore($value) {
@@ -88,6 +105,10 @@ class Examdetail extends ModalComponent
     }
 
     public function save() {
+        if (!$this->enable) {
+            $this->notify('error', 'Overtime to change anything');
+            return;
+        }
         $success = ExamStudent::where('id', $this->examStudentId)
                             ->update([
                                 'score' => doubleval($this->score),
@@ -105,6 +126,10 @@ class Examdetail extends ModalComponent
     }
 
     public function delete() {
+        if (!$this->enable) {
+            $this->notify('error', 'Overtime to change anything');
+            return;
+        }
         $success = ExamStudent::where('id', $this->examStudentId)
             ->delete();
 

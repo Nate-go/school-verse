@@ -238,7 +238,7 @@ class Studentroomdetail extends Component
         foreach ($exams as $exam) {
             $coef = ExamTypeCoefficient::COEFFICIENT[$exam['type']];
             $totalCoefficient += $coef;
-            $totalScore = $exam['score'] * $coef;
+            $totalScore += $exam['score'] * $coef;
         }
 
         return $totalCoefficient > 0 ? round($totalScore / $totalCoefficient, self::MAXNUMBERLENGTH) : 0;
