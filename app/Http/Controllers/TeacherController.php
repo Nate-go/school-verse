@@ -12,7 +12,7 @@ class TeacherController extends Controller
 
     public function __construct(TeacherService $teacherService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]));
+        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER));
         $this->teacherService = $teacherService;
     }
 

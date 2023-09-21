@@ -11,6 +11,10 @@ class Sidebar extends Component
 {
     public $adminRole = UserRole::ADMIN;
 
+    public $teacherRole = UserRole::TEACHER;
+
+    public $studentRole = UserRole::STUDENT;
+
     public $sidebarIsDisplay = false;
 
     public $page;

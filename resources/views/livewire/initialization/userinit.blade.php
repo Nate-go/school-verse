@@ -221,11 +221,11 @@
                                 @if (empty($selectedGrades))
                                 <option hidden selected>{{'Select grade to select room'}}</option>
                                 @else
-                                @foreach ($rooms as $room)
-                                <option value="{{$room['id']}}" {{($selectedRoom==$room['id']) ? "selected" : '' }}>
-                                    {{$room['name']}}
-                                </option>
-                                @endforeach
+                                    @foreach ($rooms as $room)
+                                    <option value="{{$room['id']}}" {{($selectedRoom==$room['id']) ? "selected" : '' }}>
+                                        {{$room['name']}}
+                                    </option>
+                                    @endforeach
                                 @endif
                             </select>
                         </div>

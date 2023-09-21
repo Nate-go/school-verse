@@ -30,7 +30,9 @@ class InsistenceService extends BaseService
 
     public function getPageForUser($id)
     {
-        return view('admin/insistence/insistences', ['insistencesSource' => 'INSISTENCES']);
+        $data = TableData::USER_INSISTENCES;
+        $this->tableService->setTableForm($data);
+        return view('user/insistences', ['tableSource' => $data, 'userId' => $id]);
     }
 
     public function getDetailPageForAdmin($id) {

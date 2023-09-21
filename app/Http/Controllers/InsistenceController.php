@@ -13,7 +13,7 @@ class InsistenceController extends Controller
 
     public function __construct(InsistenceService $insistenceService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('create', 'store');
+        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER));
         $this->insistenceService = $insistenceService;
     }
 

@@ -12,7 +12,7 @@ class StudentController extends Controller
 
     public function __construct(StudentService $studentService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('destroy');
+        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER))->except('destroy');
         $this->studentService = $studentService;
     }
 

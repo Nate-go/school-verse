@@ -16,7 +16,7 @@ class Authorization
      */
     public function handle(Request $request, Closure $next, $roles): Response
     {
-        $roles = json_decode($roles);
+        $roles = explode('|', $roles);
         if (in_array(Auth::user()['role'], $roles)) {
             return $next($request);
         }

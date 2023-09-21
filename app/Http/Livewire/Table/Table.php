@@ -25,13 +25,16 @@ class Table extends Component
 
     protected $constantService;
 
+    public $userId;
+
     public function boot(ConstantService $constantService)
     {
         $this->constantService = $constantService;
     }
 
-    public function mount($tableSource)
+    public function mount($tableSource, $userId = null)
     {
+        $this->userId = $userId;
         $this->tableSource = $tableSource;
         $this->header = $tableSource['header'];
         $this->filterForm = $tableSource['filterForm'];

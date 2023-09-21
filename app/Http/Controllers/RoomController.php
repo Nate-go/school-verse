@@ -13,7 +13,7 @@ class RoomController extends Controller
 
     public function __construct(RoomService $roomService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('show');
+        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER));
         $this->roomService = $roomService;
     }
 
