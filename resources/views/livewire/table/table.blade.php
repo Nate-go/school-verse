@@ -1,6 +1,8 @@
 <div
     class="flex flex-col rounded-xl bg-white text-gray-700 shadow-md xl:col-span-2 overflow-visible">
-
+    <div wire:loading>
+        @livewire('fregment.loading')
+    </div>
     
     <div
         class="bg-clip-border rounded-xl bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6 overflow-visible">

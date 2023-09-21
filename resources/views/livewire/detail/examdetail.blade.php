@@ -58,18 +58,18 @@
 
                     <div class="md:col-span-2">
                         <label>Score</label>
-                        <input type="number" placeholder="enter score" min="0" max="100" {{ $isPermissionUpdate ? '': 'readonly'}}
+                        <input type="number" placeholder="enter score" min="0" max="100" {{ ($isPermissionUpdate and $enable) ? '': 'readonly'}}
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='score' />
                     </div>
 
                     <div class="md:col-span-4 md:row-span-3">
                         <label>Review</label>
-                        <textarea  {{ $isPermissionUpdate ? '': 'readonly'}}
+                        <textarea  {{ ($isPermissionUpdate and $enable) ? '': 'readonly'}}
                         class="h-30 border mt-1 rounded px-4 w-full pt-1 bg-gray-50" rows="10" wire:model='review'></textarea>
                     </div>
                 </div>
 
-                @if ($isPermissionDelete or $isPermissionUpdate)
+                @if (($isPermissionDelete or $isPermissionUpdate) and $enable)
                     <div class="flex pt-5 gap-2 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
                         @if ($isPermissionUpdate)
                         <div class="md:col-span-2 flex grid-cols-2 gap-2">

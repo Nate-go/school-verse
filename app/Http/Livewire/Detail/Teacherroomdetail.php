@@ -49,7 +49,7 @@ class Teacherroomdetail extends Component
 
     public $content;
 
-    protected $listeners = ['updateScore' => 'setBody', 'updateExamList' => 'setExam'];
+    protected $listeners = ['updateScore' => 'setBody', 'updateExamList' => 'formGenerate'];
 
     public function boot(ConstantService $constantService)
     {

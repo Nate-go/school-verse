@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
+use App\Constant\OtherConstant;
 use App\Constant\UserRole;
 use App\Models\ExamStudent;
 use App\Services\ConstantService;
@@ -26,6 +27,8 @@ class Examdetail extends ModalComponent
 
     protected $constantService;
 
+    public $enable;
+
     public function boot(ConstantService $constantService) {
         $this->constantService = $constantService;  
     }
@@ -40,6 +43,17 @@ class Examdetail extends ModalComponent
             $this->isPermissionUpdate = $roomTeacherId == $this->data['roomTeacherId'];
             $this->isPermissionDelete = true; 
         }        
+    }
+
+    public function isEnable() {
+        $startTime = ExamStudent::selectColumns(['exams.created_at'])
+                    ->join('exams', 'exams.id', '=', 'exam_students.exam_id')
+                    ->where('exam_students.id', $this->examStudentId)
+                    ->first();
+
+        $createdTimestamp = strtotime($startTime->created_at);
+        $currentTimestamp = time();
+        return $currentTimestamp - $createdTimestamp <= OtherConstant::LIMIT_TIME_SECOND;
     }
 
     public function formGenerate() {
@@ -81,6 +95,7 @@ class Examdetail extends ModalComponent
 
         $this->score = $result->score;
         $this->review = $result->review;
+        $this->enable = $this->isEnable();
     }
 
     public function updatedScore($value) {
@@ -90,6 +105,10 @@ class Examdetail extends ModalComponent
     }
 
     public function save() {
+        if (!$this->enable) {
+            $this->notify('error', 'Overtime to change anything');
+            return;
+        }
         $success = ExamStudent::where('id', $this->examStudentId)
                             ->update([
                                 'score' => doubleval($this->score),
@@ -107,6 +126,10 @@ class Examdetail extends ModalComponent
     }
 
     public function delete() {
+        if (!$this->enable) {
+            $this->notify('error', 'Overtime to change anything');
+            return;
+        }
         $success = ExamStudent::where('id', $this->examStudentId)
             ->delete();
 
