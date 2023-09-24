@@ -120,20 +120,22 @@
                             </select>
                         </div>
 
-                        <div class="md:col-span-1">
-                            <label>Content</label>
-                            <input wire:model='content'
-                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full pl-2">
-                        </div>
-
-                        <div class="md:col-span-1">
-                            <label>Action</label>
-                            <button wire:click='createExam'
-                                class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center h-10 border mt-1">
-                                <i class="fa-regular fa-floppy-disk fa-xl"></i>
-                                <p>Create</p>
-                            </button>
-                        </div>
+                        @if ($isTeacher)
+                            <div class="md:col-span-1">
+                                <label>Content</label>
+                                <input wire:model='content'
+                                    class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full pl-2">
+                            </div>
+                            
+                            <div class="md:col-span-1">
+                                <label>Action</label>
+                                <button wire:click='createExam'
+                                    class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center h-10 border mt-1">
+                                    <i class="fa-regular fa-floppy-disk fa-xl"></i>
+                                    <p>Create</p>
+                                </button>
+                            </div>
+                        @endif
     
                         <div class="md:col-span-3 max-h-80 overflow-auto">
                             <table class="w-full min-w-[640px] table-autos">
@@ -251,7 +253,7 @@
                                 @foreach ($body as $item)
                                 <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                     <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50"
-                                        wire:click="changeToStudentView({{$item['student']['studentId']}})">
+                                        >
                                         <div class="flex gap-2 items-center">
                                             <img class="w-6 h-6 rounded-full"
                                                 src="{{$item['student']['studentImage'] ?? asset('storage/images/default-image.png')}}">

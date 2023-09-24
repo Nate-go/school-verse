@@ -27,6 +27,13 @@ class SubjectService extends BaseService
 
     public function getDetailPageForAdmin($id)
     {
+        if(!$this->isSubjectExist($id)) {
+            return redirect()->route('notFound');
+        }
         return view('admin/subject/subjects-detail', ['id' => $id]);
+    }
+
+    private function isSubjectExist($subjectId) {
+        return Subject::where('id', $subjectId)->exist();
     }
 }

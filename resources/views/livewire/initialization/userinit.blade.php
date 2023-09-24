@@ -16,7 +16,7 @@
     
                     <div class="md:col-span-2">
                         <label for="full_name">Password</label>
-                        <input type="text" 
+                        <input type="password" 
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='password' />
                     </div>
     

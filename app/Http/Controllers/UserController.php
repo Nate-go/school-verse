@@ -13,18 +13,24 @@ class UserController extends Controller
 
     public function __construct(UserService $userService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->only('index', 'create', 'store', 'destroy');
+        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER) . '|' . str(UserRole::STUDENT))->only('index', 'create', 'store', 'destroy');
         $this->userService = $userService;
     }
 
     public function index()
     {
-        return $this->userService->getPageForAdmin();
+        if(Auth::user()->role == UserRole::ADMIN) {
+            return $this->userService->getPageForAdmin();
+        }
+        return $this->userService->getDetailPage(Auth::user()->id);
     }
 
     public function create()
     {
-        return $this->userService->getInitizationForm();
+        if (Auth::user()->role == UserRole::ADMIN) {
+            return $this->userService->getInitizationForm();
+        }
+        return redirect()->route('notPermission');
     }
 
     /**
@@ -40,7 +46,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        if(Auth::user()->role == UserRole::ADMIN or Auth::user()->id == $id) {
+        if(Auth::user()->role == UserRole::ADMIN) {
             return $this->userService->getDetailPage($id);
         }
         return redirect()->route('notPermission');

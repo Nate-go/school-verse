@@ -3,9 +3,11 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\OtherConstant;
+use App\Constant\UserRole;
 use App\Models\Exam;
 use App\Models\ExamStudent;
 use App\Models\Student;
+use Auth;
 use Date;
 use DB;
 use League\Csv\Reader;
@@ -37,6 +39,8 @@ class Examactiondetail extends ModalComponent
 
     public $enable;
 
+    public $isTeacher;
+
     public function mount($exam, $roomTeacherId) {
         $this->exam = $exam;
         $this->roomTeacherId = $roomTeacherId;
@@ -44,6 +48,7 @@ class Examactiondetail extends ModalComponent
     }
 
     public function formGenerate() {
+        $this->isTeacher = Auth::user()->role == UserRole::TEACHER;
         $this->content = $this->exam['content'];
         $this->setBody();
         $this->currentData = $this->body;

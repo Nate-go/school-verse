@@ -296,7 +296,7 @@ class TableData
                 [
                     'name' => 'status',
                     'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [Insistence::class]],
-                    'defaultValues' => [Insistence::PENDING],
+                    'defaultValues' => [],
                 ],
                 [
                     'name' => 'school year',

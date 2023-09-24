@@ -269,18 +269,30 @@ class Roomdetail extends Component
             return;
         }
 
-        $roomSubjectTeachersId = $this->isSubjectTeacherExist($this->selectedSubjectTeacher);
+        $subject = Teacher::selectColumns(['subject_id'])
+            ->where('id', $this->selectedSubjectTeacher)
+            ->first();
 
-        if($roomSubjectTeachersId) {
-            $result = RoomTeacher::where('id', $roomSubjectTeachersId)
-                    ->update(['teacher_id' => $this->selectedSubjectTeacher]);
+        $currentRoomTeacher = RoomTeacher::selectColumns(['room_teachers.id'])
+            ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
+            ->where('teachers.subject_id', $subject->subject_id)
+            ->where('room_id', $this->itemId)
+            ->whereAllDeletedNull(['teachers'])
+            ->first();
 
-            if ($result) {
-                $this->notify('success', 'Change teacher successfull');
-            } else {
-                $this->notify('error', 'Change teacher fail');
-            }
+        if ($currentRoomTeacher) {
+            RoomTeacher::where('id', $currentRoomTeacher->id)
+                ->delete();
+        }
 
+        $roomTeacher = RoomTeacher::onlyTrashed()
+            ->where('room_id', $this->itemId)
+            ->where('teacher_id', $this->selectedSubjectTeacher)
+            ->first();
+
+        if ($roomTeacher) {
+            $roomTeacher->restore();
+            $roomTeacher->save();
         } else {
             $result = RoomTeacher::create([
                 'teacher_id' => $this->selectedSubjectTeacher,

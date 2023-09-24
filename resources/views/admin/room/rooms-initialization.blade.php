@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@livewire('head', ['name' => 'room create'])
+@livewire('head', ['name' => 'class create'])
 
 <body>
     <div id='root' class='bg-slate-300'>

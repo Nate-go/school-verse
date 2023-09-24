@@ -44,10 +44,9 @@
                         <label>Email</label>
                         <input type="text" readonly class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='email' />
                     </div>
-                
-                    <div class="md:col-span-2">
-                        <label>Status</label>
-                        @if ($isAdmin)
+                    @if ($isAdmin and $role != 'ADMIN')
+                        <div class="md:col-span-2">
+                            <label>Status</label>
                             <select wire:model='selectedStatus' readonly
                                 class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                                 @foreach ($statuses as $status)
@@ -55,20 +54,8 @@
                                     {{$status['name']}}</option>
                                 @endforeach
                             </select>
-                        @else
-                            @php
-                                $statusName = '';
-                                foreach($statuses as $status) {
-                                    if($selectedStatus == $status['value']) {
-                                        $statusName = $status['name'];
-                                        break;
-                                    }
-                                }
-                            @endphp
-                            <input type="text" readonly class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{$statusName}}" />
-                        @endif
-                        
-                    </div>
+                        </div>
+                    @endif
                 
                 </div>
                 <div class="flex pt-5 gap-2 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
@@ -191,24 +178,25 @@
                             class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
                             Change Password</h6>
                     </div>
-                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
-                        
-                        <div class="md:col-span-2">
-                            <label>New password</label>
-                            <input type="text" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='newPassword' />
-                        </div>
-                    
-                        <div class="md:col-span-2">
-                            <label>New password again</label>
-                            <input type="text" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='newPasswordAgain' />
-                        </div>
-
+                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
                         @if (!$isAdmin)
                         <div class="md:col-span-2">
                             <label>Current password</label>
-                            <input type="text" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='currentPassword' />
+                            <input type="password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='currentPassword' />
                         </div>
                         @endif
+
+                        <div class="{{ $isAdmin ? 'md:col-span-3' : 'md:col-span-2' }}">
+                            <label>New password</label>
+                            <input type="password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='newPassword' />
+                        </div>
+                    
+                        <div class="{{ $isAdmin ? 'md:col-span-3' : 'md:col-span-2' }}">
+                            <label>New password again</label>
+                            <input type="password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='newPasswordAgain' />
+                        </div>
+
+                       
                     
                         <div class="md:col-span-2">
                             <button wire:click='saveChangePassword'

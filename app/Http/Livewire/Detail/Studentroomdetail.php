@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
+use App\Constant\SortTypes;
 use App\Models\Exam;
 use App\Models\Room;
 use App\Models\RoomTeacher;
@@ -15,7 +16,9 @@ use Livewire\Component;
 
 class Studentroomdetail extends Component
 {
-    const MAXNUMBERLENGTH = 2;
+    const MAXNUMBERLENGTH = 0;
+
+    const ALL = -1;
 
     public $room;
 
@@ -75,9 +78,7 @@ class Studentroomdetail extends Component
 
         $this->setHeader();
         $this->setBody();
-
         $this->setStudent();
-
     }
 
     public function setStudent() {

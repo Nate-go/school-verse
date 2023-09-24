@@ -36,6 +36,17 @@ class InsistenceService extends BaseService
     }
 
     public function getDetailPageForAdmin($id) {
+        if(!$this->isInsistenceExist($id)) {
+            return redirect()->route('notFound');
+        }
         return view('admin/insistence/insistences-detail', ['id' => $id]);
+    }
+
+    public function getCreatePage($userId) {
+        return view('user/insistences-initialization', ['userId' => $userId]);
+    }
+
+    private function isInsistenceExist($id) {
+        return Insistence::where('id', $id)->exists();
     }
 }

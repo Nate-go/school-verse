@@ -23,15 +23,14 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="md:col-span-2 md:row-span-3">
                         <label>Content</label>
-                        <textarea class="h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="10" readonly>{{ $content }}</textarea>
+                        <textarea class="h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="10" {{ ($isAdmin or $selectedStatus != self::PENDDING) ? 'readonly' : '' }}  wire:model='content'></textarea>
                     </div>
 
                     <div class="md:col-span-2 md:row-span-3">
                         <label>Feedback</label>
-                        <textarea class="h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="10" wire:model='feedback'></textarea>
+                        <textarea class="h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="10" {{ $isAdmin ? '' : 'readonly' }} wire:model='feedback'></textarea>
                     </div>
 
                     <div class="md:col-span-1">
@@ -41,13 +40,27 @@
                     
                     <div class="md:col-span-1">
                         <label>Status</label>
-                        <select wire:model='selectedStatus'
-                            class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
-                            @foreach ($statuses as $status)
-                            <option {{ $selectedStatus==$status['value'] ? 'selected' : '' }} value="{{$status['value']}}">
-                                {{$status['name']}}</option>
-                            @endforeach
-                        </select>
+                        @if ($isAdmin)
+                            <select wire:model='selectedStatus'
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                @foreach ($statuses as $status)
+                                <option {{ $selectedStatus==$status['value'] ? 'selected' : '' }} value="{{$status['value']}}">
+                                    {{$status['name']}}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            @php
+                                $name = '';
+                                foreach ($statuses as $status) {
+                                    if($status['value'] == $selectedStatus) {
+                                        $name = $status['name'];
+                                        break;
+                                    }
+                                }
+                            @endphp
+                            <input type="text" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{ $name }}" readonly />
+                        @endif
+                        
                     </div>
 
                 </div>
@@ -64,6 +77,16 @@
                             <p>Cancel</p>
                         </button>
                     </div>
+
+                    @if (!$isAdmin)
+                        <div class="md:col-span-2 flex grid-cols-2 gap-2">
+                            <button wire:click='delete'
+                                class="col-span-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center">
+                                <i class="fa-solid fa-eraser"></i>
+                                <p>Delete</p>
+                            </button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
