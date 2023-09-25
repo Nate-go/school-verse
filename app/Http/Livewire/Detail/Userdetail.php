@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Detail;
 use App\Constant\Gender;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
+use App\Events\NotifyEvent;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\ConstantService;

@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\Insistence;
+use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
 use App\Services\ConstantService;
 use Auth;
 use Livewire\Component;
+use Notification;
 
 class Insistencedetail extends Component
 {
@@ -25,6 +27,8 @@ class Insistencedetail extends Component
     public $content;
 
     public $feedback;
+
+    public $userId;
 
     public $time;
 
@@ -51,7 +55,7 @@ class Insistencedetail extends Component
 
     public function formGenerate() {
         $data = \App\Models\Insistence::selectColumns(['username', 'image_url', 'role', 
-                'insistences.status', 'content', 'feedback', 'insistences.created_at'])
+                'insistences.status', 'content', 'feedback', 'insistences.created_at', 'user_id'])
                 ->join('users', 'users.id', '=', 'insistences.user_id')
                 ->where('insistences.id', $this->itemId)
                 ->first();
@@ -63,6 +67,7 @@ class Insistencedetail extends Component
         $this->content = $data->content;
         $this->time = $data->created_at;
         $this->feedback = $data->feedback;        
+        $this->userId = $data->user_id;
     }
 
     public function save() {
@@ -90,6 +95,16 @@ class Insistencedetail extends Component
         }
 
         $this->formGenerate();
+
+        $newNotify = [
+            'content' => 'Your insistence has been updated',
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $this->userId,
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/insistences/' . str($this->itemId)
+        ];
+
+        $this->realTimeNotify($newNotify);
     }
 
     public function delete() {

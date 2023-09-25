@@ -9,6 +9,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- @vite('resources/css/app.css') --}}
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <link rel="icon" type="image/png" href="{{ asset('img/icon-tab.png') }}">
     @livewireStyles
     @csrf

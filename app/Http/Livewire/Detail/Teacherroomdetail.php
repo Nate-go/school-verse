@@ -49,8 +49,6 @@ class Teacherroomdetail extends Component
 
     public $exams;
 
-    public $content;
-
     public $isTeacher;
 
     protected $listeners = ['updateScore' => 'setBody', 'updateExamList' => 'formGenerate'];
@@ -117,7 +115,6 @@ class Teacherroomdetail extends Component
         $this->setHeader();
         $this->setBody();
         $this->setExam();
-        $this->content = '';
     }
 
     public function setExam() {
@@ -288,20 +285,20 @@ class Teacherroomdetail extends Component
         return $data;
     }
 
-    public function createExam() {
+    public function createExam($content) {
         if($this->selectedExamType == null or $this->selectedExamType == -1) {
             $this->notify('error', 'Select an exam type before create');
             return;
         }
 
-        $this->content = trim($this->content);
-        if ($this->content == '') {
+        $content = trim($content);
+        if ($content == '') {
             $this->notify('error', 'Content can not be empty');
             return;
         }
 
         $exist = Exam::where('room_teacher_id', $this->itemId)
-                ->where('content', $this->content)
+                ->where('content', $content)
                 ->where('type', $this->selectedExamType)
                 ->exists();
 
@@ -311,7 +308,7 @@ class Teacherroomdetail extends Component
         }
 
         $newExam = Exam::create([
-            'content' => $this->content,
+            'content' => $content,
             'room_teacher_id' => $this->itemId,
             'type' => $this->selectedExamType
         ]);
@@ -341,5 +338,10 @@ class Teacherroomdetail extends Component
     public function render()
     {
         return view('livewire.detail.teacherroomdetail');
+    }
+
+    public function getModal($name, $data)
+    {
+        $this->displayModal($name, $data);
     }
 }
