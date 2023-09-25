@@ -123,13 +123,13 @@
                         @if ($isTeacher)
                             <div class="md:col-span-1">
                                 <label>Content</label>
-                                <input wire:model='content'
+                                <input id='content' value=""
                                     class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full pl-2">
                             </div>
                             
                             <div class="md:col-span-1">
                                 <label>Action</label>
-                                <button wire:click='createExam'
+                                <button wire:click='createExam(document.getElementById("content").value)'
                                     class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center h-10 border mt-1">
                                     <i class="fa-regular fa-floppy-disk fa-xl"></i>
                                     <p>Create</p>
@@ -185,9 +185,10 @@
                                             </p>
                                         </td>
                                         <td class="py-3 px-5 flex justify-center items-center h-max">
-                                            <button wire:click='$emit("openModal", "detail.examactiondetail", @json(["exam" => $exam, "roomTeacherId" => $itemId]))'
+                                            <button wire:click='getModal("detail.examactiondetail", {{json_encode(["exam" => $exam, "roomTeacherId" => $itemId])}})'
                                                 class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
-                                                type="button"><i class="fa-solid fa-eye"></i>
+                                                type="button">
+                                                <i class="fa-solid fa-eye"></i>
                                             </button>
                                             <button
                                                 class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
@@ -263,6 +264,7 @@
                                         </div>
                     
                                     </td>
+                                    
                                     @foreach ($header as $column)
                                     <td class="py-3 px-5 border-b border-blue-gray-50">
                                         @if (empty($item['scores']))
@@ -274,7 +276,7 @@
                                             @foreach ($item['scores'] as $score)
                                                 @if ($score['type'] == $column['value'])
                                                 <div class="py-1 px-1.5 rounded-md cursor-pointer hover:bg-blue-700 hover:text-white {{ $score['examId'] == $selectedExam ? 'bg-green-500 text-white' : 'bg-blue-300'}}" 
-                                                    wire:click='$emit("openModal", "detail.examdetail", @json(["examStudentId" => $score["id"], "roomTeacherId" => $itemId]))'>
+                                                    wire:click='getModal("detail.examdetail", {{json_encode(["examStudentId" => $score["id"], "roomTeacherId" => $itemId])}})'>
                                                     <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
                                                         {{ $score['score'] }}
                                                     </p>

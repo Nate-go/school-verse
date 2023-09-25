@@ -33,7 +33,7 @@ class Examdetail extends ModalComponent
         $this->constantService = $constantService;  
     }
 
-    public function mount($examStudentId, $roomTeacherId) {
+    public function mount($examStudentId, $roomTeacherId=null) {
         $this->examStudentId = $examStudentId;
         $this->formGenerate();
         if(auth()->user()->role == UserRole::STUDENT or !$roomTeacherId) {

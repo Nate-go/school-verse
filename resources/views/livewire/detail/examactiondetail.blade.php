@@ -119,7 +119,7 @@
                                     </td>
                                     @if ($isTeacher)
                                         <td class="py-3 px-5 flex justify-center items-center h-max">
-                                            <button wire:click='deleteStudent({{$item[' studentId']}})'
+                                            <button wire:click='deleteStudent({{$item['studentId']}})'
                                                 class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
                                                 type="button"><i class="fa-solid fa-eraser"></i>
                                             </button>

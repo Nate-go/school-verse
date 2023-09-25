@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Fregment;
 
+use App\Models\Notification;
 use App\Services\UtilService;
 use Livewire\Component;
 use Request;
@@ -24,6 +25,7 @@ class Header extends Component
         'changeHeaderLock' => 'changeLock',
         'displaySidebar' => 'changeSidebar',
         'displayNotify' => 'changeNotify',
+        'realtimeNotifyDisplay',
     ];
 
     protected $utilService;
@@ -63,5 +65,12 @@ class Header extends Component
     public function changeNotify()
     {
         $this->notifyIsOpen = ! $this->notifyIsOpen;
+    }
+
+    public function realtimeNotifyDisplay($data) {
+        $notify = Notification::where('id', $data['notifyId'])
+                                ->first();
+
+        $this->notify('info', $notify->content);
     }
 }

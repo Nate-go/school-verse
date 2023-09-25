@@ -1,4 +1,7 @@
 <div class="flex-col">
+    <div wire:loading>
+        @livewire('fregment.loading')
+    </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div class="">
@@ -146,8 +149,8 @@
                                             <div class="flex gap-1">
                                                 @foreach ($item['scores'] as $score)
                                                     @if ($score['type'] == $column['value'])
-                                                    <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer hover:bg-blue-700 hover:text-white bg-blue-300"
-                                                    wire:click='$emit("openModal", "detail.examdetail", @json(["examStudentId" => $score["id"], "roomTeacherId" => null]))'>
+                                                    <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer hover:bg-blue-700 hover:text-white"
+                                                    wire:click='getModal("detail.examdetail", {{json_encode(["examStudentId" => $score["id"]])}})'>
                                                         <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
                                                             {{ $score['score'] }}
                                                         </p>
@@ -167,7 +170,7 @@
                                     </td>
                                 </tr>
                                 @php
-                                $count += 1;
+                                    $count += 1;
                                 @endphp
                                 @endforeach
                                 <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>

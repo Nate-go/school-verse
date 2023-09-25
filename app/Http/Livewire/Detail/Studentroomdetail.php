@@ -249,4 +249,9 @@ class Studentroomdetail extends Component
     {
         return view('livewire.detail.studentroomdetail');
     }
+
+    public function getModal($name, $data)
+    {
+        $this->displayModal($name, $data);
+    }
 }
