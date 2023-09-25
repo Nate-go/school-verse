@@ -71,6 +71,8 @@ class Header extends Component
         $notify = Notification::where('id', $data['notifyId'])
                                 ->first();
 
+        $this->emit('setNotify');                        
+
         $this->notify('info', $notify->content);
     }
 }

@@ -20,6 +20,7 @@ class Notifytable extends Component
     protected $listeners = [
         'displayNotify' => 'changeNotify',
         'closeAll' => 'closeNotify',
+        'setNotify'
     ];
 
     public function mount() {
