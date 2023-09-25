@@ -21,10 +21,9 @@ class HomeController extends Controller
             case UserRole::ADMIN:
                 return redirect('/insistences');
             case UserRole::TEACHER:
-                return redirect('/rooms');
+                return redirect('/teachers');
             default:
                 $url = $this->roomService->getUrlForStudent();
-
                 return redirect($url);
         }
     }

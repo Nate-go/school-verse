@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\Insistence;
+use App\Constant\UserRole;
 use App\Services\ConstantService;
+use Auth;
 use Livewire\Component;
 
 class Insistencedetail extends Component
@@ -28,6 +30,10 @@ class Insistencedetail extends Component
 
     protected $constantService;
 
+    public $isAdmin;
+
+    const PENDDING = Insistence::PENDING;
+
     public function boot(ConstantService $constantService) {
         $this->constantService = $constantService;
     }
@@ -36,6 +42,7 @@ class Insistencedetail extends Component
         $this->itemId = $itemId;
         $this->formGenerate();
         $this->setStatus();
+        $this->isAdmin = Auth::user()->role == UserRole::ADMIN;
     }
 
     private function setStatus() {
@@ -51,7 +58,7 @@ class Insistencedetail extends Component
         
         $this->username = $data->username;
         $this->imageUrl = $data->image_url;
-        $this->role = $this->constantService->getNameConstant(Insistence::class, $data->role) ;
+        $this->role = $this->constantService->getNameConstant(UserRole::class, $data->role) ;
         $this->selectedStatus = $data->status;
         $this->content = $data->content;
         $this->time = $data->created_at;
@@ -59,10 +66,22 @@ class Insistencedetail extends Component
     }
 
     public function save() {
-        $result = \App\Models\Insistence::where('id', $this->itemId)->update([
-            'status' => $this->selectedStatus,
-            'feedback' => $this->feedback
-        ]);
+        if($this->isAdmin) {
+            $result = \App\Models\Insistence::where('id', $this->itemId)->update([
+                'status' => $this->selectedStatus,
+                'feedback' => $this->feedback
+            ]);
+        } else {
+            if($this->selectedStatus != Insistence::PENDING) {
+                $this->notify('error', 'Your insistence is not pending anymore for change');
+                $this->formGenerate();
+                return;
+            }
+            $result = \App\Models\Insistence::where('id', $this->itemId)->update([
+                'content' => $this->content
+            ]);
+        }
+        
 
         if($result) {
             $this->notify('success', 'Insistence update successfull');
@@ -71,6 +90,23 @@ class Insistencedetail extends Component
         }
 
         $this->formGenerate();
+    }
+
+    public function delete() {
+        if($this->selectedStatus != Insistence::PENDING) {
+            $this->notify('error', 'Your insistence is not pending anymore to delete');
+            return;
+        }
+
+        $success = \App\Models\Insistence::where('id', $this->itemId)
+                                ->delete();
+
+        if ($success) {
+            $this->notify('success', 'Insistence delete successfull');
+            return redirect('/insistences');
+        } else {
+            $this->notify('error', 'Insistence delete fail');
+        }
     }
 
     public function render()

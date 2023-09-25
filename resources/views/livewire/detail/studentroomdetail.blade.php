@@ -92,7 +92,7 @@
                 <div class="text-center pb-4">
                     <h6
                         class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
-                        Students</h6>
+                        Scores</h6>
                 </div>
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-3">
                     <div class="md:col-span-3">
@@ -146,7 +146,8 @@
                                             <div class="flex gap-1">
                                                 @foreach ($item['scores'] as $score)
                                                     @if ($score['type'] == $column['value'])
-                                                    <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer">
+                                                    <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer hover:bg-blue-700 hover:text-white bg-blue-300"
+                                                    wire:click='$emit("openModal", "detail.examdetail", @json(["examStudentId" => $score["id"], "roomTeacherId" => null]))'>
                                                         <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
                                                             {{ $score['score'] }}
                                                         </p>
@@ -154,7 +155,6 @@
                                                     @endif
                                                 @endforeach
                                             </div>
-                                            
                                         @endif
                     
                                     </td>

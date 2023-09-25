@@ -20,16 +20,19 @@
                 </li>
                 <li
                     class="hover:bg-slate-100 block w-full pt-[9px] pb-2 px-3 rounded-md text-start leading-tight cursor-pointer select-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900">
-                    <a href="/profiles">
+                    <a href="{{ $isAdmin ? '/users/' . str(Auth::user()->id) : '/users'}}">
                         <i class="fa-solid fa-address-card pr-2"></i>Account setting
+                    </a>
                 </li>
-                </a>
+                
+                
                 <li
                     class="hover:bg-slate-100 block w-full pt-[9px] pb-2 px-3 rounded-md text-start leading-tight cursor-pointer select-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900">
                     <a href="/logout">
                         <i class="fa-solid fa-right-from-bracket pr-2"></i>Logout
+                    </a>
                 </li>
-                </a>
+                
         
             </ul>
         </div>

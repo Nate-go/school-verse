@@ -5,12 +5,14 @@ namespace App\Http\Livewire\Detail;
 use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
 use App\Constant\SortTypes;
+use App\Constant\UserRole;
 use App\Models\Exam;
 use App\Models\ExamStudent;
 use App\Models\Room;
 use App\Models\RoomTeacher;
 use App\Models\Student;
 use App\Services\ConstantService;
+use Auth;
 use DB;
 use Exception;
 use Livewire\Component;
@@ -49,6 +51,8 @@ class Teacherroomdetail extends Component
 
     public $content;
 
+    public $isTeacher;
+
     protected $listeners = ['updateScore' => 'setBody', 'updateExamList' => 'formGenerate'];
 
     public function boot(ConstantService $constantService)
@@ -81,6 +85,7 @@ class Teacherroomdetail extends Component
 
     public function formGenerate()
     {
+        $this->isTeacher = Auth::user()->role == UserRole::TEACHER;
         $data = Room::selectColumns([
             'rooms.image_url as room_image',
             DB::raw('CONCAT(grades.name, "", rooms.name) as room_name'),
@@ -228,9 +233,8 @@ class Teacherroomdetail extends Component
             ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
             ->where('exam_students.student_id', $studentId)
             ->where('teachers.subject_id', $subjectId)
-            ->whereAllDeletedNull(['exam_students', 'room_teachers', 'teachers', 'subjects'])
+            ->whereAllDeletedNull(['exam_students'])
             ->get();
-
         $data = [];
 
         foreach ($exams as $exam) {

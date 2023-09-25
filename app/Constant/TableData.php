@@ -272,4 +272,38 @@ class TableData
             ],
         ],
     ];
+
+    const USER_INSISTENCES = [
+        'name' => 'insistences',
+        'header' => [
+            ['name' => 'content', 'attributesName' => 'content', 'type' => HeaderTypes::TEXTARE_TYPE, 'sortable' => false],
+            ['name' => 'time', 'attributesName' => 'created_at', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+            ['name' => 'status', 'attributesName' => 'status', 'type' => HeaderTypes::TEXT_TYPE, 'sortable' => true],
+        ],
+        'filterForm' => [
+            'search' => [
+                'elements' => [
+                    ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
+                ],
+                'value' => ['element' => 0, 'type' => 0, 'value' => ''],
+            ],
+            'perPage' => 8,
+            'sort' => [
+                'column' => 1,
+                'type' => SortTypes::DECREASE_SORT,
+            ],
+            'filterElements' => [
+                [
+                    'name' => 'status',
+                    'resource' => ['model' => ConstantService::class, 'method' => 'getConstantsJson', 'args' => [Insistence::class]],
+                    'defaultValues' => [],
+                ],
+                [
+                    'name' => 'school year',
+                    'resource' => ['model' => SchoolYearService::class, 'method' => 'getSchoolYearJson', 'args' => []],
+                    'defaultValues' => [],
+                ],
+            ],
+        ],
+    ];
 }

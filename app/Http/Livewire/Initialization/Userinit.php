@@ -129,9 +129,12 @@ class Userinit extends Component
             $this->removeItem($this->selectedSubjects, $this->subjects);
             $this->resetSelectedSubjectNames();
         } else {
-            if ($value != $this->selectedGrades[0]) {
-                $this->selectedRoom = null;
+            if(!empty($this->selectedGrades)) {
+                if ($value != $this->selectedGrades[0]) {
+                    $this->selectedRoom = null;
+                }
             }
+            
             $this->selectedGrades = [$value];
             $this->getRooms();
         }

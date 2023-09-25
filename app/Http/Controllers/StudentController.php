@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
 use App\Services\ModelServices\StudentService;
+use Auth;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -12,13 +13,17 @@ class StudentController extends Controller
 
     public function __construct(StudentService $studentService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]))->except('destroy');
+        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::STUDENT))->except('destroy');
         $this->studentService = $studentService;
     }
 
     public function index()
     {
-        return $this->studentService->getPageForAdmin();
+        if (Auth::user()->role == UserRole::ADMIN) {
+            return $this->studentService->getPageForAdmin();
+        }
+        return $this->studentService->getPageForStudent(Auth::user()->id);
+        
     }
 
     /**
@@ -42,6 +47,9 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
+        if (Auth::user()->role != UserRole::ADMIN) {
+            return redirect()->route('notPermission');
+        }
         return $this->studentService->getDetailPageForAdmin($id);
     }
 

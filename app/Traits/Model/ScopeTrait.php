@@ -63,8 +63,14 @@ trait ScopeTrait
         }
 
         $schoolYears = SchoolYear::whereIn('id', $schoolYears)->get();
+        $isFirst = true;
         foreach ($schoolYears as $schoolYear) {
-            $query->orWhereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
+            if($isFirst) {
+                $query->whereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
+            } else {
+                $query->orWhereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
+            }
+            $isFirst = false;
         }
 
         return $query;

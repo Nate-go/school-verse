@@ -5,7 +5,7 @@
                 <div class="text-center pb-4">
                     <h6
                         class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
-                        Room</h6>
+                        Class</h6>
                 </div>
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
                     <div class="md:col-span-2 md:row-span-2">

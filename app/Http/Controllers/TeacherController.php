@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
 use App\Services\ModelServices\TeacherService;
+use Auth;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -12,13 +13,16 @@ class TeacherController extends Controller
 
     public function __construct(TeacherService $teacherService)
     {
-        $this->middleware('author:'.json_encode([UserRole::ADMIN]));
+        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER));
         $this->teacherService = $teacherService;
     }
 
     public function index()
     {
-        return $this->teacherService->getPageForAdmin();
+        if(Auth::user()->role == UserRole::ADMIN) {
+            return $this->teacherService->getPageForAdmin();
+        }
+        return $this->teacherService->getPageForTeacher(Auth::user()->id);
     }
 
     /**
@@ -26,7 +30,10 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return $this->teacherService->getInitizationForm();
+        if (Auth::user()->role == UserRole::ADMIN) {
+            return $this->teacherService->getInitizationForm();
+        }
+        return redirect()->route('notPermission');
     }
 
     /**
@@ -42,6 +49,9 @@ class TeacherController extends Controller
      */
     public function show(string $id)
     {
+        if(Auth::user()->role != UserRole::ADMIN) {
+            return redirect()->route('notPermission');
+        }
         return $this->teacherService->getDetailPageForAdmin($id);
     }
 

@@ -30,10 +30,23 @@ class InsistenceService extends BaseService
 
     public function getPageForUser($id)
     {
-        return view('admin/insistence/insistences', ['insistencesSource' => 'INSISTENCES']);
+        $data = TableData::USER_INSISTENCES;
+        $this->tableService->setTableForm($data);
+        return view('user/insistences', ['tableSource' => $data, 'userId' => $id]);
     }
 
     public function getDetailPageForAdmin($id) {
+        if(!$this->isInsistenceExist($id)) {
+            return redirect()->route('notFound');
+        }
         return view('admin/insistence/insistences-detail', ['id' => $id]);
+    }
+
+    public function getCreatePage($userId) {
+        return view('user/insistences-initialization', ['userId' => $userId]);
+    }
+
+    private function isInsistenceExist($id) {
+        return Insistence::where('id', $id)->exists();
     }
 }

@@ -28,35 +28,36 @@
                             value="{{$exam['type']['name']}}" />
                     </div>
 
-                    <div class="md:col-span-2">
-                        <label>Student in class</label>
-                        <select wire:model='selectedStudent'
-                            class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
-                            @if (!$selectedStudent)
+                    @if ($isTeacher)
+                        <div class="md:col-span-2">
+                            <label>Student in class</label>
+                            <select wire:model='selectedStudent'
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                @if (!$selectedStudent)
                                 <option selected hidden>
-                                    Selelect to add student</option>                             
-                            @endif  
-                            <option value="-1">
-                                All</option>
-                            @foreach ($studentInRooms as $student)
-                            <option
-                                value="{{$student['studentId']}}">
-                                {{$student['studentName']}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label>Action</label>
-                        <form wire:submit.prevent="import" class="flex gap-1 items-center">
-                            <input type="file" wire:model="csvFile">
-                            <button type="submit"
-                                class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center h-10 border mt-1">
-                                <i class="fa-solid fa-upload"></i>
-                                <p>Import</p>
-                            </button>
-                        </form>
-                    </div>
+                                    Selelect to add student</option>
+                                @endif
+                                <option value="-1">
+                                    All</option>
+                                @foreach ($studentInRooms as $student)
+                                <option value="{{$student['studentId']}}">
+                                    {{$student['studentName']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label>Action</label>
+                            <form wire:submit.prevent="import" class="flex gap-1 items-center">
+                                <input type="file" wire:model="csvFile">
+                                <button type="submit"
+                                    class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center h-10 border mt-1">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <p>Import</p>
+                                </button>
+                            </form>
+                        </div>
+                    @endif
 
                     <div class="md:col-span-4 max-h-96 overflow-auto px-1">
                         <table class="w-full min-w-[640px] table-autos">
@@ -76,10 +77,13 @@
                                         <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
                                             Review</p>
                                     </th>
-                                    <th class="border-b border-blue-gray-50 py-3 px-2 text-center">
-                                        <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
-                                            Delete</p>
-                                    </th>
+                                    @if ($isTeacher)
+                                        <th class="border-b border-blue-gray-50 py-3 px-2 text-center">
+                                            <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400 text-center">
+                                                Delete</p>
+                                        </th>
+                                    @endif
+                                    
                                 </tr>
                             </thead>
                             <tbody class="overflow-y-auto">
@@ -113,13 +117,15 @@
                                         </div>
                                     
                                     </td>
-                    
-                                    <td class="py-3 px-5 flex justify-center items-center h-max">
-                                        <button wire:click='deleteStudent({{$item['studentId']}})'
-                                            class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
-                                            type="button"><i class="fa-solid fa-eraser"></i>
-                                        </button>
-                                    </td>
+                                    @if ($isTeacher)
+                                        <td class="py-3 px-5 flex justify-center items-center h-max">
+                                            <button wire:click='deleteStudent({{$item[' studentId']}})'
+                                                class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                                type="button"><i class="fa-solid fa-eraser"></i>
+                                            </button>
+                                        </td>
+                                    @endif
+                                    
                                 </tr>
                                 @php
                                     $count += 1;
@@ -130,7 +136,8 @@
                     </div>
                 </div>
 
-                @if ($enable)
+                @if ($isTeacher)
+                    @if ($enable)
                     <div class="flex pt-5 gap-2 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
                         <div class="md:col-span-2 flex grid-cols-2 gap-2">
                             <button wire:click='save'
@@ -155,12 +162,12 @@
                             </button>
                         </div>
                     </div>
-                @else
+                    @else
                     <div class="flex pt-5 gap-2 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
                         Overtime to do anything
                     </div>
+                    @endif
                 @endif
-                
             </div>
         </div>
     </div>

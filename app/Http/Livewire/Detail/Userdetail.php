@@ -233,10 +233,13 @@ class Userdetail extends Component
     }
 
     private function isCurrentPasswordTrue() {
-        $isPasswordTrue = User::where('id', $this->itemId)
-                        ->where('password', Hash::make($this->currentPassword ?? ''))
-                        ->exists();
-        
-        return $isPasswordTrue or Auth::user()->role == UserRole::ADMIN;
+        $currentPassword = User::selectColumns(['password'])
+                        ->where('id', $this->itemId)
+                        ->first();
+
+        if($currentPassword) {
+            return Hash::check($this->currentPassword, $currentPassword->password) or Auth::user()->role == UserRole::ADMIN;
+        }
+        return false;
     }
 }
