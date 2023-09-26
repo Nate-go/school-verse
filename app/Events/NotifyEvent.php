@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Jobs\SendEmailQueue;
 use App\Models\Notification;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;

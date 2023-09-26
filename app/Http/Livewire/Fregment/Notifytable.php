@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Fregment;
 
 use App\Constant\NotificationStatus;
+use App\Constant\SortTypes;
 use App\Models\Notification;
 use Auth;
 use Livewire\Component;
@@ -76,6 +77,7 @@ class Notifytable extends Component
         ])
         ->join('users', 'users.id', '=', 'notifications.from_user_id')
         ->where('notifications.user_id', Auth::user()->id)
+        ->sort(['columnName' => 'created_at', 'type' => SortTypes::DECREASE_SORT])
         ->get();
 
         $this->numberOfUnread = 0;

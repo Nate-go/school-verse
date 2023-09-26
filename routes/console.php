@@ -1,5 +1,7 @@
 <?php
 
+use App\Jobs\SendEmailQueue;
+use App\Mail\SendMail;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 

@@ -105,6 +105,7 @@ class Insistencedetail extends Component
         ];
 
         $this->realTimeNotify($newNotify);
+
     }
 
     public function delete() {
