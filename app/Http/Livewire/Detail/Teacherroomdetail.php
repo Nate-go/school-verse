@@ -19,7 +19,7 @@ use Livewire\Component;
 
 class Teacherroomdetail extends Component
 {
-    const MAXNUMBERLENGTH = 2;
+    const MAXNUMBERLENGTH = 0;
 
     const ALL = -1;
 

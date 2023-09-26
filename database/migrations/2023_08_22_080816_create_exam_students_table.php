@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->double('score')->nullable();
             $table->text('review')->nullable();
+            $table->timestamp('rescored_at')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
 

@@ -10,6 +10,7 @@ use App\Models\RoomTeacher;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Services\ConstantService;
+use Auth;
 use DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -341,7 +342,8 @@ class Homeroomdetail extends Component
         $students = Student::selectColumns([
             'students.id as student_id',
             'users.username as student_name',
-            'users.image_url as student_image'
+            'users.image_url as student_image',
+            'users.id as user_id'
         ])
         ->join('users', 'users.id', '=', 'students.user_id')
         ->where('students.room_id', '=', $this->itemId)
@@ -354,7 +356,8 @@ class Homeroomdetail extends Component
             $data[] = [
                 'studentId' => $student->student_id,
                 'studentName' => $student->student_name,
-                'studentImage' => $student->student_image
+                'studentImage' => $student->student_image,
+                'userId' => $student->user_id,
             ];
         }
 
@@ -363,6 +366,7 @@ class Homeroomdetail extends Component
     }
 
     public function save() {
+        
         $room = [];
 
         $room['image_url'] = $this->saveImage();
@@ -371,8 +375,29 @@ class Homeroomdetail extends Component
 
         if ($result) {
             $this->notify('success', 'Change room image successfully');
+            if($room['image_url'] != $this->imageUrl) {
+                $this->notifyForChangeImage();
+            }
         } else {
             $this->notify('error', 'Change room image fail');
+        }
+    }
+
+    public function notifyForChangeImage() {
+        $this->studentName = '';
+        $students = $this->getStudents();
+
+        foreach($students as $student) {
+            $room = Room::where('id', $this->itemId)->first();
+            $newNotify = [
+                'content' => 'Image of your class ' . $this->room['roomName'] . ' has been changed',
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $student['userId'],
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+            ];
+
+            $this->realTimeNotify($newNotify);
         }
     }
 
