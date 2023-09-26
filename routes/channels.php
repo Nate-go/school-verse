@@ -13,6 +13,5 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 Broadcast::channel('my‑channel', function ($user, $userId) {
-    dd(1234);
     return (int) $user->id === (int) $userId;
 });
