@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b61125ccc1bcb584b02b02da42992b9",
+    "content-hash": "a7b4efad1f0e3ff8d80e5e2419194c2a",
     "packages": [
         {
             "name": "brick/math",
@@ -4009,6 +4009,79 @@
                 "source": "https://github.com/pusher/pusher-http-php/tree/7.2.3"
             },
             "time": "2023-05-17T16:00:06+00:00"
+        },
+        {
+            "name": "railsware/mailtrap-php",
+            "version": "1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railsware/mailtrap-php.git",
+                "reference": "8426e9b9fcbb6af1a271f241bf46f79035300e06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/railsware/mailtrap-php/zipball/8426e9b9fcbb6af1a271f241bf46f79035300e06",
+                "reference": "8426e9b9fcbb6af1a271f241bf46f79035300e06",
+                "shasum": ""
+            },
+            "require": {
+                "egulias/email-validator": "^2.1.10|^3.1|^4",
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0",
+                "php-http/client-common": "^2.0",
+                "php-http/discovery": "^1.0",
+                "php-http/httplug": "^2.0",
+                "psr/http-client-implementation": "^1.0",
+                "psr/http-message": "^1.0 || ^2.0",
+                "symfony/mime": "^5.4|^6.0"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.5",
+                "phpunit/phpunit": "^9",
+                "symfony/http-client": "^5.4|^6.0",
+                "symfony/mailer": "^5.4|^6.0",
+                "vimeo/psalm": "^4.0 || ^5.0"
+            },
+            "suggest": {
+                "nyholm/psr7": "PSR-7 message implementation",
+                "symfony/http-client": "HTTP client"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mailtrap\\Bridge\\Laravel\\MailtrapApiProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mailtrap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Mailtrap SDK provides methods for all API functions.",
+            "homepage": "https://github.com/railsware/mailtrap-php",
+            "keywords": [
+                "email",
+                "laravel",
+                "mail",
+                "mailtrap",
+                "mailtrap-io",
+                "php",
+                "plugin",
+                "sdk",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/railsware/mailtrap-php/issues",
+                "source": "https://github.com/railsware/mailtrap-php/tree/1.7.1"
+            },
+            "time": "2023-06-05T08:20:13+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
