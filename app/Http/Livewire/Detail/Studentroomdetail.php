@@ -4,13 +4,19 @@ namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
+use App\Constant\InsistenceTypes;
+use App\Constant\NotificationStatus;
 use App\Constant\SortTypes;
+use App\Constant\UserRole;
 use App\Models\Exam;
+use App\Models\Insistence;
 use App\Models\Room;
 use App\Models\RoomTeacher;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\User;
 use App\Services\ConstantService;
+use Auth;
 use DB;
 use Livewire\Component;
 
@@ -35,6 +41,12 @@ class Studentroomdetail extends Component
     protected $constantService;
 
     public $student;
+
+    public $rooms;
+
+    public $selectedRoom;
+
+    public $content;
 
     public function boot(ConstantService $constantService)
     {
@@ -79,6 +91,82 @@ class Studentroomdetail extends Component
         $this->setHeader();
         $this->setBody();
         $this->setStudent();
+        $this->selectedRoom = null;
+        $this->content = '';
+        $this->setRoom();
+    }
+
+    public function setRoom() {
+        $room = Student::selectColumns([
+            'school_year_id',
+            'grade_id',
+            'room_id'
+        ])
+        ->where('id', $this->itemId)
+        ->first();
+
+        $data = Room::selectColumns([
+            'rooms.id',
+            DB::raw('CONCAT(grades.name, "", rooms.name) as name'),
+        ])
+        ->join('grades', 'grades.id', '=', 'rooms.grade_id')
+        ->where('grade_id', $room->grade_id)
+        ->where('school_year_id', $room->school_year_id)
+        ->whereNot('rooms.id', $room->room_id)
+        ->get();
+
+        $this->rooms = [];
+
+        foreach($data as $item) {
+            $this->rooms[] = [
+                'value' => $item->id,
+                'name' => $item->name
+            ];
+        }
+    }
+
+    public function requestChangeRoom() {
+        if($this->selectedRoom == null) {
+            $this->notify('error', 'You have not select class to change');
+            return;
+        }
+
+        if ($this->content == '') {
+            $this->notify('error', 'Your content is empty');
+            return;
+        }
+
+        try {
+            $newRoom = Room::selectColumns([
+                DB::raw('CONCAT(grades.name, "", rooms.name) as name'),
+            ])
+            ->join('grades', 'grades.id', '=', 'rooms.grade_id')
+            ->where('rooms.id', $this->selectedRoom)->first();
+
+            $newInsistence = Insistence::create([
+                'user_id' => Auth::user()->id,
+                'content' => 'I request for change room to ' . $newRoom->name . "\n - Detail: \n" . $this->content,
+                'status' => \App\Constant\Insistence::PENDING,
+                'type' => InsistenceTypes::CHANGE_CLASS,
+                'object' => json_encode(['roomId' => $this->selectedRoom])
+            ]);
+
+            $admin = User::where('role', UserRole::ADMIN)->first();
+            $newNotify = [
+                'content' => 'You have new change class insistence',
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $admin->id,
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/insistences/' . str($newInsistence->id)
+            ];
+
+            $this->realTimeNotify($newNotify);
+
+            $this->notify('success', 'rescore request exam successfully');
+        } catch (e) {
+            $this->notify('error', 'rescore request exam fail');
+        }
+        $this->formGenerate();
     }
 
     public function setStudent() {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Initialization;
 
+use App\Constant\InsistenceTypes;
 use App\Models\Insistence;
 use Livewire\Component;
 
@@ -29,7 +30,8 @@ class Insistenceinit extends Component
         $newInsistence = Insistence::create([
             'user_id' => $this->userId,
             'status' => \App\Constant\Insistence::PENDING,
-            'content' => $this->content
+            'content' => $this->content,
+            'type' => InsistenceTypes::NORMAL
         ]);
 
         if($newInsistence) {

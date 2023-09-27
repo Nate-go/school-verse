@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InsistenceController;
@@ -63,4 +64,7 @@ Route::group([
     Route::get('/teachers/room-teachers/{roomTeacherId}', [HomeController::class, 'teacherRoom']);
 
     Route::get('/students/{userId}/rooms/{roomId}', [HomeController::class, 'studentRoom']);
+
+    Route::get('/teachers/rescores/{examStudentId}', [ExamController::class, 'rescore']);
+
 });

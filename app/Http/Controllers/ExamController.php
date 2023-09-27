@@ -68,4 +68,8 @@ class ExamController extends Controller
     {
         //
     }
+
+    public function rescore(string $examStudentId) {
+        return $this->examService->getRescorePage($examStudentId);
+    }
 }
