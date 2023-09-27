@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
+use App\Constant\InsistenceTypes;
 use App\Constant\NotificationStatus;
 use App\Constant\OtherConstant;
 use App\Constant\UserRole;
 use App\Models\ExamStudent;
+use App\Models\Insistence;
+use App\Models\User;
 use App\Services\ConstantService;
 use Auth;
 use DB;
@@ -32,6 +35,8 @@ class Examdetail extends ModalComponent
     protected $constantService;
 
     public $enable;
+
+    public $isRescoreable;
 
     public function boot(ConstantService $constantService) {
         $this->constantService = $constantService;  
@@ -73,7 +78,8 @@ class Examdetail extends ModalComponent
             'exams.type as exam_type',
             'room_teacher_id',
             'exams.content as exam_content',
-            'student_info.id as user_id'
+            'student_info.id as user_id',
+            'rescored_at'
         ])
             ->join('students', 'students.id', '=', 'exam_students.student_id')
             ->join('users as student_info', 'students.user_id', '=', 'student_info.id')
@@ -96,12 +102,53 @@ class Examdetail extends ModalComponent
             'examType' =>  $this->constantService->getNameConstant(ExamType::class, $result->exam_type),
             'roomTeacherId' => $result->room_teacher_id,
             'examContent' => $result->exam_content,
-            'userId' => $result->user_id
+            'userId' => $result->user_id,
+            'rescored_at' => $result->rescored_at
         ];
 
         $this->score = $result->score;
         $this->review = $result->review;
         $this->enable = $this->isEnable();
+        $this->isRescoreable = $this->isRescoreable();
+    }
+
+    public function isRescoreable() {
+        if(Auth::user()->role != UserRole::STUDENT or $this->data['rescored_at'] != null) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    public function rescore() {
+        try {
+            $newInsistence = Insistence::create([
+                'user_id' => Auth::user()->id,
+                'content' => 'I request for rescore about ' . $this->data['subjectName'] . ' exam of teacher ' . $this->data['teacherName'],
+                'status' => \App\Constant\Insistence::PENDING,
+                'type' => InsistenceTypes::RESCORE,
+                'object' => json_encode(['examStudentId' => $this->examStudentId])
+            ]);
+
+            $admin = User::where('role', UserRole::ADMIN)->first();
+            $newNotify = [
+                'content' => 'You have new rescore insistence',
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $admin->id,
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/insistences/' . str($newInsistence->id)
+            ];
+
+            $this->realTimeNotify($newNotify);
+
+            $this->notify('success', 'rescore request exam successfully');
+        } catch(e) {
+            $this->notify('error', 'rescore request exam fail');
+
+        }
+        $this->closeModal();
+
     }
 
     public function updatedScore($value) {

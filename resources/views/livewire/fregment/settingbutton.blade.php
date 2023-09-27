@@ -1,4 +1,4 @@
-<div class="group fixed bottom-2 right-2 z-10 flex flex-row items-center gap-3 p-3 text-lg">
+<div class="group fixed bottom-2 right-2 z-30 flex flex-row items-center gap-3 p-3 text-lg">
     <div class="group relative" data-headlessui-state="open">
         <button
             class="p-4 hover:text-blue-400 flex items-center justify-center rounded-full border border-gray-200 bg-gray-50 "

@@ -26,7 +26,7 @@
                 @else
                     @foreach ($notifies as $notify)
                     <li wire:click="readNotify({{$notify['id']}}, '{{str($notify['link'])}}')"
-                        class="hover:bg-blue-200 w-full pt-[9px] pb-2 px-3 rounded-md text-start leading-tight cursor-pointer select-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900 flex items-center gap-3">
+                        class="hover:bg-blue-200 w-72 overflow-auto pt-[9px] pb-2 px-3 rounded-md text-start leading-tight cursor-pointer select-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900 flex items-center gap-3">
                         <img src="{{$notify['image']}}" class="inline-block relative object-cover object-center !rounded-full w-10 h-10">
                         <div>
                             <div class="antialiased font-sans text-sm leading-normal text-blue-gray-900 mb-1 font-normal flex justify-between">
