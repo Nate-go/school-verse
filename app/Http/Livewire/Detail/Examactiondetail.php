@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Detail;
 
+use App\Constant\NotificationStatus;
 use App\Constant\OtherConstant;
 use App\Constant\UserRole;
 use App\Models\Exam;
@@ -125,7 +126,8 @@ class Examactiondetail extends ModalComponent
             'users.image_url as student_image',
             'score',
             'review',
-            'exam_students.id as exam_id'
+            'exam_students.id as exam_id',
+            'user_id' 
         ])
             ->join('users', 'users.id', '=', 'students.user_id')
             ->join('exam_students', 'exam_students.student_id', '=', 'students.id')
@@ -144,7 +146,8 @@ class Examactiondetail extends ModalComponent
                 'score' => $student->score,
                 'examStudentId' => $student->exam_id,
                 'review' => $student->review,
-                'isMissing' => false
+                'isMissing' => false,
+                'userId' => $student->user_id
             ];
         }
     }
@@ -284,9 +287,24 @@ class Examactiondetail extends ModalComponent
 
         if ($success) {
             $this->notify('success', 'Update scores successfully');
+            $this->notifyForUpdateScore($updateExams);
             return;
         }
         $this->notify('error', 'Update scores fail');
+    }
+
+    public function notifyForUpdateScore($updateExams) {
+        foreach($updateExams as $updateExam) {
+            $newNotify = [
+                'content' => 'Your ' . $this->exam['name'] . ' score has been updated',
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $updateExam['userId'],
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/'
+            ];
+
+            $this->realTimeNotify($newNotify);
+        }
     }
 
     public function updateScore($exams) {

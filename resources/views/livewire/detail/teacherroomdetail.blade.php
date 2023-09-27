@@ -1,5 +1,5 @@
 <div class="flex-col">
-    <div wire:loading>
+    <div wire:loading.delay.longest>
         @livewire('fregment.loading')
     </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">

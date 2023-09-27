@@ -1,4 +1,7 @@
 <div class="flex-col">
+    <div wire:loading.delay.longest>
+        @livewire('fregment.loading')
+    </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div class="">
@@ -47,10 +50,10 @@
                         <select wire:model='selectedTeacher'
                             class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                             @if (!$selectedTeacher)
-                            <option selected hidden>You haven't selected yet</option>
+                                <option selected hidden>You haven't selected yet</option>
                             @endif
                             @foreach ($teachers as $teacher)
-                            <option {{ $selectedTeacher==$teacher['value'] ? 'selected' : '' }} value="{{$teacher['value']}}">
+                                <option {{ $selectedTeacher==$teacher['value'] ? 'selected' : '' }} value="{{$teacher['value']}}">
                                 {{$teacher['name']}}</option>
                             @endforeach
                         </select>
