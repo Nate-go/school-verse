@@ -103,6 +103,19 @@
                     
                     </div>
                 @endif
+
+                @if ($isRescoreable)
+                    <div class="flex pt-5 gap-2 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
+                        <div class="md:col-span-2">
+                            <button wire:click='rescore'
+                                class="col-span-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center">
+                                <i class="fa-solid fa-eraser"></i>
+                                <p>Rescore</p>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+                
                 
             </div>
         </div>
