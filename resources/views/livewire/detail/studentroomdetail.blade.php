@@ -1,5 +1,5 @@
 <div class="flex-col">
-    <div wire:loading>
+    <div wire:loading.delay.longest>
         @livewire('fregment.loading')
     </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
@@ -150,7 +150,7 @@
                                                 @foreach ($item['scores'] as $score)
                                                     @if ($score['type'] == $column['value'])
                                                     <div class="py-1 px-1.5 bg-blue-300 rounded-md cursor-pointer hover:bg-blue-700 hover:text-white"
-                                                    wire:click='getModal("detail.examdetail", {{json_encode(["examStudentId" => $score["id"]])}})'>
+                                                    wire:click.stop='getModal("detail.examdetail", {{json_encode(["examStudentId" => $score["id"]])}})'>
                                                         <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600">
                                                             {{ $score['score'] }}
                                                         </p>

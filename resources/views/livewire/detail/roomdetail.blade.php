@@ -1,4 +1,7 @@
 <div class="flex-col">
+    <div wire:loading.delay.longest>
+        @livewire('fregment.loading')
+    </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div class="">
@@ -9,6 +12,7 @@
                 </div>
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
                     <div class="md:col-span-2 md:row-span-2">
+                        <label>School year: {{$schoolYear}}</label>
                         <div>
                             <div class="grid grid-cols-1 gap-3">
                                 <div class="shrink-0 col-span-1 flex items-center justify-center">
@@ -46,10 +50,10 @@
                         <select wire:model='selectedTeacher'
                             class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                             @if (!$selectedTeacher)
-                            <option selected hidden>You haven't selected yet</option>
+                                <option selected hidden>You haven't selected yet</option>
                             @endif
                             @foreach ($teachers as $teacher)
-                            <option {{ $selectedTeacher==$teacher['value'] ? 'selected' : '' }} value="{{$teacher['value']}}">
+                                <option {{ $selectedTeacher==$teacher['value'] ? 'selected' : '' }} value="{{$teacher['value']}}">
                                 {{$teacher['name']}}</option>
                             @endforeach
                         </select>
@@ -74,6 +78,15 @@
                             <i class="fa-solid fa-xmark fa-xl"></i>
                             <p>Cancel</p>
                         </button>
+                    </div>
+
+                    <div class="md:col-span-2 flex grid-cols-2 gap-2">
+                        <a href="/teachers/homerooms/{{str($itemId)}}">
+                            <button class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center">
+                                <i class="fa-solid fa-street-view fa-xl"></i>
+                                <p>Homeroom</p>
+                            </button>
+                        </a>
                     </div>
                 </div>
 
@@ -124,6 +137,7 @@
                             <label for="full_name">Teacher list</label>
                             <ul class="max-w divide-y divide-gray-20 max-h-52 overflow-auto">
                                 @foreach ($roomTeachers as $roomTeacher)
+                                <a href="/teachers/room-teachers/{{str($roomTeacher['value'])}}">
                                     <li class="py-1">
                                         <div class="flex items-center space-x-4">
                                             <div class="flex-shrink-0">
@@ -143,12 +157,14 @@
                                             <div>
                                                 <button
                                                     class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
-                                                    wire:click="deleteSubjectTeacher({{$roomTeacher['value']}})" type="button"><i class="fa-solid fa-eraser"></i>
+                                                    wire:click.stop="deleteSubjectTeacher({{$roomTeacher['value']}})" type="button"><i
+                                                        class="fa-solid fa-eraser"></i>
                                                 </button>
                                             </div>
                                         </div>
-                                        
                                     </li>
+                                </a>
+                                    
                                 @endforeach
                             </ul>
                         </div>
@@ -218,27 +234,30 @@
                             <label for="full_name">Student list</label>
                             <ul class="max-w divide-y divide-gray-200 max-h-36 overflow-auto">
                                 @foreach ($roomStudents as $student)
-                                <li class="py-1">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="flex-shrink-0">
-                                            <img class="w-8 h-8 rounded-full" src="{{$student['image_url']}}" alt="Neil image">
+                                <a href="/students/{{str($student['userId'])}}/rooms/{{str($itemId)}}">
+                                    <li class="py-1">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex-shrink-0">
+                                                <img class="w-8 h-8 rounded-full" src="{{$student['image_url']}}" alt="Neil image">
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                    {{ $student['name'] }}
+                                                </p>
+                                                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                    {{ $student['email'] }}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <button
+                                                    class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                                    wire:click.stop="deleteStudent({{$student['value']}})" type="button"><i class="fa-solid fa-eraser"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="flex-1 min-w-0">
-                                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                {{ $student['name'] }}
-                                            </p>
-                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                {{ $student['email'] }}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <button
-                                                class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
-                                                wire:click="deleteStudent({{$student['value']}})" type="button"><i class="fa-solid fa-eraser"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                </a>
+                                
                                 @endforeach
                             </ul>
                         </div>

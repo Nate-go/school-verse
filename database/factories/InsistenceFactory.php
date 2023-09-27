@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Constant\Insistence;
+use App\Constant\InsistenceTypes;
 use App\Constant\UserRole;
 use App\Models\User;
 use App\Services\FactoryService;
@@ -234,6 +235,7 @@ class InsistenceFactory extends Factory
             'content' => $this->factoryService->randValues($this->insistencesContent[$randomUser->role][$type])['content'],
             'feedback' => $feedback,
             'status' => $status,
+            'type' => InsistenceTypes::NORMAL
         ];
     }
 }

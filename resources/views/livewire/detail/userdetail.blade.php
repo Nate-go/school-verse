@@ -1,4 +1,7 @@
 <div class="flex-col">
+    <div wire:loading.delay.longest>
+        @livewire('fregment.loading')
+    </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div class="">
@@ -7,6 +10,7 @@
                         class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
                         User profile</h6>
                 </div>
+                
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
                     <div class="md:col-span-2 md:row-span-2">
                         <div>

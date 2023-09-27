@@ -1,5 +1,5 @@
 <div class="flex-col">
-    <div wire:loading>
+    <div wire:loading.delay.longest>
         @livewire('fregment.loading')
     </div>
     <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
@@ -20,7 +20,7 @@
                     <div class="md:col-span-2">
                         <label>Content</label>
                         <input type="text" placeholder="enter content" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            wire:model='content' />
+                            wire:model.debounce.2000ms='content' />
                     </div>
                     <div class="md:col-span-2">
                         <label>Type</label>

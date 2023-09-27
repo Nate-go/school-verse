@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('content');
             $table->text('feedback')->nullable();
             $table->integer('status');
+            $table->integer('type');
+            $table->string('object')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
 

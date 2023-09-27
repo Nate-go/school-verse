@@ -1,4 +1,7 @@
 <div class="flex-col">
+    <div wire:loading.delay.longest>
+        @livewire('fregment.loading')
+    </div>
     <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
         <div
             class="absolute top-2 right-1 flex items-center bg-white rounded-full p-1 hover:text-blue-600 cursor-pointer">

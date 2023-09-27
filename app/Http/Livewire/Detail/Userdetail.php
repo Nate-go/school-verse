@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\Gender;
+use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
 use App\Events\NotifyEvent;
@@ -143,6 +144,7 @@ class Userdetail extends Component
     }
 
     public function save() {
+
         $user = [
             'username' => trim($this->username),
             'status' => $this->selectedStatus,
@@ -173,6 +175,17 @@ class Userdetail extends Component
 
         if ($result) {
             $this->notify('success', 'update user successfully');
+            if($this->itemId != Auth::user()->id) {
+                $newNotify = [
+                    'content' => 'Your profile has been updated',
+                    'from_user_id' => Auth::user()->id,
+                    'user_id' => $this->itemId,
+                    'status' => NotificationStatus::UNSEEN,
+                    'link' => '/users'
+                ];
+
+                $this->realTimeNotify($newNotify);
+            }
         } else {
             $this->notify('error', 'update user fail');
         }

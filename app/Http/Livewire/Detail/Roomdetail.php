@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Detail;
 
+use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
 use App\Models\Room;
 use App\Models\RoomTeacher;
@@ -9,6 +10,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
+use Auth;
 use DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -136,7 +138,8 @@ class Roomdetail extends Component
             'students.id',
             'users.email',
             'users.username',
-            'users.image_url'
+            'users.image_url',
+            'users.id as user_id'
         )
             ->join('users', 'users.id', '=', 'students.user_id')
             ->where('students.room_id', '=', $this->itemId)
@@ -149,7 +152,8 @@ class Roomdetail extends Component
                 'value' => $roomStudent->id,
                 'email' => $roomStudent->email,
                 'name'  =>$roomStudent->username,
-                'image_url' => $roomStudent->image_url
+                'image_url' => $roomStudent->image_url,
+                'userId' => $roomStudent->user_id
             ];
         }
     }
@@ -250,6 +254,7 @@ class Roomdetail extends Component
 
         if($result) {
             $this->notify('success', 'Change class successfull');
+            $this->notifyForAddStudent();
         } else {
             $this->notify('error', 'Change class fail');
         }
@@ -301,6 +306,7 @@ class Roomdetail extends Component
 
             if ($result) {
                 $this->notify('success', 'Add teacher successfull');
+                $this->notifyForAddTeacher();
             } else {
                 $this->notify('error', 'Add teacher fail');
             }
@@ -308,6 +314,71 @@ class Roomdetail extends Component
 
         $this->setRoomTeacher();
         $this->setSubjectTeacher();
+    }
+
+    public function notifyForAddStudent() {
+        $student = Student::where('id', $this->selectedStudent)->first();
+        $newNotify = [
+            'content' => 'You have been changed class to ' . $this->grade . $this->name,
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $student->user_id,
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/'
+        ];
+
+        $this->realTimeNotify($newNotify);
+
+        $room = Room::where('id', $this->itemId)->first();
+        $newNotify = [
+            'content' => 'A new student has been add to your class: ' . $this->grade . $this->name,
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $room->homeroom_teacher_id,
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/rooms/' . str($this->itemId)
+        ];
+
+        $this->realTimeNotify($newNotify);
+    }
+
+    public function notifyForAddTeacher()
+    {
+        $teacher = Teacher::where('id', $this->selectedSubjectTeacher)->first();
+        $roomTeacher = RoomTeacher::where('room_id', $this->itemId)
+                                ->where('teacher_id', $this->selectedSubjectTeacher)
+                                ->first();
+        $newNotify = [
+            'content' => 'You have been add to class ' . $this->grade . $this->name,
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $teacher->user_id,
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/teachers/room-teachers/' . str($roomTeacher->id)
+        ];
+
+        $this->realTimeNotify($newNotify);
+
+        foreach($this->roomStudents as $student) {
+            $room = Room::where('id', $this->itemId)->first();
+            $newNotify = [
+                'content' => 'A new teacher has been add to your class: ' . $this->grade . $this->name,
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $student['userId'],
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+            ];
+
+            $this->realTimeNotify($newNotify);
+        }
+
+        $room = Room::where('id', $this->itemId)->first();
+        $newNotify = [
+            'content' => 'A new teacher has been add to your class: ' . $this->grade . $this->name,
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $room->homeroom_teacher_id,
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/teachers/room-teachers/' . str($this->itemId)
+        ];
+
+        $this->realTimeNotify($newNotify);
     }
 
     private function isRoomTeacherExist($teacherId) {
@@ -326,7 +397,11 @@ class Roomdetail extends Component
         return $roomTeachersIds ? $roomTeachersIds->id : null;
     }
 
+
+
     public function save() {
+
+        $oldRoom = Room::where('id', $this->itemId)->first();
 
         $room = [
             'homeroom_teacher_id' => $this->selectedTeacher,
@@ -347,8 +422,91 @@ class Roomdetail extends Component
 
         if ($result) {
             $this->notify('success', 'Change room detail successfully');
+            $currentRoom = Room::where('id', $this->itemId)->first();
+
+            if($oldRoom->image_url != $currentRoom->image_url) {
+                $this->notifyForChangeImage();
+            }
+
+            if ($oldRoom->homeroom_teacher_id != $currentRoom->homeroom_teacher_id) {
+                $this->notifyForChangeHomeroomTeacher();
+            }
+
+            if ($oldRoom->name != $currentRoom->name) {
+                $this->notifyForChangeName();
+            }
+
         } else {
             $this->notify('error', 'Change room detail fail');
+        }
+    }
+
+    public function notifyForChangeImage() {
+        $room = Room::where('id', $this->itemId)->first();
+        $newNotify = [
+            'content' => 'Image of your class ' . $this->grade . $this->name . ' has been changed',
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $room->homeroom_teacher_id,
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/teachers/homerooms/' . str($this->itemId)
+        ];
+
+        $this->realTimeNotify($newNotify);
+
+        foreach ($this->roomStudents as $student) {
+            $room = Room::where('id', $this->itemId)->first();
+            $newNotify = [
+                'content' => 'Image of your class ' . $this->grade . $this->name . ' has been changed',
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $student['userId'],
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+            ];
+
+            $this->realTimeNotify($newNotify);
+        }
+    }
+
+    public function notifyForChangeName()
+    {
+        $room = Room::where('id', $this->itemId)->first();
+        $newNotify = [
+            'content' => 'Name of your class ' . $this->grade . $this->name . ' has been changed',
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $room->homeroom_teacher_id,
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/teachers/homerooms/' . str($this->itemId)
+        ];
+
+        $this->realTimeNotify($newNotify);
+
+        foreach ($this->roomStudents as $student) {
+            $room = Room::where('id', $this->itemId)->first();
+            $newNotify = [
+                'content' => 'Name of your class ' . $this->grade . $this->name . ' has been changed',
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $student['userId'],
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+            ];
+
+            $this->realTimeNotify($newNotify);
+        }
+    }
+
+    public function notifyForChangeHomeroomTeacher()
+    {
+        foreach ($this->roomStudents as $student) {
+            $room = Room::where('id', $this->itemId)->first();
+            $newNotify = [
+                'content' => 'Homeroom teacher of your class ' . $this->grade . $this->name . ' has been changed',
+                'from_user_id' => Auth::user()->id,
+                'user_id' => $student['userId'],
+                'status' => NotificationStatus::UNSEEN,
+                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+            ];
+
+            $this->realTimeNotify($newNotify);
         }
     }
 

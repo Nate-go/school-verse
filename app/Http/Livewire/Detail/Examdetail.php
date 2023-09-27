@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
+use App\Constant\NotificationStatus;
 use App\Constant\OtherConstant;
 use App\Constant\UserRole;
 use App\Models\ExamStudent;
 use App\Services\ConstantService;
+use Auth;
 use DB;
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
@@ -68,7 +70,8 @@ class Examdetail extends ModalComponent
             'review',
             'exams.type as exam_type',
             'room_teacher_id',
-            'exams.content as exam_content'
+            'exams.content as exam_content',
+            'student_info.id as user_id'
         ])
             ->join('students', 'students.id', '=', 'exam_students.student_id')
             ->join('users as student_info', 'students.user_id', '=', 'student_info.id')
@@ -90,7 +93,8 @@ class Examdetail extends ModalComponent
             'subjectImage' => $result->subject_image,
             'examType' =>  $this->constantService->getNameConstant(ExamType::class, $result->exam_type),
             'roomTeacherId' => $result->room_teacher_id,
-            'examContent' => $result->exam_content
+            'examContent' => $result->exam_content,
+            'userId' => $result->user_id
         ];
 
         $this->score = $result->score;
@@ -123,6 +127,18 @@ class Examdetail extends ModalComponent
             return;
         } 
         $this->notify('error', 'Update exam fail');
+    }
+
+    public function notifyForUpdateScore() {
+        $newNotify = [
+            'content' => 'Your ' . $this->data['subjectName'] . ' score has been updated',
+            'from_user_id' => Auth::user()->id,
+            'user_id' => $this->data['userId'],
+            'status' => NotificationStatus::UNSEEN,
+            'link' => '/'
+        ];
+
+        $this->realTimeNotify($newNotify);
     }
 
     public function delete() {
