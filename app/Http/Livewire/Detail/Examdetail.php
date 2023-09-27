@@ -15,6 +15,8 @@ use LivewireUI\Modal\ModalComponent;
 
 class Examdetail extends ModalComponent
 {
+    const STUDNET = UserRole::STUDENT;
+    
     public $data;
 
     public $score;
