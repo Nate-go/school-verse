@@ -182,4 +182,12 @@ class Table extends Component
 
         return $elements;
     }
+
+    public function confirmAction($input)
+    {
+        $data = $input['data']['inputAttributes'];
+        $action = $data['action'];
+        $params = $data['params'];
+        $this->$action(...$params);
+    }
 }

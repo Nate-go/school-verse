@@ -435,4 +435,9 @@ class Homeroomdetail extends Component
     {
         return view('livewire.detail.homeroomdetail');
     }
+
+    public function getModal($name, $data)
+    {
+        $this->displayModal($name, $data);
+    }
 }

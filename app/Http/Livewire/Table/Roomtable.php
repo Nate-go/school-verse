@@ -42,9 +42,4 @@ class Roomtable extends Table
 
         return $results;
     }
-
-    public function delete($userId)
-    {
-
-    }
 }

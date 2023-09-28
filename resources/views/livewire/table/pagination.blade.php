@@ -1,4 +1,8 @@
 <div class='text-4xl flex justify-center'>
+    <div wire:loading
+        wire:target='pageChange'>
+        @livewire('fregment.loading')
+    </div>
     @if ($paginator->hasPages())
         @if ($paginator->currentPage() === 1)
             <button

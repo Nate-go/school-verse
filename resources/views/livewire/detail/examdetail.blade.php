@@ -1,5 +1,5 @@
 <div class="flex-col">
-    <div wire:loading.delay.longest>
+    <div wire:loading wire:target='closeModal,save,formGenerate,delete,rescore'>
         @livewire('fregment.loading')
     </div>
     <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">

@@ -1,7 +1,11 @@
 <div class='flex relative'>
+    <div wire:loading
+        wire:target='changeNotify,changeStatus'>
+        @livewire('fregment.loading')
+    </div>
     <button
         class="hover:bg-slate-200 text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-lg hover:text-blue-400 active:text-blue-500"
-        wire:click.prevent="$emit('displayNotify')" type="button"><i class="fa-solid fa-bell"></i>
+        wire:click.prevent="changeNotify" type="button"><i class="fa-solid fa-bell"></i>
     </button>
 
     @if ($numberOfUnread > 0)

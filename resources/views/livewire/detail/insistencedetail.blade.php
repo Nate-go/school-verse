@@ -1,5 +1,5 @@
 <div class="flex-col">
-    <div wire:loading.delay.longest>
+    <div wire:loading wire:target='formGenerate,save,delete'>
         @livewire('fregment.loading')
     </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
@@ -33,7 +33,7 @@
 
                     <div class="md:col-span-2 md:row-span-3">
                         <label>Feedback</label>
-                        <textarea class="h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="10" {{ $isAdmin ? '' : 'readonly' }} wire:model='feedback'></textarea>
+                        <textarea wire:loading.excluded class="h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="10" {{ $isAdmin ? '' : 'readonly' }} wire:model='feedback'></textarea>
                     </div>
 
                     <div class="md:col-span-1">

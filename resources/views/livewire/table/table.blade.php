@@ -1,6 +1,6 @@
 <div
     class="flex flex-col rounded-xl bg-white text-gray-700 shadow-md xl:col-span-2 overflow-visible">
-    <div wire:loading>
+    <div wire:loading wire:target='pageChange,sort,delete'>
         @livewire('fregment.loading')
     </div>
     
@@ -140,8 +140,8 @@
             </tbody>
             <tfoot class="sticky bg-slate-200 rounded-b-md bottom-0">
                 <tr>
-                    <th colspan="100%" class="items-center py-1">{{ $data->links('livewire.table.pagination') }}
-                        
+                    <th colspan="100%" class="items-center py-1">
+                        {{ $data->links('livewire.table.pagination') }}
                     </th>
                 </tr>
             </tfoot>
