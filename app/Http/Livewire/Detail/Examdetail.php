@@ -45,13 +45,13 @@ class Examdetail extends ModalComponent
     public function mount($examStudentId, $roomTeacherId=null) {
         $this->examStudentId = $examStudentId;
         $this->formGenerate();
-        if(auth()->user()->role == UserRole::STUDENT or !$roomTeacherId) {
+        if (auth()->user()->role == UserRole::STUDENT or !$roomTeacherId) {
             $this->isPermissionDelete = false;
             $this->isPermissionUpdate = false;
         } else {
             $this->isPermissionUpdate = $roomTeacherId == $this->data['roomTeacherId'];
-            $this->isPermissionDelete = true; 
-        }        
+            $this->isPermissionDelete = true;
+        }
     }
 
     public function isEnable() {

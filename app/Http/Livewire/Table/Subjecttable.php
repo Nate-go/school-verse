@@ -36,8 +36,17 @@ class Subjecttable extends Table
         return $results;
     }
 
-    public function delete($userId)
+    public function delete($id, $confirmed = false)
     {
+        if (!$confirmed) {
+            $this->confirmBox('delete this item', 'delete', ['id' => $id, 'confirmed' => true]);
+            return;
+        }
 
+        $result = Subject::where('id', $id)->delelete();
+
+        if ($result) {
+            $this->notify('success', 'Delete user successfull');
+        }
     }
 }

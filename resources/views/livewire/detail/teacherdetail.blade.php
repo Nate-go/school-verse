@@ -1,5 +1,5 @@
 <div>
-    <div wire:loading.delay.longest>
+    <div wire:loading wire:target='selectedGrade,selectedRoom,selectedSubject,selectedSchoolYear'>
         @livewire('fregment.loading')
     </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4">

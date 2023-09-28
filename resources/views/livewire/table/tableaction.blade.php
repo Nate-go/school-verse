@@ -1,4 +1,7 @@
 <div class='relative flex'>
+    <div wire:loading wire:target='openAction,filter'>
+        @livewire('fregment.loading')
+    </div>
     <button
         class="hover:bg-slate-100 relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
         wire:click='openAction'><i class="fa-solid fa-ellipsis-vertical text-xl"></i>
@@ -40,7 +43,7 @@
                         </li>
                     </ul>
                 </li>
-                <li wire:click="$emit('filter')"
+                <li wire:click="filter"
                     class="hover:bg-slate-100 block w-full py-2 px-3 mt-2 rounded-md text-start leading-tight cursor-pointer select-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900">
         
                     <div class='text-center'>

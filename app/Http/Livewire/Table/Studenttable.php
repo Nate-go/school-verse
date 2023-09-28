@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Table;
 
 use App\Constant\UserRole;
+use App\Models\Student;
 use App\Models\User;
 use DB;
 
@@ -39,5 +40,19 @@ class Studenttable extends Table
             ->paginate($filterValues['perPage']);
 
         return $results;
+    }
+
+    public function delete($id, $confirmed = false)
+    {
+        if (!$confirmed) {
+            $this->confirmBox('delete this item', 'delete', ['id' => $id, 'confirmed' => true]);
+            return;
+        }
+
+        $result = Student::where('id', $id)->delelete();
+
+        if ($result) {
+            $this->notify('success', 'Delete user successfull');
+        }
     }
 }

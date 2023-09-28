@@ -13,7 +13,6 @@ class Userinfomation extends Component
     public $isAdmin;
 
     protected $listeners = [
-        'displayUserInfo' => 'changeUserInfo',
         'closeAll' => 'closeInfo',
     ];
 

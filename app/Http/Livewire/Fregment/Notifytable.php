@@ -19,7 +19,6 @@ class Notifytable extends Component
     public $numberOfUnread;
 
     protected $listeners = [
-        'displayNotify' => 'changeNotify',
         'closeAll' => 'closeNotify',
         'setNotify'
     ];

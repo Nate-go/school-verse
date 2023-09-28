@@ -26,4 +26,18 @@ class Gradetable extends Table
 
         return $results;
     }
+
+    public function delete($id, $confirmed = false)
+    {
+        if (!$confirmed) {
+            $this->confirmBox('delete this item', 'delete', ['id' => $id, 'confirmed' => true]);
+            return;
+        }
+
+        $result = Grade::where('id', $id)->delelete();
+
+        if ($result) {
+            $this->notify('success', 'Delete user successfull');
+        }
+    }
 }
