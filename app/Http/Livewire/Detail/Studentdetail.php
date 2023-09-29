@@ -86,7 +86,7 @@ class Studentdetail extends Component
                 'teacherName' => $item->teacher_name,
                 'roomImage' => $item->room_image,
                 'teacherImage' => $item->teacher_image,
-                'id' => $item->id
+                'id' => $item->id,
             ];
         }
     }

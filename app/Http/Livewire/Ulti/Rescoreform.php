@@ -49,7 +49,7 @@ class Rescoreform extends Component
             'room_teacher_id',
             'exams.content as exam_content',
             'student_info.id as user_id',
-            'rescored_at'
+            'rescored_at',
         ])
             ->join('students', 'students.id', '=', 'exam_students.student_id')
             ->join('users as student_info', 'students.user_id', '=', 'student_info.id')
@@ -73,7 +73,7 @@ class Rescoreform extends Component
             'roomTeacherId' => $result->room_teacher_id,
             'examContent' => $result->exam_content,
             'userId' => $result->user_id,
-            'rescored_at' => $result->rescored_at
+            'rescored_at' => $result->rescored_at,
         ];
 
         $this->score = $result->score;
@@ -85,6 +85,7 @@ class Rescoreform extends Component
         if ($this->data['rescored_at'] >= Carbon::now()) {
             return true;
         }
+
         return false;
     }
 
@@ -97,19 +98,21 @@ class Rescoreform extends Component
 
     public function save()
     {
-        if (!$this->isRescoreable()) {
+        if (! $this->isRescoreable()) {
             $this->notify('error', 'Overtime to change anything');
+
             return;
         }
         $success = ExamStudent::where('id', $this->examStudentId)
             ->update([
-                'score' => doubleval($this->score),
-                'review' => $this->review
+                'score' => floatval($this->score),
+                'review' => $this->review,
             ]);
 
         if ($success) {
             $this->notify('success', 'Update exam successfully');
             $this->notifyForUpdateScore();
+
             return;
         }
         $this->notify('error', 'Update exam fail');
@@ -118,11 +121,11 @@ class Rescoreform extends Component
     public function notifyForUpdateScore()
     {
         $newNotify = [
-            'content' => 'Your ' . $this->data['subjectName'] . ' score has been updated',
+            'content' => 'Your '.$this->data['subjectName'].' score has been updated',
             'from_user_id' => Auth::user()->id,
             'user_id' => $this->data['userId'],
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/'
+            'link' => '/',
         ];
 
         $this->realTimeNotify($newNotify);

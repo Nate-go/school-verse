@@ -9,32 +9,32 @@ use Illuminate\Database\Seeder;
 class SubjectSeeder extends Seeder
 {
     public $subjects = [
-        "Physics",
-        "Chemistry",
-        "History",
-        "Geography",
-        "Biology",
-        "Civic Education",
-        "Technology",
-        "National Defense Education",
-        "Physical Education",
-        "Computer Science"
+        'Physics',
+        'Chemistry',
+        'History',
+        'Geography',
+        'Biology',
+        'Civic Education',
+        'Technology',
+        'National Defense Education',
+        'Physical Education',
+        'Computer Science',
     ];
 
     public $mainSubjects = [
-        "Mathematics",
-        "Literature",
-        "English",
+        'Mathematics',
+        'Literature',
+        'English',
     ];
 
     public function run(): void
     {
         $grades = Grade::selectColumns([
-            'id'
+            'id',
         ])->get();
 
-        foreach($grades as $grade) {
-            foreach($this->subjects as $subjectName) {
+        foreach ($grades as $grade) {
+            foreach ($this->subjects as $subjectName) {
                 Subject::create([
                     'grade_id' => $grade->id,
                     'name' => $subjectName,

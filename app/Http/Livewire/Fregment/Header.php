@@ -67,11 +67,12 @@ class Header extends Component
         $this->notifyIsOpen = ! $this->notifyIsOpen;
     }
 
-    public function realtimeNotifyDisplay($data) {
+    public function realtimeNotifyDisplay($data)
+    {
         $notify = Notification::where('id', $data['notifyId'])
-                                ->first();
+            ->first();
 
-        $this->emit('setNotify');                        
+        $this->emit('setNotify');
 
         $this->notify('info', $notify->content);
     }

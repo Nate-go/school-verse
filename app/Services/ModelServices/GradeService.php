@@ -34,13 +34,15 @@ class GradeService extends BaseService
 
     public function getDetailPageForAdmin($id)
     {
-        if(!$this->isGradeExist($id)) {
+        if (! $this->isGradeExist($id)) {
             return redirect()->route('notFound');
         }
+
         return view('admin/grade/grades-detail', ['id' => $id]);
     }
 
-    private function isGradeExist($id) {
+    private function isGradeExist($id)
+    {
         return Grade::where('id', $id)->exists();
     }
 }

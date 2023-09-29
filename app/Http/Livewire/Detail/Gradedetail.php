@@ -11,26 +11,29 @@ class Gradedetail extends Component
 
     public $name;
 
-    public function mount($itemId) {
+    public function mount($itemId)
+    {
         $this->itemId = $itemId;
         $this->formGenerate();
     }
 
-    public function formGenerate() {
+    public function formGenerate()
+    {
         $result = Grade::selectColumns(['name'])
-                        ->where('id', $this->itemId)->first();
+            ->where('id', $this->itemId)->first();
 
         $this->name = $result->name;
     }
 
-    public function save() {
+    public function save()
+    {
         $grade = [
-            'name' => trim($this->name)
+            'name' => trim($this->name),
         ];
 
         $result = $this->isValidData($grade);
 
-        if (!$result['isValid']) {
+        if (! $result['isValid']) {
             $this->notify('error', $result['message']);
 
             return;

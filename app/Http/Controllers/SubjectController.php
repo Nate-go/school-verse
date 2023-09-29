@@ -12,7 +12,7 @@ class SubjectController extends Controller
 
     public function __construct(SubjectService $subjectService)
     {
-        $this->middleware('author:' . str(UserRole::ADMIN))->except('show');
+        $this->middleware('author:'.str(UserRole::ADMIN))->except('show');
         $this->subjectService = $subjectService;
     }
 

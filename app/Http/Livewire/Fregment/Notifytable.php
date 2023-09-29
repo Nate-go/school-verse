@@ -20,10 +20,11 @@ class Notifytable extends Component
 
     protected $listeners = [
         'closeAll' => 'closeNotify',
-        'setNotify'
+        'setNotify',
     ];
 
-    public function mount() {
+    public function mount()
+    {
         $this->setNotify();
     }
 
@@ -42,8 +43,9 @@ class Notifytable extends Component
         $this->notifyIsOpen = ! $this->notifyIsOpen;
     }
 
-    public function changeStatus($notifyId, $currentStatus = null) {
-        if($currentStatus == null or $currentStatus == NotificationStatus::UNSEEN) {
+    public function changeStatus($notifyId, $currentStatus = null)
+    {
+        if ($currentStatus == null or $currentStatus == NotificationStatus::UNSEEN) {
             $currentStatus = NotificationStatus::SEEN;
         } else {
             $currentStatus = NotificationStatus::UNSEEN;
@@ -51,18 +53,21 @@ class Notifytable extends Component
 
         Notification::where('id', $notifyId)
             ->update([
-                'status' => $currentStatus
+                'status' => $currentStatus,
             ]);
 
         $this->setNotify();
     }
 
-    public function readNotify($notifyId, $link) {
+    public function readNotify($notifyId, $link)
+    {
         $this->changeStatus($notifyId);
+
         return redirect($link);
     }
 
-    public function setNotify() {
+    public function setNotify()
+    {
         $this->notifies = [];
 
         $data = Notification::selectColumns([
@@ -72,16 +77,16 @@ class Notifytable extends Component
             'content',
             'notifications.created_at',
             'link',
-            'notifications.id as notify_id'
+            'notifications.id as notify_id',
         ])
-        ->join('users', 'users.id', '=', 'notifications.from_user_id')
-        ->where('notifications.user_id', Auth::user()->id)
-        ->sort(['columnName' => 'created_at', 'type' => SortTypes::DECREASE_SORT])
-        ->get();
+            ->join('users', 'users.id', '=', 'notifications.from_user_id')
+            ->where('notifications.user_id', Auth::user()->id)
+            ->sort(['columnName' => 'created_at', 'type' => SortTypes::DECREASE_SORT])
+            ->get();
 
         $this->numberOfUnread = 0;
 
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $this->notifies[] = [
                 'image' => $item->image,
                 'status' => $item->status,
@@ -89,10 +94,10 @@ class Notifytable extends Component
                 'content' => $item->content,
                 'created_at' => $item->created_at,
                 'link' => $item->link,
-                'id' => $item->notify_id
+                'id' => $item->notify_id,
             ];
 
-            if($item->status == self::UNSEEN) {
+            if ($item->status == self::UNSEEN) {
                 $this->numberOfUnread += 1;
             }
         }

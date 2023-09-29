@@ -31,7 +31,7 @@ class RoomService extends BaseService
 
         $room = Student::selectColumns(['room_id'])->where('user_id', Auth::user()->id)->where('school_year_id', $currentSchoolYearId)->first();
 
-        return '/students/' . str(Auth::user()->id) . '/rooms/'.str($room->room_id);
+        return '/students/'.str(Auth::user()->id).'/rooms/'.str($room->room_id);
     }
 
     public function getPageForAdmin()
@@ -65,76 +65,88 @@ class RoomService extends BaseService
 
     public function getDetailPageForAdmin($id)
     {
-        if(!$this->isRoomExist($id)) {
+        if (! $this->isRoomExist($id)) {
             return redirect()->route('notFound');
         }
+
         return view('admin/room/rooms-detail', ['id' => $id]);
     }
 
-    private function isRoomExist($id) {
+    private function isRoomExist($id)
+    {
         $isExist = Room::where('id', $id)->exists();
 
         return $isExist;
     }
 
-    public function getHomeroomPage($roomId) {
-        if (!$this->isRoomExist($roomId)) {
+    public function getHomeroomPage($roomId)
+    {
+        if (! $this->isRoomExist($roomId)) {
             return redirect()->route('notFound');
         }
-        if(Auth::user()->role == UserRole::ADMIN or $this->isHomeroomTeacher($roomId)) {
+        if (Auth::user()->role == UserRole::ADMIN or $this->isHomeroomTeacher($roomId)) {
             return view('teacher/room/homerooms-detail', ['id' => $roomId]);
         }
+
         return redirect()->route('notPermission');
     }
 
-    private function isHomeroomTeacher($roomId) {
+    private function isHomeroomTeacher($roomId)
+    {
         $result = $this->model->where('homeroom_teacher_id', Auth::user()->id)
-                        ->where('id', $roomId)->exists();
-        
+            ->where('id', $roomId)->exists();
+
         return $result;
     }
 
-    public function getStudentRoom($userId, $roomId) {
+    public function getStudentRoom($userId, $roomId)
+    {
         if (Auth::user()->role == UserRole::ADMIN or Auth::user()->id == $userId) {
             $studentId = $this->getStudentId($userId, $roomId);
-            if($studentId) {
+            if ($studentId) {
                 return view('student/room/student-rooms-detail', ['studentId' => $studentId]);
             }
+
             return redirect()->route('notFound');
         }
+
         return redirect()->route('notPermission');
     }
 
-    private function getStudentId($userId, $roomId) {
+    private function getStudentId($userId, $roomId)
+    {
         $result = Student::selectColumns(['id'])
-                        ->where('user_id', $userId)
-                        ->where('room_id', $roomId)
-                        ->first();
+            ->where('user_id', $userId)
+            ->where('room_id', $roomId)
+            ->first();
 
-        return $result != null ? $result->id : null; 
+        return $result != null ? $result->id : null;
     }
 
     public function getTeacherRoom($roomTeacherId)
     {
-        if(!$this->isRoomTeacherExist($roomTeacherId)) {
+        if (! $this->isRoomTeacherExist($roomTeacherId)) {
             return redirect()->route('notFound');
         }
         if (Auth::user()->role == UserRole::ADMIN or $this->isTeacherValid($roomTeacherId)) {
             return view('teacher/room/teacher-rooms-detail', ['roomTeacherId' => $roomTeacherId]);
         }
+
         return redirect()->route('notPermission');
     }
 
-    private function isTeacherValid($roomTeacherId) {
+    private function isTeacherValid($roomTeacherId)
+    {
         $result = Teacher::join('room_teachers', 'room_teachers.teacher_id', '=', 'teachers.id')
-                        ->where('room_teachers.id', $roomTeacherId)
-                        ->where('teachers.user_id', Auth::user()->id)
-                        ->exists();
+            ->where('room_teachers.id', $roomTeacherId)
+            ->where('teachers.user_id', Auth::user()->id)
+            ->exists();
 
         return $result;
-    } 
+    }
 
-    private function isRoomTeacherExist($roomTeacherId) {
+    private function isRoomTeacherExist($roomTeacherId)
+    {
         return RoomTeacher::where('id', $roomTeacherId)->exists();
     }
 }

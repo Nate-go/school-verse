@@ -13,13 +13,12 @@ use App\Models\User;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 
 class Examdetail extends ModalComponent
 {
     const STUDNET = UserRole::STUDENT;
-    
+
     public $data;
 
     public $score;
@@ -38,14 +37,16 @@ class Examdetail extends ModalComponent
 
     public $isRescoreable;
 
-    public function boot(ConstantService $constantService) {
-        $this->constantService = $constantService;  
+    public function boot(ConstantService $constantService)
+    {
+        $this->constantService = $constantService;
     }
 
-    public function mount($examStudentId, $roomTeacherId=null) {
+    public function mount($examStudentId, $roomTeacherId = null)
+    {
         $this->examStudentId = $examStudentId;
         $this->formGenerate();
-        if (auth()->user()->role == UserRole::STUDENT or !$roomTeacherId) {
+        if (auth()->user()->role == UserRole::STUDENT or ! $roomTeacherId) {
             $this->isPermissionDelete = false;
             $this->isPermissionUpdate = false;
         } else {
@@ -54,18 +55,21 @@ class Examdetail extends ModalComponent
         }
     }
 
-    public function isEnable() {
+    public function isEnable()
+    {
         $startTime = ExamStudent::selectColumns(['exams.created_at'])
-                    ->join('exams', 'exams.id', '=', 'exam_students.exam_id')
-                    ->where('exam_students.id', $this->examStudentId)
-                    ->first();
+            ->join('exams', 'exams.id', '=', 'exam_students.exam_id')
+            ->where('exam_students.id', $this->examStudentId)
+            ->first();
 
         $createdTimestamp = strtotime($startTime->created_at);
         $currentTimestamp = time();
+
         return $currentTimestamp - $createdTimestamp <= OtherConstant::LIMIT_TIME_SECOND;
     }
 
-    public function formGenerate() {
+    public function formGenerate()
+    {
         $result = ExamStudent::selectColumns([
             'student_info.username as student_name',
             'student_info.image_url as student_image',
@@ -79,7 +83,7 @@ class Examdetail extends ModalComponent
             'room_teacher_id',
             'exams.content as exam_content',
             'student_info.id as user_id',
-            'rescored_at'
+            'rescored_at',
         ])
             ->join('students', 'students.id', '=', 'exam_students.student_id')
             ->join('users as student_info', 'students.user_id', '=', 'student_info.id')
@@ -99,11 +103,11 @@ class Examdetail extends ModalComponent
             'teacherImage' => $result->teacher_image,
             'subjectName' => $result->subject_name,
             'subjectImage' => $result->subject_image,
-            'examType' =>  $this->constantService->getNameConstant(ExamType::class, $result->exam_type),
+            'examType' => $this->constantService->getNameConstant(ExamType::class, $result->exam_type),
             'roomTeacherId' => $result->room_teacher_id,
             'examContent' => $result->exam_content,
             'userId' => $result->user_id,
-            'rescored_at' => $result->rescored_at
+            'rescored_at' => $result->rescored_at,
         ];
 
         $this->score = $result->score;
@@ -112,23 +116,24 @@ class Examdetail extends ModalComponent
         $this->isRescoreable = $this->isRescoreable();
     }
 
-    public function isRescoreable() {
-        if(Auth::user()->role != UserRole::STUDENT or $this->data['rescored_at'] != null) {
+    public function isRescoreable()
+    {
+        if (Auth::user()->role != UserRole::STUDENT or $this->data['rescored_at'] != null) {
             return false;
         }
+
         return true;
     }
 
-
-
-    public function rescore() {
+    public function rescore()
+    {
         try {
             $newInsistence = Insistence::create([
                 'user_id' => Auth::user()->id,
-                'content' => 'I request for rescore about ' . $this->data['subjectName'] . ' exam of teacher ' . $this->data['teacherName'],
+                'content' => 'I request for rescore about '.$this->data['subjectName'].' exam of teacher '.$this->data['teacherName'],
                 'status' => \App\Constant\Insistence::PENDING,
                 'type' => InsistenceTypes::RESCORE,
-                'object' => json_encode(['examStudentId' => $this->examStudentId])
+                'object' => json_encode(['examStudentId' => $this->examStudentId]),
             ]);
 
             $admin = User::where('role', UserRole::ADMIN)->first();
@@ -137,13 +142,13 @@ class Examdetail extends ModalComponent
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $admin->id,
                 'status' => NotificationStatus::UNSEEN,
-                'link' => '/insistences/' . str($newInsistence->id)
+                'link' => '/insistences/'.str($newInsistence->id),
             ];
 
             $this->realTimeNotify($newNotify);
 
             $this->notify('success', 'rescore request exam successfully');
-        } catch(e) {
+        } catch (e) {
             $this->notify('error', 'rescore request exam fail');
 
         }
@@ -151,48 +156,55 @@ class Examdetail extends ModalComponent
 
     }
 
-    public function updatedScore($value) {
-        if($value == '') {
+    public function updatedScore($value)
+    {
+        if ($value == '') {
             $this->score = 0;
         }
     }
 
-    public function save() {
-        if (!$this->enable) {
+    public function save()
+    {
+        if (! $this->enable) {
             $this->notify('error', 'Overtime to change anything');
+
             return;
         }
         $success = ExamStudent::where('id', $this->examStudentId)
-                            ->update([
-                                'score' => doubleval($this->score),
-                                'review' => $this->review
-                            ]);
+            ->update([
+                'score' => floatval($this->score),
+                'review' => $this->review,
+            ]);
 
-        if($success) {
+        if ($success) {
             $this->notify('success', 'Update exam successfully');
             $this->closeModalWithEvents([
-                Teacherroomdetail::getName() => 'updateScore'
+                Teacherroomdetail::getName() => 'updateScore',
             ]);
+
             return;
-        } 
+        }
         $this->notify('error', 'Update exam fail');
     }
 
-    public function notifyForUpdateScore() {
+    public function notifyForUpdateScore()
+    {
         $newNotify = [
-            'content' => 'Your ' . $this->data['subjectName'] . ' score has been updated',
+            'content' => 'Your '.$this->data['subjectName'].' score has been updated',
             'from_user_id' => Auth::user()->id,
             'user_id' => $this->data['userId'],
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/'
+            'link' => '/',
         ];
 
         $this->realTimeNotify($newNotify);
     }
 
-    public function delete() {
-        if (!$this->enable) {
+    public function delete()
+    {
+        if (! $this->enable) {
             $this->notify('error', 'Overtime to change anything');
+
             return;
         }
         $success = ExamStudent::where('id', $this->examStudentId)
@@ -201,11 +213,12 @@ class Examdetail extends ModalComponent
         if ($success) {
             $this->notify('success', 'Delete exam successfully');
             $this->closeModalWithEvents([
-                Teacherroomdetail::getName() => 'updateScore'
+                Teacherroomdetail::getName() => 'updateScore',
             ]);
+
             return;
         }
-        $this->notify('error', 'Delete exam fail');    
+        $this->notify('error', 'Delete exam fail');
     }
 
     public function render()

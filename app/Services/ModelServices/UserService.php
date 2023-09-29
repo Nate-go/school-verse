@@ -36,13 +36,15 @@ class UserService extends BaseService
 
     public function getDetailPage($id)
     {
-        if (!$this->isUserExist($id)) {
+        if (! $this->isUserExist($id)) {
             return redirect()->route('notFound');
         }
+
         return view('user/users-detail', ['id' => $id]);
     }
 
-    private function isUserExist($userId) {
+    private function isUserExist($userId)
+    {
         return User::where('id', $userId)->exists();
     }
 }

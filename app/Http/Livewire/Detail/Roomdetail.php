@@ -18,7 +18,7 @@ use Livewire\WithFileUploads;
 class Roomdetail extends Component
 {
     use WithFileUploads;
-    
+
     public $schoolYear;
 
     public $image;
@@ -61,17 +61,19 @@ class Roomdetail extends Component
 
     public $itemId;
 
-    public function mount($itemId) {
+    public function mount($itemId)
+    {
         $this->itemId = $itemId;
         $this->initData();
         $this->formGenerate();
     }
 
-    public function formGenerate() {
+    public function formGenerate()
+    {
         $this->teacherName = '';
         $homeroomTeacher = User::selectColumns('users.id')
-                        ->join('rooms', 'users.id', '=', 'rooms.homeroom_teacher_id')
-                        ->where('rooms.id', $this->itemId)->first();
+            ->join('rooms', 'users.id', '=', 'rooms.homeroom_teacher_id')
+            ->where('rooms.id', $this->itemId)->first();
         $this->selectedTeacher = $homeroomTeacher->id;
 
         $this->setTeacher();
@@ -95,18 +97,20 @@ class Roomdetail extends Component
         $this->setStudent();
     }
 
-    private function setSubjectTeacher() {
+    private function setSubjectTeacher()
+    {
         $subjectTeacher = Teacher::selectColumns(['teachers.id', 'username as name'])
-                            ->join('users', 'users.id', '=', 'teachers.user_id')
-                            ->where('teachers.subject_id', $this->selectedSubject)
-                            ->get();
+            ->join('users', 'users.id', '=', 'teachers.user_id')
+            ->where('teachers.subject_id', $this->selectedSubject)
+            ->get();
 
         $this->mappingData($this->subjectTeachers, $subjectTeacher);
 
         $this->slectedSubjectTeacher = null;
     }
 
-    private function setRoomTeacher() {
+    private function setRoomTeacher()
+    {
         $roomTeachers = RoomTeacher::select(
             DB::raw('CONCAT(subjects.name, " ", grades.name) as subject_name'),
             'room_teachers.id',
@@ -122,18 +126,19 @@ class Roomdetail extends Component
 
         $this->roomTeachers = [];
 
-        foreach($roomTeachers as $roomTeacher) {
+        foreach ($roomTeachers as $roomTeacher) {
             $this->roomTeachers[] = [
                 'subject' => $roomTeacher->subject_name,
                 'value' => $roomTeacher->id,
                 'email' => $roomTeacher->email,
-                'name'  =>$roomTeacher->username,
-                'image_url' => $roomTeacher->image_url
+                'name' => $roomTeacher->username,
+                'image_url' => $roomTeacher->image_url,
             ];
         }
     }
 
-    private function setRoomStudent() {
+    private function setRoomStudent()
+    {
         $roomStudents = Student::select(
             'students.id',
             'users.email',
@@ -147,18 +152,19 @@ class Roomdetail extends Component
 
         $this->roomStudents = [];
 
-        foreach($roomStudents as $roomStudent) {
+        foreach ($roomStudents as $roomStudent) {
             $this->roomStudents[] = [
                 'value' => $roomStudent->id,
                 'email' => $roomStudent->email,
-                'name'  =>$roomStudent->username,
+                'name' => $roomStudent->username,
                 'image_url' => $roomStudent->image_url,
-                'userId' => $roomStudent->user_id
+                'userId' => $roomStudent->user_id,
             ];
         }
     }
 
-    private function setStudent() {
+    private function setStudent()
+    {
         $students = Student::selectColumns(['students.id', 'username as name'])
             ->join('users', 'users.id', '=', 'students.user_id')
             ->where('students.grade_id', $this->gradeId)
@@ -186,7 +192,8 @@ class Roomdetail extends Component
         $this->selectedTeacher = $selectedTeacherTemp;
     }
 
-    public function initData() {
+    public function initData()
+    {
         $data = Room::select(
             'rooms.name as room_name',
             'rooms.image_url as image_url',
@@ -211,16 +218,18 @@ class Roomdetail extends Component
         $this->mappingData($this->subjects, $subject);
     }
 
-    private function setTeacher() {
+    private function setTeacher()
+    {
         $teachers = User::selectColumns(['id', 'username as name'])->where('role', UserRole::TEACHER)
-                        ->contain('username', $this->teacherName)->get();
+            ->contain('username', $this->teacherName)->get();
 
         $this->mappingData($this->teachers, $teachers);
     }
 
-    private function mappingData(&$data, $source) {
+    private function mappingData(&$data, $source)
+    {
         $data = [];
-        foreach($source as $item) {
+        foreach ($source as $item) {
             $data[] = ['name' => $item->name, 'value' => $item->id];
         }
     }
@@ -230,29 +239,33 @@ class Roomdetail extends Component
         return view('livewire.detail.roomdetail');
     }
 
-    public function changeTeacherState() {
+    public function changeTeacherState()
+    {
         $this->isTeachersOpen = ! $this->isTeachersOpen;
     }
 
     public function changeStudentState()
     {
-        $this->isStudentsOpen = !$this->isStudentsOpen;
+        $this->isStudentsOpen = ! $this->isStudentsOpen;
     }
 
-    public function updatedSelectedSubject($value) {
+    public function updatedSelectedSubject($value)
+    {
         $this->setSubjectTeacher();
         $this->selectedSubjectTeacher = null;
     }
 
-    public function addStudent() {
-        if(!$this->selectedStudent) {
+    public function addStudent()
+    {
+        if (! $this->selectedStudent) {
             $this->notify('error', 'You have not selected student');
+
             return;
         }
 
         $result = Student::where('id', $this->selectedStudent)->update(['room_id' => $this->itemId]);
 
-        if($result) {
+        if ($result) {
             $this->notify('success', 'Change class successfull');
             $this->notifyForAddStudent();
         } else {
@@ -263,14 +276,17 @@ class Roomdetail extends Component
         $this->setStudent();
     }
 
-    public function addSubjectTeacher() {
-        if(!$this->selectedSubjectTeacher) {
+    public function addSubjectTeacher()
+    {
+        if (! $this->selectedSubjectTeacher) {
             $this->notify('error', 'You have not select teacher');
+
             return;
         }
 
-        if($this->isRoomTeacherExist($this->selectedSubjectTeacher)) {
+        if ($this->isRoomTeacherExist($this->selectedSubjectTeacher)) {
             $this->notify('error', 'This teacher have already been in class');
+
             return;
         }
 
@@ -301,7 +317,7 @@ class Roomdetail extends Component
         } else {
             $result = RoomTeacher::create([
                 'teacher_id' => $this->selectedSubjectTeacher,
-                'room_id' => $this->itemId
+                'room_id' => $this->itemId,
             ]);
 
             if ($result) {
@@ -316,25 +332,26 @@ class Roomdetail extends Component
         $this->setSubjectTeacher();
     }
 
-    public function notifyForAddStudent() {
+    public function notifyForAddStudent()
+    {
         $student = Student::where('id', $this->selectedStudent)->first();
         $newNotify = [
-            'content' => 'You have been changed class to ' . $this->grade . $this->name,
+            'content' => 'You have been changed class to '.$this->grade.$this->name,
             'from_user_id' => Auth::user()->id,
             'user_id' => $student->user_id,
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/'
+            'link' => '/',
         ];
 
         $this->realTimeNotify($newNotify);
 
         $room = Room::where('id', $this->itemId)->first();
         $newNotify = [
-            'content' => 'A new student has been add to your class: ' . $this->grade . $this->name,
+            'content' => 'A new student has been add to your class: '.$this->grade.$this->name,
             'from_user_id' => Auth::user()->id,
             'user_id' => $room->homeroom_teacher_id,
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/rooms/' . str($this->itemId)
+            'link' => '/rooms/'.str($this->itemId),
         ];
 
         $this->realTimeNotify($newNotify);
@@ -344,26 +361,26 @@ class Roomdetail extends Component
     {
         $teacher = Teacher::where('id', $this->selectedSubjectTeacher)->first();
         $roomTeacher = RoomTeacher::where('room_id', $this->itemId)
-                                ->where('teacher_id', $this->selectedSubjectTeacher)
-                                ->first();
+            ->where('teacher_id', $this->selectedSubjectTeacher)
+            ->first();
         $newNotify = [
-            'content' => 'You have been add to class ' . $this->grade . $this->name,
+            'content' => 'You have been add to class '.$this->grade.$this->name,
             'from_user_id' => Auth::user()->id,
             'user_id' => $teacher->user_id,
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/teachers/room-teachers/' . str($roomTeacher->id)
+            'link' => '/teachers/room-teachers/'.str($roomTeacher->id),
         ];
 
         $this->realTimeNotify($newNotify);
 
-        foreach($this->roomStudents as $student) {
+        foreach ($this->roomStudents as $student) {
             $room = Room::where('id', $this->itemId)->first();
             $newNotify = [
-                'content' => 'A new teacher has been add to your class: ' . $this->grade . $this->name,
+                'content' => 'A new teacher has been add to your class: '.$this->grade.$this->name,
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $student['userId'],
                 'status' => NotificationStatus::UNSEEN,
-                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+                'link' => '/students/'.str($student['userId']).'/rooms'.str($this->itemId),
             ];
 
             $this->realTimeNotify($newNotify);
@@ -371,23 +388,25 @@ class Roomdetail extends Component
 
         $room = Room::where('id', $this->itemId)->first();
         $newNotify = [
-            'content' => 'A new teacher has been add to your class: ' . $this->grade . $this->name,
+            'content' => 'A new teacher has been add to your class: '.$this->grade.$this->name,
             'from_user_id' => Auth::user()->id,
             'user_id' => $room->homeroom_teacher_id,
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/teachers/room-teachers/' . str($this->itemId)
+            'link' => '/teachers/room-teachers/'.str($this->itemId),
         ];
 
         $this->realTimeNotify($newNotify);
     }
 
-    private function isRoomTeacherExist($teacherId) {
+    private function isRoomTeacherExist($teacherId)
+    {
         $result = RoomTeacher::where('teacher_id', $teacherId)->where('room_id', $this->itemId)->exists();
 
         return $result;
     }
 
-    private function isSubjectTeacherExist($teacherId) {
+    private function isSubjectTeacherExist($teacherId)
+    {
         $roomTeachersIds = RoomTeacher::selectColumns(['room_teachers.id'])
             ->where('room_id', $this->itemId)
             ->join('teachers', 'room_teachers.teacher_id', '=', 'teachers.id')
@@ -397,9 +416,8 @@ class Roomdetail extends Component
         return $roomTeachersIds ? $roomTeachersIds->id : null;
     }
 
-
-
-    public function save() {
+    public function save()
+    {
 
         $oldRoom = Room::where('id', $this->itemId)->first();
 
@@ -410,7 +428,7 @@ class Roomdetail extends Component
 
         $result = $this->isValidData($room);
 
-        if (!$result['isValid']) {
+        if (! $result['isValid']) {
             $this->notify('error', $result['message']);
 
             return;
@@ -424,7 +442,7 @@ class Roomdetail extends Component
             $this->notify('success', 'Change room detail successfully');
             $currentRoom = Room::where('id', $this->itemId)->first();
 
-            if($oldRoom->image_url != $currentRoom->image_url) {
+            if ($oldRoom->image_url != $currentRoom->image_url) {
                 $this->notifyForChangeImage();
             }
 
@@ -441,14 +459,15 @@ class Roomdetail extends Component
         }
     }
 
-    public function notifyForChangeImage() {
+    public function notifyForChangeImage()
+    {
         $room = Room::where('id', $this->itemId)->first();
         $newNotify = [
-            'content' => 'Image of your class ' . $this->grade . $this->name . ' has been changed',
+            'content' => 'Image of your class '.$this->grade.$this->name.' has been changed',
             'from_user_id' => Auth::user()->id,
             'user_id' => $room->homeroom_teacher_id,
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/teachers/homerooms/' . str($this->itemId)
+            'link' => '/teachers/homerooms/'.str($this->itemId),
         ];
 
         $this->realTimeNotify($newNotify);
@@ -456,11 +475,11 @@ class Roomdetail extends Component
         foreach ($this->roomStudents as $student) {
             $room = Room::where('id', $this->itemId)->first();
             $newNotify = [
-                'content' => 'Image of your class ' . $this->grade . $this->name . ' has been changed',
+                'content' => 'Image of your class '.$this->grade.$this->name.' has been changed',
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $student['userId'],
                 'status' => NotificationStatus::UNSEEN,
-                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+                'link' => '/students/'.str($student['userId']).'/rooms'.str($this->itemId),
             ];
 
             $this->realTimeNotify($newNotify);
@@ -471,11 +490,11 @@ class Roomdetail extends Component
     {
         $room = Room::where('id', $this->itemId)->first();
         $newNotify = [
-            'content' => 'Name of your class ' . $this->grade . $this->name . ' has been changed',
+            'content' => 'Name of your class '.$this->grade.$this->name.' has been changed',
             'from_user_id' => Auth::user()->id,
             'user_id' => $room->homeroom_teacher_id,
             'status' => NotificationStatus::UNSEEN,
-            'link' => '/teachers/homerooms/' . str($this->itemId)
+            'link' => '/teachers/homerooms/'.str($this->itemId),
         ];
 
         $this->realTimeNotify($newNotify);
@@ -483,11 +502,11 @@ class Roomdetail extends Component
         foreach ($this->roomStudents as $student) {
             $room = Room::where('id', $this->itemId)->first();
             $newNotify = [
-                'content' => 'Name of your class ' . $this->grade . $this->name . ' has been changed',
+                'content' => 'Name of your class '.$this->grade.$this->name.' has been changed',
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $student['userId'],
                 'status' => NotificationStatus::UNSEEN,
-                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+                'link' => '/students/'.str($student['userId']).'/rooms'.str($this->itemId),
             ];
 
             $this->realTimeNotify($newNotify);
@@ -499,23 +518,24 @@ class Roomdetail extends Component
         foreach ($this->roomStudents as $student) {
             $room = Room::where('id', $this->itemId)->first();
             $newNotify = [
-                'content' => 'Homeroom teacher of your class ' . $this->grade . $this->name . ' has been changed',
+                'content' => 'Homeroom teacher of your class '.$this->grade.$this->name.' has been changed',
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $student['userId'],
                 'status' => NotificationStatus::UNSEEN,
-                'link' => '/students/' . str($student['userId']) . '/rooms' . str($this->itemId)
+                'link' => '/students/'.str($student['userId']).'/rooms'.str($this->itemId),
             ];
 
             $this->realTimeNotify($newNotify);
         }
     }
 
-    private function isValidData($data) {
+    private function isValidData($data)
+    {
         if ($data['name'] === '') {
             return ['isValid' => false, 'message' => 'Name is invalid'];
         }
 
-        if (!$data['homeroom_teacher_id']) {
+        if (! $data['homeroom_teacher_id']) {
             return ['isValid' => false, 'message' => 'Homeroom teacher have not been selected'];
         }
 
@@ -535,9 +555,9 @@ class Roomdetail extends Component
     public function saveImage()
     {
         if ($this->image) {
-            $imageName = time() . '.' . $this->image->extension();
+            $imageName = time().'.'.$this->image->extension();
             $this->image->storeAs('public/images', $imageName);
-            $url = asset('storage/images/' . $imageName);
+            $url = asset('storage/images/'.$imageName);
 
             return $url;
         } else {
@@ -545,7 +565,8 @@ class Roomdetail extends Component
         }
     }
 
-    public function deleteSubjectTeacher($id) {
+    public function deleteSubjectTeacher($id)
+    {
 
         $result = RoomTeacher::where('id', $id)->delete();
 

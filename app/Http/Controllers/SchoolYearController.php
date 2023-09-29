@@ -12,7 +12,7 @@ class SchoolYearController extends Controller
 
     public function __construct(SchoolYearService $schoolYearService)
     {
-        $this->middleware('author:' . str(UserRole::ADMIN))->only('index', 'create', 'store', 'destroy');
+        $this->middleware('author:'.str(UserRole::ADMIN))->only('index', 'create', 'store', 'destroy');
         $this->schoolYearService = $schoolYearService;
     }
 

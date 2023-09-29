@@ -12,7 +12,7 @@ class GradeController extends Controller
 
     public function __construct(GradeService $gradeService)
     {
-        $this->middleware('author:' . str(UserRole::ADMIN));
+        $this->middleware('author:'.str(UserRole::ADMIN));
         $this->gradeService = $gradeService;
     }
 

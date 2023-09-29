@@ -5,7 +5,6 @@ namespace App\Constant;
 use App\Services\ConstantService;
 use App\Services\ModelServices\GradeService;
 use App\Services\ModelServices\SchoolYearService;
-use App\Services\ModelServices\SubjectService;
 
 class TableData
 {

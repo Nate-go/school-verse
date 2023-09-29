@@ -16,7 +16,8 @@ class Userinfomation extends Component
         'closeAll' => 'closeInfo',
     ];
 
-    public function mount() {
+    public function mount()
+    {
         $this->isAdmin = Auth::user()->role == UserRole::ADMIN;
     }
 

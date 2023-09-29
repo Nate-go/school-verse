@@ -51,7 +51,8 @@ class Tableaction extends Component
         $this->actionIsOpen = ! $this->actionIsOpen;
     }
 
-    public function filter() {
+    public function filter()
+    {
         $this->emit('filter');
     }
 }

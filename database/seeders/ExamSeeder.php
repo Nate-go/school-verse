@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Constant\ExamType;
 use App\Models\Exam;
 use App\Models\RoomTeacher;
-use DB;
 use Illuminate\Database\Seeder;
 
 class ExamSeeder extends Seeder
@@ -22,12 +21,12 @@ class ExamSeeder extends Seeder
     {
         $roomTeachers = RoomTeacher::selectColumns(['id'])->get();
 
-        foreach($roomTeachers as $roomTeacher) {
-            foreach($this->types as $type) {
+        foreach ($roomTeachers as $roomTeacher) {
+            foreach ($this->types as $type) {
                 $numberExam = random_int($type['min'], $type['max']);
-                foreach(range(0, $numberExam - 1) as $number) {
+                foreach (range(0, $numberExam - 1) as $number) {
                     Exam::create([
-                        'content' => $type['name'] . ' ' . str($number + 1),
+                        'content' => $type['name'].' '.str($number + 1),
                         'room_teacher_id' => $roomTeacher->id,
                         'type' => $type['value'],
                     ]);

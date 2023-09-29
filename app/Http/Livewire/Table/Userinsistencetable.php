@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Table;
 
-use App\Constant\UserRole;
 use App\Models\Insistence;
 
 class Userinsistencetable extends Table
@@ -26,7 +25,6 @@ class Userinsistencetable extends Table
             ->search($search)
             ->orderBy($sort['column'], $sort['type'])
             ->paginate($filterValues['perPage']);
-        
 
         $insistences = $this->constantService->mappingConstant(\App\Constant\Insistence::class, 'status', $insistences);
 

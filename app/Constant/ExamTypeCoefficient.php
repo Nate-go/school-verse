@@ -13,6 +13,6 @@ class ExamTypeCoefficient
 
         ExamType::MIDTERM => 3,
 
-        ExamType::FINAL_SEMESTER => 3
+        ExamType::FINAL_SEMESTER => 3,
     ];
 }

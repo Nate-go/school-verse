@@ -18,9 +18,9 @@ class TeacherSeeder extends Seeder
         $teachers = User::selectColumns(['id'])->where('role', UserRole::TEACHER)->get();
         $subjects = Subject::selectColumns(['id'])->get();
 
-        foreach($subjects as $subject) {
+        foreach ($subjects as $subject) {
             $numberTeachers = random_int(2, 3);
-            foreach(range(0, $numberTeachers - 1) as $number) {
+            foreach (range(0, $numberTeachers - 1) as $number) {
                 $randTeacher = random_int(0, count($teachers) - 1);
                 Teacher::create([
                     'user_id' => $teachers[$randTeacher]->id,
