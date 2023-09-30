@@ -13,9 +13,9 @@ use App\Models\User;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use LivewireUI\Modal\ModalComponent;
+use App\Http\Livewire\BaseComponent;
 
-class Examdetail extends ModalComponent
+class Examdetail extends BaseComponent
 {
     const STUDNET = UserRole::STUDENT;
 

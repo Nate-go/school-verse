@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Head extends Component
+class Head extends BaseComponent
 {
     public $name;
 

@@ -4,10 +4,10 @@ namespace App\Http\Livewire\Fregment;
 
 use App\Constant\UserRole;
 use App\Services\UtilService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Request;
 
-class Sidebar extends Component
+class Sidebar extends BaseComponent
 {
     public $adminRole = UserRole::ADMIN;
 

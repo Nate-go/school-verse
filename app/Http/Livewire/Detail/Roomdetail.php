@@ -12,10 +12,10 @@ use App\Models\Teacher;
 use App\Models\User;
 use Auth;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
-class Roomdetail extends Component
+class Roomdetail extends BaseComponent
 {
     use WithFileUploads;
 

@@ -6,9 +6,9 @@ use App\Constant\NotificationStatus;
 use App\Constant\SortTypes;
 use App\Models\Notification;
 use Auth;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Notifytable extends Component
+class Notifytable extends BaseComponent
 {
     const UNSEEN = NotificationStatus::UNSEEN;
 

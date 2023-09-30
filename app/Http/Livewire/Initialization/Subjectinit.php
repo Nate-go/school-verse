@@ -6,10 +6,10 @@ use App\Models\Grade;
 use App\Models\Subject;
 use App\Services\ConstantService;
 use App\Services\UtilService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
-class Subjectinit extends Component
+class Subjectinit extends BaseComponent
 {
     use WithFileUploads;
 

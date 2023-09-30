@@ -8,10 +8,10 @@ use App\Models\Room;
 use App\Models\User;
 use App\Services\ConstantService;
 use App\Services\UtilService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
-class Roominit extends Component
+class Roominit extends BaseComponent
 {
     use WithFileUploads;
 

@@ -18,7 +18,7 @@
     @if ($notifyIsOpen)
         <div class="">
             <ul tabindex="-1"
-                class="absolute top-8 right-7 bg-white min-w-[180px] p-3 border-blue-gray-50 rounded-md shadow-lg shadow-blue-gray-500/10 font-sans text-sm font-normal text-blue-gray-500 overflow-auto focus:outline-none z-[999] w-max border-0 max-h-96">
+                class="absolute top-8 right-7 bg-white min-w-[180px] p-3 border-blue-gray-50 rounded-md shadow-lg shadow-blue-gray-500/10 font-sans text-sm font-normal text-blue-gray-500 overflow-auto focus:outline-none z-40 w-max border-0 max-h-96">
                 @if (empty($notifies))
                     <li
                         class="w-full pt-[9px] pb-2 px-3 rounded-md text-start leading-tight cursor-pointer select-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900 flex items-center gap-3">
@@ -32,7 +32,7 @@
                     <li wire:click="readNotify({{$notify['id']}}, '{{str($notify['link'])}}')"
                         class="hover:bg-blue-200 w-72 overflow-auto pt-[9px] pb-2 px-3 rounded-md text-start leading-tight cursor-pointer select-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-blue-gray-50 focus:bg-opacity-80 active:bg-blue-gray-50 active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900 flex items-center gap-3">
                         <img src="{{$notify['image']}}" class="inline-block relative object-cover object-center !rounded-full w-10 h-10">
-                        <div>
+                        <div class="w-full">
                             <div class="antialiased font-sans text-sm leading-normal text-blue-gray-900 mb-1 font-normal flex justify-between">
                                 <p>From {{$notify['fromName']}} </p> 
                                 <div class="hover:bg-slate-200 hover:text-blue-500 rounded-md py-1 px-2" wire:click.stop="changeStatus({{$notify['id']}}, {{$notify['status']}})">

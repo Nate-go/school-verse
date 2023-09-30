@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Fregment;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Loading extends Component
+class Loading extends BaseComponent
 {
     public function render()
     {

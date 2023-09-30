@@ -16,9 +16,9 @@ use App\Services\ConstantService;
 use App\Services\UtilService;
 use DB;
 use Hash;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Userinit extends Component
+class Userinit extends BaseComponent
 {
     public $isProfileOpen = true;
 

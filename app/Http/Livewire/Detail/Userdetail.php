@@ -13,10 +13,10 @@ use Auth;
 use DateTime;
 use DB;
 use Hash;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
-class Userdetail extends Component
+class Userdetail extends BaseComponent
 {
     use WithFileUploads;
 

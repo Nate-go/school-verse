@@ -17,9 +17,9 @@ use App\Models\User;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Studentroomdetail extends Component
+class Studentroomdetail extends BaseComponent
 {
     const MAXNUMBERLENGTH = 0;
 
@@ -223,7 +223,6 @@ class Studentroomdetail extends Component
 
     private function setBody()
     {
-
         $subjects = $this->getSubjects();
 
         $subjectScores = [];

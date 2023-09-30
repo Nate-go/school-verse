@@ -3,11 +3,11 @@
 namespace App\Http\Livewire\Table;
 
 use App\Services\ConstantService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithPagination;
 use Request;
 
-class Table extends Component
+class Table extends BaseComponent
 {
     use WithPagination;
 
@@ -71,12 +71,13 @@ class Table extends Component
     public function changeTypeSearch($value)
     {
         $this->filterForm['search']['value']['type'] = intval($value);
+        $this->updateData();
     }
 
     public function changeData($value)
     {
         $this->filterForm['search']['value']['value'] = $value;
-        $this->updateData();
+        $this->updateData(); 
     }
 
     public function updateFilterForm($filterForm)
@@ -181,13 +182,5 @@ class Table extends Component
         }
 
         return $elements;
-    }
-
-    public function confirmAction($input)
-    {
-        $data = $input['data']['inputAttributes'];
-        $action = $data['action'];
-        $params = $data['params'];
-        $this->$action(...$params);
     }
 }

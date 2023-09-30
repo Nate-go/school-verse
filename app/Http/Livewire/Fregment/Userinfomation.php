@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Fregment;
 
 use App\Constant\UserRole;
 use Auth;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Userinfomation extends Component
+class Userinfomation extends BaseComponent
 {
     public $userInfoIsOpen = false;
 

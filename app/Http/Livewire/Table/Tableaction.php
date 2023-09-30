@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Table;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Tableaction extends Component
+class Tableaction extends BaseComponent
 {
     public $actionIsOpen = false;
 

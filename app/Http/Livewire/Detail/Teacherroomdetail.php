@@ -13,9 +13,10 @@ use App\Models\Student;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use Livewire\Component;
+use Exception;
+use App\Http\Livewire\BaseComponent;
 
-class Teacherroomdetail extends Component
+class Teacherroomdetail extends BaseComponent
 {
     const MAXNUMBERLENGTH = 0;
 

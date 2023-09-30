@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Detail;
 
 use App\Models\SchoolYear;
 use DateTime;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Schoolyeardetail extends Component
+class Schoolyeardetail extends BaseComponent
 {
     public $itemId;
 

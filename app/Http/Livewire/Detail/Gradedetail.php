@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Detail;
 
 use App\Models\Grade;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Gradedetail extends Component
+class Gradedetail extends BaseComponent
 {
     public $itemId;
 

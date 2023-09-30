@@ -4,10 +4,10 @@ namespace App\Http\Livewire\Detail;
 
 use App\Models\Subject;
 use App\Services\ConstantService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
-class Subjectdetail extends Component
+class Subjectdetail extends BaseComponent
 {
     use WithFileUploads;
 

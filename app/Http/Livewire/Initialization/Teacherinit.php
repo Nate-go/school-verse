@@ -8,9 +8,9 @@ use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Teacherinit extends Component
+class Teacherinit extends BaseComponent
 {
     public $teachers;
 

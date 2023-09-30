@@ -13,9 +13,9 @@ use App\Services\ConstantService;
 use Auth;
 use Carbon\Carbon;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Insistencedetail extends Component
+class Insistencedetail extends BaseComponent
 {
     public $itemId;
 

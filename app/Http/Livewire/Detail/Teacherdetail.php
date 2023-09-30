@@ -8,9 +8,9 @@ use App\Models\Teacher;
 use App\Models\User;
 use App\Services\UtilService;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Teacherdetail extends Component
+class Teacherdetail extends BaseComponent
 {
     public $itemId;
 

@@ -4,10 +4,10 @@ namespace App\Http\Livewire\Fregment;
 
 use App\Models\Notification;
 use App\Services\UtilService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Request;
 
-class Header extends Component
+class Header extends BaseComponent
 {
     public $headerIsLock = true;
 
