@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Services\ModelServices\GradeServiceTest;
+namespace Tests\Unit\Services\ModelServices\InsistenceServiceTest;
 
 use App\Constant\TableData;
-use App\Services\ModelServices\GradeService;
+use App\Services\ModelServices\InsistenceService;
 use App\Services\TableService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,14 +17,14 @@ class GetPageForAdminTest extends BaseTest
     {
         $data = $this->setUpInitData();
 
-        $gradeService = app()->make(GradeService::class);
+        $insistenceService = app()->make(InsistenceService::class);
         $tableService = app()->make(TableService::class);
-        $result = $gradeService->getPageForAdmin();
+        $result = $insistenceService->getPageForAdmin();
 
         $this->assertInstanceOf(View::class, $result);
-        $this->assertEquals('admin.grade.grades', $result->getName());
+        $this->assertEquals('admin.insistence.insistences', $result->getName());
         $viewData = $result->getData();
-        $data = TableData::GRADES;
+        $data = TableData::INSISTENCES;
         $tableService->setTableForm($data);
         $this->assertEquals($data, $viewData['tableSource']);
     }

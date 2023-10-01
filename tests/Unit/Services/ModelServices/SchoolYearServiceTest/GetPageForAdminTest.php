@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Unit\Services\ModelServices\GradeServiceTest;
+namespace Tests\Unit\Services\ModelServices\SchoolYearServiceTest;
 
 use App\Constant\TableData;
-use App\Services\ModelServices\GradeService;
+use App\Services\ModelServices\RoomService;
+use App\Services\ModelServices\SchoolYearService;
 use App\Services\TableService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,16 +16,14 @@ class GetPageForAdminTest extends BaseTest
 
     public function testReturnView()
     {
-        $data = $this->setUpInitData();
-
-        $gradeService = app()->make(GradeService::class);
+        $schoolYearService = app()->make(SchoolYearService::class);
         $tableService = app()->make(TableService::class);
-        $result = $gradeService->getPageForAdmin();
+        $result = $schoolYearService->getPageForAdmin();
 
         $this->assertInstanceOf(View::class, $result);
-        $this->assertEquals('admin.grade.grades', $result->getName());
+        $this->assertEquals('admin.school-year.school-years', $result->getName());
         $viewData = $result->getData();
-        $data = TableData::GRADES;
+        $data = TableData::SCHOOLYEARS;
         $tableService->setTableForm($data);
         $this->assertEquals($data, $viewData['tableSource']);
     }

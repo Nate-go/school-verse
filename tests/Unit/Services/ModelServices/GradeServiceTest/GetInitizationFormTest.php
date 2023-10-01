@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Services\ModelServices\GradeServiceTest;
 
-use App\Models\Grade;
 use App\Services\ModelServices\GradeService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Unit\BaseTest;
 
-class GetInitizationTest extends TestCase
+class GetInitizationFormTest extends BaseTest
 {
     use RefreshDatabase;
 

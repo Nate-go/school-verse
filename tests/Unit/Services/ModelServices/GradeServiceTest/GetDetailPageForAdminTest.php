@@ -6,17 +6,17 @@ use App\Models\Grade;
 use App\Services\ModelServices\GradeService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Unit\BaseTest;
 
-class GetDetailPageForAdminTest extends TestCase
+class GetDetailPageForAdminTest extends BaseTest
 {
     use RefreshDatabase;
 
     public function testGetExistGrade()
     {
-        $grade = Grade::create([
-            'name' => 10,
-        ]);
+        $data = $this->setUpInitData();
+
+        $grade = $data['grade'];
 
         $gradeService = app()->make(GradeService::class);
         $result = $gradeService->getDetailPageForAdmin($grade->id);
