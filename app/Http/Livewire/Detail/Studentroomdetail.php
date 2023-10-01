@@ -6,7 +6,6 @@ use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
 use App\Constant\InsistenceTypes;
 use App\Constant\NotificationStatus;
-use App\Constant\SortTypes;
 use App\Constant\UserRole;
 use App\Models\Exam;
 use App\Models\Insistence;
@@ -18,9 +17,9 @@ use App\Models\User;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Studentroomdetail extends Component
+class Studentroomdetail extends BaseComponent
 {
     const MAXNUMBERLENGTH = 0;
 
@@ -69,7 +68,7 @@ class Studentroomdetail extends Component
             'users.image_url as teacher_image',
             'rooms.grade_id',
             'school_years.name as school_year_name',
-            'room_id'
+            'room_id',
         ])
             ->join('users', 'users.id', '=', 'rooms.homeroom_teacher_id')
             ->join('grades', 'grades.id', '=', 'rooms.grade_id')
@@ -85,7 +84,7 @@ class Studentroomdetail extends Component
             'gradeId' => $data->grade_id,
             'schoolYearName' => $data->school_year_name,
             'roomImage' => $data->room_image,
-            'roomId' => $data->room_id
+            'roomId' => $data->room_id,
         ];
 
         $this->setHeader();
@@ -96,43 +95,47 @@ class Studentroomdetail extends Component
         $this->setRoom();
     }
 
-    public function setRoom() {
+    public function setRoom()
+    {
         $room = Student::selectColumns([
             'school_year_id',
             'grade_id',
-            'room_id'
+            'room_id',
         ])
-        ->where('id', $this->itemId)
-        ->first();
+            ->where('id', $this->itemId)
+            ->first();
 
         $data = Room::selectColumns([
             'rooms.id',
             DB::raw('CONCAT(grades.name, "", rooms.name) as name'),
         ])
-        ->join('grades', 'grades.id', '=', 'rooms.grade_id')
-        ->where('grade_id', $room->grade_id)
-        ->where('school_year_id', $room->school_year_id)
-        ->whereNot('rooms.id', $room->room_id)
-        ->get();
+            ->join('grades', 'grades.id', '=', 'rooms.grade_id')
+            ->where('grade_id', $room->grade_id)
+            ->where('school_year_id', $room->school_year_id)
+            ->whereNot('rooms.id', $room->room_id)
+            ->get();
 
         $this->rooms = [];
 
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $this->rooms[] = [
                 'value' => $item->id,
-                'name' => $item->name
+                'name' => $item->name,
             ];
         }
     }
 
-    public function requestChangeRoom() {
-        if($this->selectedRoom == null) {
+    public function requestChangeRoom()
+    {
+        if ($this->selectedRoom == null) {
             $this->notify('error', 'You have not select class to change');
+
             return;
         }
 
         if ($this->content == '') {
             $this->notify('error', 'Your content is empty');
+
             return;
         }
 
@@ -140,15 +143,15 @@ class Studentroomdetail extends Component
             $newRoom = Room::selectColumns([
                 DB::raw('CONCAT(grades.name, "", rooms.name) as name'),
             ])
-            ->join('grades', 'grades.id', '=', 'rooms.grade_id')
-            ->where('rooms.id', $this->selectedRoom)->first();
+                ->join('grades', 'grades.id', '=', 'rooms.grade_id')
+                ->where('rooms.id', $this->selectedRoom)->first();
 
             $newInsistence = Insistence::create([
                 'user_id' => Auth::user()->id,
-                'content' => 'I request for change room to ' . $newRoom->name . "\n - Detail: \n" . $this->content,
+                'content' => 'I request for change room to '.$newRoom->name."\n - Detail: \n".$this->content,
                 'status' => \App\Constant\Insistence::PENDING,
                 'type' => InsistenceTypes::CHANGE_CLASS,
-                'object' => json_encode(['roomId' => $this->selectedRoom])
+                'object' => json_encode(['roomId' => $this->selectedRoom]),
             ]);
 
             $admin = User::where('role', UserRole::ADMIN)->first();
@@ -157,7 +160,7 @@ class Studentroomdetail extends Component
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $admin->id,
                 'status' => NotificationStatus::UNSEEN,
-                'link' => '/insistences/' . str($newInsistence->id)
+                'link' => '/insistences/'.str($newInsistence->id),
             ];
 
             $this->realTimeNotify($newNotify);
@@ -169,18 +172,19 @@ class Studentroomdetail extends Component
         $this->formGenerate();
     }
 
-    public function setStudent() {
+    public function setStudent()
+    {
         $data = Student::selectColumns([
             'users.username as name',
-            'users.image_url'
+            'users.image_url',
         ])
-        ->join('users', 'users.id', '=', 'students.user_id')
-        ->where('students.id', $this->itemId)
-        ->first();
+            ->join('users', 'users.id', '=', 'students.user_id')
+            ->where('students.id', $this->itemId)
+            ->first();
 
         $this->student = [
             'name' => $data->name,
-            'image' => $data->image_url
+            'image' => $data->image_url,
         ];
     }
 
@@ -207,7 +211,7 @@ class Studentroomdetail extends Component
                 'value' => $roomTeacher->id,
                 'email' => $roomTeacher->email,
                 'name' => $roomTeacher->username,
-                'image_url' => $roomTeacher->image_url
+                'image_url' => $roomTeacher->image_url,
             ];
         }
     }
@@ -217,8 +221,8 @@ class Studentroomdetail extends Component
         $this->header = $this->constantService->getConstantsJson(ExamType::class);
     }
 
-    private function setBody() {
-
+    private function setBody()
+    {
         $subjects = $this->getSubjects();
 
         $subjectScores = [];
@@ -229,7 +233,7 @@ class Studentroomdetail extends Component
             $subjectScores[] = [
                 'subject' => $subject,
                 'scores' => $exams,
-                'totalScore' => $subjectScore
+                'totalScore' => $subjectScore,
             ];
         }
 
@@ -237,7 +241,7 @@ class Studentroomdetail extends Component
 
         $this->body = [
             'subjectScores' => $subjectScores,
-            'finalScore' => end($scores)
+            'finalScore' => end($scores),
         ];
     }
 
@@ -247,7 +251,7 @@ class Studentroomdetail extends Component
             'id',
             'name',
             'coefficient',
-            'image_url'
+            'image_url',
         ])
             ->where('grade_id', $this->room['gradeId'])
             ->get();
@@ -259,7 +263,7 @@ class Studentroomdetail extends Component
                 'name' => $item->name,
                 'value' => $item->id,
                 'coefficient' => $item->coefficient,
-                'image' => $item->image_url
+                'image' => $item->image_url,
             ];
         }
 
@@ -295,7 +299,7 @@ class Studentroomdetail extends Component
             'exam_students.id',
             'score',
             'exams.type',
-            'subjects.name'
+            'subjects.name',
         ])
             ->join('exam_students', 'exam_students.exam_id', '=', 'exams.id')
             ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
@@ -312,7 +316,7 @@ class Studentroomdetail extends Component
                 'id' => $exam->id,
                 'score' => $exam->score,
                 'type' => $exam->type,
-                'name' => $exam->name
+                'name' => $exam->name,
             ];
         }
 

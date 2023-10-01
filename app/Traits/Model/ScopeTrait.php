@@ -8,19 +8,21 @@ use Schema;
 
 trait ScopeTrait
 {
-    public function scopeWhereAllDeletedNull($query, $tables) {
-        foreach($tables as $table) {
-            $query->whereNull($table . '.deleted_at');
+    public function scopeWhereAllDeletedNull($query, $tables)
+    {
+        foreach ($tables as $table) {
+            $query->whereNull($table.'.deleted_at');
         }
     }
 
     public function scopeWhereOrAll($query, $columns, $values)
     {
-        for($i = 0; $i < count($columns); $i++) {
-            if($values[$i] != -1) {
+        for ($i = 0; $i < count($columns); $i++) {
+            if ($values[$i] != -1) {
                 $query->where($columns[$i], $values[$i]);
             }
         }
+
         return $query;
     }
 
@@ -65,7 +67,7 @@ trait ScopeTrait
         $schoolYears = SchoolYear::whereIn('id', $schoolYears)->get();
         $isFirst = true;
         foreach ($schoolYears as $schoolYear) {
-            if($isFirst) {
+            if ($isFirst) {
                 $query->whereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);
             } else {
                 $query->orWhereBetween($time, [$schoolYear->start_at, $schoolYear->end_at]);

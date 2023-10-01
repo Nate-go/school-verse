@@ -29,8 +29,9 @@ class Gradetable extends Table
 
     public function delete($id, $confirmed = false)
     {
-        if (!$confirmed) {
+        if (! $confirmed) {
             $this->confirmBox('delete this item', 'delete', ['id' => $id, 'confirmed' => true]);
+
             return;
         }
 

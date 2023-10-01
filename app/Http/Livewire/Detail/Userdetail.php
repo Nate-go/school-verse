@@ -6,7 +6,6 @@ use App\Constant\Gender;
 use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
-use App\Events\NotifyEvent;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\ConstantService;
@@ -14,13 +13,13 @@ use Auth;
 use DateTime;
 use DB;
 use Hash;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
-class Userdetail extends Component
+class Userdetail extends BaseComponent
 {
     use WithFileUploads;
-    
+
     public $image;
 
     public $imageUrl;
@@ -63,11 +62,13 @@ class Userdetail extends Component
 
     protected $constantService;
 
-    public function boot(ConstantService $constantService) {
+    public function boot(ConstantService $constantService)
+    {
         $this->constantService = $constantService;
     }
 
-    public function mount($itemId) {
+    public function mount($itemId)
+    {
         $this->itemId = $itemId;
         $this->setGender();
         $this->setStatus();
@@ -76,10 +77,11 @@ class Userdetail extends Component
         $this->isAdmin = Auth::user()->role === UserRole::ADMIN;
     }
 
-    public function profileFormGenerate() {
+    public function profileFormGenerate()
+    {
         $result = Profile::selectColumns(['address', 'gender', 'phonenumber', 'date_of_birth'])
-                ->where('id', $this->profileId)
-                ->first();
+            ->where('id', $this->profileId)
+            ->first();
 
         $this->address = $result->address;
         $this->selectedGender = $result->gender;
@@ -88,7 +90,8 @@ class Userdetail extends Component
         $this->dateOfBirth = $dateTime->format('Y-m-d');
     }
 
-    public function formGenerate() {
+    public function formGenerate()
+    {
         $result = User::selectColumns(['image_url', 'username', 'role', 'email', 'status', 'profile_id'])
             ->where('users.id', $this->itemId)
             ->first();
@@ -102,7 +105,8 @@ class Userdetail extends Component
         $this->profileId = $result->profile_id;
     }
 
-    private function setGender() {
+    private function setGender()
+    {
         $this->genders = $this->constantService->getConstantsJson(Gender::class);
     }
 
@@ -116,15 +120,18 @@ class Userdetail extends Component
         return view('livewire.detail.userdetail');
     }
 
-    public function changeProfileState() {
+    public function changeProfileState()
+    {
         $this->isProfileOpen = ! $this->isProfileOpen;
     }
 
-    public function changePasswordState() {
+    public function changePasswordState()
+    {
         $this->isChangePasswordOpen = ! $this->isChangePasswordOpen;
     }
 
-    public function changePasswordFormGenerate () {
+    public function changePasswordFormGenerate()
+    {
         $this->currentPassword = null;
         $this->newPassword = null;
         $this->newPasswordAgain = null;
@@ -133,9 +140,9 @@ class Userdetail extends Component
     public function saveImage()
     {
         if ($this->image) {
-            $imageName = time() . '.' . $this->image->extension();
+            $imageName = time().'.'.$this->image->extension();
             $this->image->storeAs('public/images', $imageName);
-            $url = asset('storage/images/' . $imageName);
+            $url = asset('storage/images/'.$imageName);
 
             return $url;
         } else {
@@ -143,7 +150,8 @@ class Userdetail extends Component
         }
     }
 
-    public function save() {
+    public function save()
+    {
 
         $user = [
             'username' => trim($this->username),
@@ -152,7 +160,7 @@ class Userdetail extends Component
 
         $result = $this->isValidData($user);
 
-        if (!$result['isValid']) {
+        if (! $result['isValid']) {
             $this->notify('error', $result['message']);
 
             return;
@@ -167,7 +175,7 @@ class Userdetail extends Component
                 'address' => $this->address,
                 'gender' => $this->selectedGender,
                 'phonenumber' => $this->phoneNumber,
-                'date_of_birth' => $this->dateOfBirth
+                'date_of_birth' => $this->dateOfBirth,
             ]);
 
             $result = true;
@@ -175,13 +183,13 @@ class Userdetail extends Component
 
         if ($result) {
             $this->notify('success', 'update user successfully');
-            if($this->itemId != Auth::user()->id) {
+            if ($this->itemId != Auth::user()->id) {
                 $newNotify = [
                     'content' => 'Your profile has been updated',
                     'from_user_id' => Auth::user()->id,
                     'user_id' => $this->itemId,
                     'status' => NotificationStatus::UNSEEN,
-                    'link' => '/users'
+                    'link' => '/users',
                 ];
 
                 $this->realTimeNotify($newNotify);
@@ -192,7 +200,8 @@ class Userdetail extends Component
 
     }
 
-    private function isValidData($user) {
+    private function isValidData($user)
+    {
         if ($user['username'] === '') {
             return ['isValid' => false, 'message' => 'Username is invalid'];
         }
@@ -208,9 +217,11 @@ class Userdetail extends Component
         return ['isValid' => true];
     }
 
-    public function saveChangePassword() {
-        if(!$this->isCurrentPasswordTrue()) {
+    public function saveChangePassword()
+    {
+        if (! $this->isCurrentPasswordTrue()) {
             $this->notify('error', 'Author fail');
+
             return;
         }
 
@@ -218,18 +229,20 @@ class Userdetail extends Component
 
         $result = $this->isValidPassword($password);
 
-        if(!$result['isValid']) {
+        if (! $result['isValid']) {
             $this->notify('error', $result['message']);
+
             return;
         }
 
-        if($password !== trim($this->newPasswordAgain)) {
+        if ($password !== trim($this->newPasswordAgain)) {
             $this->notify('error', 'Password again is not true');
+
             return;
         }
 
         $result = User::where('id', $this->itemId)
-                        ->update(['password' => Hash::make($password)]);
+            ->update(['password' => Hash::make($password)]);
 
         if ($result) {
             $this->notify('success', 'Change password successfully');
@@ -238,22 +251,25 @@ class Userdetail extends Component
         }
     }
 
-    private function isValidPassword($password) {
-        if(strlen($password) < 6 or !$password) {
-            return ['isValid' => false, 'message' => 'Password must have at least 6 characters']; 
+    private function isValidPassword($password)
+    {
+        if (strlen($password) < 6 or ! $password) {
+            return ['isValid' => false, 'message' => 'Password must have at least 6 characters'];
         }
 
         return ['isValid' => true];
     }
 
-    private function isCurrentPasswordTrue() {
+    private function isCurrentPasswordTrue()
+    {
         $currentPassword = User::selectColumns(['password'])
-                        ->where('id', $this->itemId)
-                        ->first();
+            ->where('id', $this->itemId)
+            ->first();
 
-        if($currentPassword) {
+        if ($currentPassword) {
             return Hash::check($this->currentPassword, $currentPassword->password) or Auth::user()->role == UserRole::ADMIN;
         }
+
         return false;
     }
 }

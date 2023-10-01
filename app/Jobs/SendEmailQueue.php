@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Mail\SendMail;
 use App\Models\Notification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -33,7 +32,7 @@ class SendEmailQueue implements ShouldQueue
             'from_users.username as from_name',
             'users.email',
             'content',
-            'link'
+            'link',
         ])
             ->join('users as from_users', 'from_users.id', '=', 'notifications.from_user_id')
             ->join('users', 'users.id', '=', 'notifications.user_id')

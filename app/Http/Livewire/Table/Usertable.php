@@ -35,11 +35,12 @@ class Usertable extends Table
 
     public function delete($userId, $confirmed = false)
     {
-        if(!$confirmed) {
+        if (! $confirmed) {
             $this->confirmBox('delete this item', 'delete', ['userId' => $userId, 'confirmed' => true]);
+
             return;
         }
-        
+
         $result = DB::transaction(function () use ($userId) {
             $user = User::findOrFail($userId);
             $profileId = $user->profile_id;

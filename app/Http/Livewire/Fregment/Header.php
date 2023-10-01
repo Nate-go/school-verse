@@ -4,10 +4,10 @@ namespace App\Http\Livewire\Fregment;
 
 use App\Models\Notification;
 use App\Services\UtilService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Request;
 
-class Header extends Component
+class Header extends BaseComponent
 {
     public $headerIsLock = true;
 
@@ -67,11 +67,12 @@ class Header extends Component
         $this->notifyIsOpen = ! $this->notifyIsOpen;
     }
 
-    public function realtimeNotifyDisplay($data) {
+    public function realtimeNotifyDisplay($data)
+    {
         $notify = Notification::where('id', $data['notifyId'])
-                                ->first();
+            ->first();
 
-        $this->emit('setNotify');                        
+        $this->emit('setNotify');
 
         $this->notify('info', $notify->content);
     }

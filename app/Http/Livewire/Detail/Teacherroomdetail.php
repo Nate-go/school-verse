@@ -7,7 +7,6 @@ use App\Constant\ExamTypeCoefficient;
 use App\Constant\SortTypes;
 use App\Constant\UserRole;
 use App\Models\Exam;
-use App\Models\ExamStudent;
 use App\Models\Room;
 use App\Models\RoomTeacher;
 use App\Models\Student;
@@ -15,9 +14,9 @@ use App\Services\ConstantService;
 use Auth;
 use DB;
 use Exception;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Teacherroomdetail extends Component
+class Teacherroomdetail extends BaseComponent
 {
     const MAXNUMBERLENGTH = 0;
 
@@ -73,8 +72,9 @@ class Teacherroomdetail extends Component
         $this->selectedExam = null;
     }
 
-    public function changeExam($value) {
-        if($this->selectedExam == $value) {
+    public function changeExam($value)
+    {
+        if ($this->selectedExam == $value) {
             $this->selectedExam = null;
         } else {
             $this->selectedExam = $value;
@@ -92,7 +92,7 @@ class Teacherroomdetail extends Component
             'grade_id',
             'school_years.name as school_year_name',
             'rooms.id',
-            'subject_id'
+            'subject_id',
         ])
             ->join('users', 'users.id', '=', 'rooms.homeroom_teacher_id')
             ->join('grades', 'grades.id', '=', 'rooms.grade_id')
@@ -109,7 +109,7 @@ class Teacherroomdetail extends Component
             'gradeId' => $data->grade_id,
             'schoolYearName' => $data->school_year_name,
             'roomId' => $data->id,
-            'subjectId' =>$data->subject_id
+            'subjectId' => $data->subject_id,
         ];
 
         $this->setHeader();
@@ -117,50 +117,53 @@ class Teacherroomdetail extends Component
         $this->setExam();
     }
 
-    public function setExam() {
+    public function setExam()
+    {
         $data = Exam::selectColumns([
             'id',
             'content',
             'type',
-            DB::raw('(select count(id) from exam_students where exam_id = exams.id and deleted_at is null) as member')
+            DB::raw('(select count(id) from exam_students where exam_id = exams.id and deleted_at is null) as member'),
         ])
-        ->where('room_teacher_id', $this->itemId)
-        ->whereOrAll(['type'], [$this->selectedExamType])
-        ->sort(['columnName' => 'created_at', 'type' => SortTypes::DECREASE_SORT])
-        ->get();
+            ->where('room_teacher_id', $this->itemId)
+            ->whereOrAll(['type'], [$this->selectedExamType])
+            ->sort(['columnName' => 'created_at', 'type' => SortTypes::DECREASE_SORT])
+            ->get();
 
         $this->exams = [];
 
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $this->exams[] = [
                 'id' => $item->id,
                 'content' => $item->content,
                 'type' => ['value' => $item->type, 'name' => $this->constantService->getNameConstant(ExamType::class, $item->type)],
-                'member' => $item->member
+                'member' => $item->member,
             ];
         }
     }
 
-    public function updatedSelectedExamType($value) {
+    public function updatedSelectedExamType($value)
+    {
         $this->setExam();
     }
 
-    public function setTeacher() {
+    public function setTeacher()
+    {
         $data = RoomTeacher::selectColumns([
             'users.username as name',
             'users.image_url as image',
             'subjects.name as subject_name',
         ])
-        ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
-        ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
-        ->join('users', 'users.id', '=', 'teachers.user_id')
-        ->where('room_teachers.id', $this->itemId)
-        ->first();
+            ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
+            ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
+            ->join('users', 'users.id', '=', 'teachers.user_id')
+            ->where('room_teachers.id', $this->itemId)
+            ->first();
 
         $this->teacher = [
             'name' => $data->name,
             'image' => $data->image,
-            'subjectName' => $data->subject_name
+            'subjectName' => $data->subject_name,
         ];
     }
 
@@ -187,7 +190,7 @@ class Teacherroomdetail extends Component
                 'value' => $roomTeacher->id,
                 'email' => $roomTeacher->email,
                 'name' => $roomTeacher->username,
-                'image_url' => $roomTeacher->image_url
+                'image_url' => $roomTeacher->image_url,
             ];
         }
     }
@@ -210,7 +213,7 @@ class Teacherroomdetail extends Component
             $this->body[] = [
                 'student' => $student,
                 'scores' => $exams,
-                'totalScore' => $subjectScore
+                'totalScore' => $subjectScore,
             ];
         }
     }
@@ -222,7 +225,7 @@ class Teacherroomdetail extends Component
             'exam_students.id',
             'score',
             'exams.type',
-            'subjects.name'
+            'subjects.name',
         ])
             ->join('exam_students', 'exam_students.exam_id', '=', 'exams.id')
             ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
@@ -240,7 +243,7 @@ class Teacherroomdetail extends Component
                 'id' => $exam->id,
                 'score' => $exam->score,
                 'type' => $exam->type,
-                'name' => $exam->name
+                'name' => $exam->name,
             ];
         }
 
@@ -257,6 +260,7 @@ class Teacherroomdetail extends Component
             $totalCoefficient += $coef;
             $totalScore += $exam['score'] * $coef;
         }
+
         return $totalCoefficient > 0 ? round($totalScore / $totalCoefficient, self::MAXNUMBERLENGTH) : 0;
     }
 
@@ -265,7 +269,7 @@ class Teacherroomdetail extends Component
         $students = Student::selectColumns([
             'students.id as student_id',
             'users.username as student_name',
-            'users.image_url as student_image'
+            'users.image_url as student_image',
         ])
             ->join('users', 'users.id', '=', 'students.user_id')
             ->where('students.room_id', '=', $this->room['roomId'])
@@ -277,40 +281,43 @@ class Teacherroomdetail extends Component
             $data[] = [
                 'studentId' => $student->student_id,
                 'studentName' => $student->student_name,
-                'studentImage' => $student->student_image
+                'studentImage' => $student->student_image,
             ];
         }
-
 
         return $data;
     }
 
-    public function createExam($content) {
-        if($this->selectedExamType == null or $this->selectedExamType == -1) {
+    public function createExam($content)
+    {
+        if ($this->selectedExamType == null or $this->selectedExamType == -1) {
             $this->notify('error', 'Select an exam type before create');
+
             return;
         }
 
         $content = trim($content);
         if ($content == '') {
             $this->notify('error', 'Content can not be empty');
+
             return;
         }
 
         $exist = Exam::where('room_teacher_id', $this->itemId)
-                ->where('content', $content)
-                ->where('type', $this->selectedExamType)
-                ->exists();
+            ->where('content', $content)
+            ->where('type', $this->selectedExamType)
+            ->exists();
 
         if ($exist) {
             $this->notify('error', 'Content has exist in your exam list');
+
             return;
         }
 
         $newExam = Exam::create([
             'content' => $content,
             'room_teacher_id' => $this->itemId,
-            'type' => $this->selectedExamType
+            'type' => $this->selectedExamType,
         ]);
 
         if ($newExam) {
@@ -318,20 +325,22 @@ class Teacherroomdetail extends Component
         } else {
             $this->notify('error', 'Create exam fail');
         }
-        
+
         $this->setExam();
     }
 
-    private function getExamId() {
+    private function getExamId()
+    {
         $newExam = Exam::create([
             'room_teacher_id' => $this->itemId,
-            'type' => $this->selectedExamType
+            'type' => $this->selectedExamType,
         ]);
 
-        if($newExam) {
+        if ($newExam) {
             return $newExam->id;
         }
         $this->notify('error', 'Create exam fail');
+
         return null;
     }
 

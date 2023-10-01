@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Attachment;
 use Illuminate\Mail\Mailable;
@@ -43,19 +42,16 @@ class SendMail extends Mailable
                     // Headers
                     $email->getHeaders()
                         ->addTextHeader('X-Message-Source', 'example.com')
-                        ->add(new UnstructuredHeader('X-Mailer', 'Mailtrap PHP Client'))
-                    ;
+                        ->add(new UnstructuredHeader('X-Mailer', 'Mailtrap PHP Client'));
 
                     // Custom Variables
                     $email->getHeaders()
                         ->add(new CustomVariableHeader('user_id', '45982'))
-                        ->add(new CustomVariableHeader('batch_id', 'PSJ-12'))
-                    ;
+                        ->add(new CustomVariableHeader('batch_id', 'PSJ-12'));
 
                     // Category (should be only one)
                     $email->getHeaders()
-                        ->add(new CategoryHeader('Integration Test'))
-                    ;
+                        ->add(new CategoryHeader('Integration Test'));
                 },
             ]
         );
@@ -66,7 +62,6 @@ class SendMail extends Mailable
      */
     public function content(): Content
     {
-        
 
         return new Content(
             view: 'emails.send-mail-template',
@@ -74,7 +69,7 @@ class SendMail extends Mailable
                 'name' => $this->notify->name,
                 'fromName' => $this->notify->from_name,
                 'content' => $this->notify->content,
-                'link' => $this->notify->link
+                'link' => $this->notify->link,
             ]
         );
     }

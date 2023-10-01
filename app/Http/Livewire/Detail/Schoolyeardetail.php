@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Detail;
 
 use App\Models\SchoolYear;
 use DateTime;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Schoolyeardetail extends Component
+class Schoolyeardetail extends BaseComponent
 {
     public $itemId;
 
@@ -16,15 +16,17 @@ class Schoolyeardetail extends Component
 
     public $endAt;
 
-    public function mount($itemId) {
+    public function mount($itemId)
+    {
         $this->itemId = $itemId;
         $this->formGenerate();
     }
 
-    public function formGenerate() {
+    public function formGenerate()
+    {
         $result = SchoolYear::selectColumns(['name', 'start_at', 'end_at'])
-                            ->where('id', $this->itemId)
-                            ->first();
+            ->where('id', $this->itemId)
+            ->first();
 
         $this->name = $result->name;
 
@@ -35,16 +37,17 @@ class Schoolyeardetail extends Component
         $this->endAt = $endAt->format('Y-m-d');
     }
 
-    public function save() {
+    public function save()
+    {
         $schoolYear = [
             'name' => trim($this->name),
             'start_at' => $this->startAt,
-            'end_at' => $this->endAt
+            'end_at' => $this->endAt,
         ];
 
         $result = $this->isValidData($schoolYear);
 
-        if (!$result['isValid']) {
+        if (! $result['isValid']) {
             $this->notify('error', $result['message']);
 
             return;
@@ -65,7 +68,7 @@ class Schoolyeardetail extends Component
             return ['isValid' => false, 'message' => 'Name is invalid'];
         }
 
-        if($data['start_at'] >= $data['end_at']) {
+        if ($data['start_at'] >= $data['end_at']) {
             return ['isValid' => false, 'message' => 'End time can not be equal or smaller start time'];
         }
 

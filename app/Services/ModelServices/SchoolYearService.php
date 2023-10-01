@@ -43,13 +43,15 @@ class SchoolYearService extends BaseService
 
     public function getDetailPageForAdmin($id)
     {
-        if(!$this->isSchoolYearExist($id)) {
+        if (! $this->isSchoolYearExist($id)) {
             return redirect()->route('notFound');
         }
+
         return view('admin/school-year/school-years-detail', ['id' => $id]);
     }
 
-    private function isSchoolYearExist($schoolYearId) {
+    private function isSchoolYearExist($schoolYearId)
+    {
         return SchoolYear::where('id', $schoolYearId)->exists();
     }
 }

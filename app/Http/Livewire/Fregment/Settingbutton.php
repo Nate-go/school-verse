@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Fregment;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Settingbutton extends Component
+class Settingbutton extends BaseComponent
 {
     public $isActive = false;
 

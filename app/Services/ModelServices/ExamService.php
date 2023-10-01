@@ -15,31 +15,35 @@ class ExamService extends BaseService
         return Exam::class;
     }
 
-    public function getRescorePage($examStudentId) {
-        if(!$this->isRescoreable($examStudentId) or !(Auth::user()->role == UserRole::ADMIN or $this->isValidTeacher($examStudentId))) {
+    public function getRescorePage($examStudentId)
+    {
+        if (! $this->isRescoreable($examStudentId) or ! (Auth::user()->role == UserRole::ADMIN or $this->isValidTeacher($examStudentId))) {
             return redirect()->route('notFound');
         }
 
         return view('teacher/exam/rescore', ['examStudentId' => $examStudentId]);
     }
 
-    private function isRescoreable($examStudentId) {
+    private function isRescoreable($examStudentId)
+    {
         $now = Carbon::now();
         $result = ExamStudent::where('id', $examStudentId)
-                            ->where('rescored_at', '<>', null)
-                            ->where('rescored_at', '>', $now)
-                            ->exists();
+            ->where('rescored_at', '<>', null)
+            ->where('rescored_at', '>', $now)
+            ->exists();
+
         return $result;
     }
 
-    private function isValidTeacher($examStudentId) {
+    private function isValidTeacher($examStudentId)
+    {
         $result = ExamStudent::join('exams', 'exams.id', '=', 'exam_students.exam_id')
-                ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
-                ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
-                ->join('users', 'users.id', '=', 'teachers.user_id')
-                ->where('exam_students.id', $examStudentId)
-                ->where('users.id', Auth::user()->id)
-                ->exists();
+            ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
+            ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
+            ->join('users', 'users.id', '=', 'teachers.user_id')
+            ->where('exam_students.id', $examStudentId)
+            ->where('users.id', Auth::user()->id)
+            ->exists();
 
         return $result;
     }

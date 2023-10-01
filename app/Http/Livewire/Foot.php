@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Foot extends Component
+class Foot extends BaseComponent
 {
     public function render()
     {

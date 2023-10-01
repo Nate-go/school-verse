@@ -13,15 +13,16 @@ class TeacherController extends Controller
 
     public function __construct(TeacherService $teacherService)
     {
-        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER));
+        $this->middleware('author:'.str(UserRole::ADMIN).'|'.str(UserRole::TEACHER));
         $this->teacherService = $teacherService;
     }
 
     public function index()
     {
-        if(Auth::user()->role == UserRole::ADMIN) {
+        if (Auth::user()->role == UserRole::ADMIN) {
             return $this->teacherService->getPageForAdmin();
         }
+
         return $this->teacherService->getPageForTeacher(Auth::user()->id);
     }
 
@@ -33,6 +34,7 @@ class TeacherController extends Controller
         if (Auth::user()->role == UserRole::ADMIN) {
             return $this->teacherService->getInitizationForm();
         }
+
         return redirect()->route('notPermission');
     }
 
@@ -49,9 +51,10 @@ class TeacherController extends Controller
      */
     public function show(string $id)
     {
-        if(Auth::user()->role != UserRole::ADMIN) {
+        if (Auth::user()->role != UserRole::ADMIN) {
             return redirect()->route('notPermission');
         }
+
         return $this->teacherService->getDetailPageForAdmin($id);
     }
 

@@ -13,7 +13,7 @@ class InsistenceController extends Controller
 
     public function __construct(InsistenceService $insistenceService)
     {
-        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER) . '|' . str(UserRole::STUDENT) );
+        $this->middleware('author:'.str(UserRole::ADMIN).'|'.str(UserRole::TEACHER).'|'.str(UserRole::STUDENT));
         $this->insistenceService = $insistenceService;
     }
 
@@ -31,9 +31,10 @@ class InsistenceController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == UserRole::ADMIN) {
+        if (Auth::user()->role == UserRole::ADMIN) {
             return redirect()->route('notPermission');
         }
+
         return $this->insistenceService->getCreatePage(Auth::user()->id);
     }
 

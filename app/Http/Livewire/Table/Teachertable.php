@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Table;
 
 use App\Constant\UserRole;
-use App\Models\Teacher;
 use App\Models\User;
 use DB;
 
@@ -39,6 +38,7 @@ class Teachertable extends Table
             ->search($search)
             ->orderBy($sort['column'], $sort['type'])
             ->paginate($filterValues['perPage']);
+
         return $results;
     }
 }

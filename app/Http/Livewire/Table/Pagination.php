@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Table;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithPagination;
 
-class Pagination extends Component
+class Pagination extends BaseComponent
 {
     use WithPagination;
 

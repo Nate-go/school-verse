@@ -1,5 +1,5 @@
 <div class='relative flex'>
-    <div wire:loading wire:target='openAction,filter'>
+    <div wire:loading wire:target='filter'>
         @livewire('fregment.loading')
     </div>
     <button

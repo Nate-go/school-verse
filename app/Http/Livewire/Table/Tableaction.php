@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Table;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Tableaction extends Component
+class Tableaction extends BaseComponent
 {
     public $actionIsOpen = false;
 
@@ -51,7 +51,8 @@ class Tableaction extends Component
         $this->actionIsOpen = ! $this->actionIsOpen;
     }
 
-    public function filter() {
+    public function filter()
+    {
         $this->emit('filter');
     }
 }

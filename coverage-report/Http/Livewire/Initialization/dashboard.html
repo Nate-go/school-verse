@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for D:\lamviec\goldenowl\simple_laravel_project\school-verse\app\Http\Livewire\Initialization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../../../_css/bootstrap.min.css?v=10.1.5" rel="stylesheet" type="text/css">
+  <link href="../../../_css/nv.d3.min.css?v=10.1.5" rel="stylesheet" type="text/css">
+  <link href="../../../_css/style.css?v=10.1.5" rel="stylesheet" type="text/css">
+  <link href="../../../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../../../index.html">D:\lamviec\goldenowl\simple_laravel_project\school-verse\app</a></li>
+         <li class="breadcrumb-item"><a href="../../index.html">Http</a></li>
+         <li class="breadcrumb-item"><a href="../index.html">Livewire</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Initialization</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Gradeinit.php.html#8">App\Http\Livewire\Initialization\Gradeinit</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#9">App\Http\Livewire\Initialization\Insistenceinit</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#14">App\Http\Livewire\Initialization\Roominit</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#8">App\Http\Livewire\Initialization\Schoolyearinit</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#14">App\Http\Livewire\Initialization\Studentinit</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#12">App\Http\Livewire\Initialization\Subjectinit</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#13">App\Http\Livewire\Initialization\Teacherinit</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#21">App\Http\Livewire\Initialization\Userinit</a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Userinit.php.html#21">App\Http\Livewire\Initialization\Userinit</a></td><td class="text-right">2652</td></tr>
+       <tr><td><a href="Studentinit.php.html#14">App\Http\Livewire\Initialization\Studentinit</a></td><td class="text-right">1056</td></tr>
+       <tr><td><a href="Teacherinit.php.html#13">App\Http\Livewire\Initialization\Teacherinit</a></td><td class="text-right">992</td></tr>
+       <tr><td><a href="Roominit.php.html#14">App\Http\Livewire\Initialization\Roominit</a></td><td class="text-right">506</td></tr>
+       <tr><td><a href="Subjectinit.php.html#12">App\Http\Livewire\Initialization\Subjectinit</a></td><td class="text-right">306</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#8">App\Http\Livewire\Initialization\Schoolyearinit</a></td><td class="text-right">210</td></tr>
+       <tr><td><a href="Gradeinit.php.html#8">App\Http\Livewire\Initialization\Gradeinit</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#9">App\Http\Livewire\Initialization\Insistenceinit</a></td><td class="text-right">56</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Gradeinit.php.html#12"><abbr title="App\Http\Livewire\Initialization\Gradeinit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Gradeinit.php.html#17"><abbr title="App\Http\Livewire\Initialization\Gradeinit::formGenerate">formGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Gradeinit.php.html#22"><abbr title="App\Http\Livewire\Initialization\Gradeinit::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Gradeinit.php.html#45"><abbr title="App\Http\Livewire\Initialization\Gradeinit::isValid">isValid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Gradeinit.php.html#58"><abbr title="App\Http\Livewire\Initialization\Gradeinit::isExistName">isExistName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Gradeinit.php.html#65"><abbr title="App\Http\Livewire\Initialization\Gradeinit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Gradeinit.php.html#71"><abbr title="App\Http\Livewire\Initialization\Gradeinit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#15"><abbr title="App\Http\Livewire\Initialization\Insistenceinit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#20"><abbr title="App\Http\Livewire\Initialization\Insistenceinit::formGenerate">formGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#25"><abbr title="App\Http\Livewire\Initialization\Insistenceinit::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#48"><abbr title="App\Http\Livewire\Initialization\Insistenceinit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#54"><abbr title="App\Http\Livewire\Initialization\Insistenceinit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#36"><abbr title="App\Http\Livewire\Initialization\Roominit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#42"><abbr title="App\Http\Livewire\Initialization\Roominit::formGenerate">formGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#52"><abbr title="App\Http\Livewire\Initialization\Roominit::boot">boot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#58"><abbr title="App\Http\Livewire\Initialization\Roominit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#63"><abbr title="App\Http\Livewire\Initialization\Roominit::updatedTeacherName">updatedTeacherName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#78"><abbr title="App\Http\Livewire\Initialization\Roominit::getGrades">getGrades</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#84"><abbr title="App\Http\Livewire\Initialization\Roominit::getTeachers">getTeachers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#90"><abbr title="App\Http\Livewire\Initialization\Roominit::mappingData">mappingData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#100"><abbr title="App\Http\Livewire\Initialization\Roominit::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#129"><abbr title="App\Http\Livewire\Initialization\Roominit::isValidData">isValidData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#155"><abbr title="App\Http\Livewire\Initialization\Roominit::saveImage">saveImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Roominit.php.html#168"><abbr title="App\Http\Livewire\Initialization\Roominit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#16"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#21"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#26"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::formGenerate">formGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#33"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#58"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::isValid">isValid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#79"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::isExistName">isExistName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#86"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::isInAnotherRange">isInAnotherRange</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#93"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#36"><abbr title="App\Http\Livewire\Initialization\Studentinit::boot">boot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#41"><abbr title="App\Http\Livewire\Initialization\Studentinit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#46"><abbr title="App\Http\Livewire\Initialization\Studentinit::formGenerate">formGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#56"><abbr title="App\Http\Livewire\Initialization\Studentinit::setGrades">setGrades</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#62"><abbr title="App\Http\Livewire\Initialization\Studentinit::setRoom">setRoom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#71"><abbr title="App\Http\Livewire\Initialization\Studentinit::setStudent">setStudent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#85"><abbr title="App\Http\Livewire\Initialization\Studentinit::updatedStudentName">updatedStudentName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#100"><abbr title="App\Http\Livewire\Initialization\Studentinit::selectGrades">selectGrades</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#118"><abbr title="App\Http\Livewire\Initialization\Studentinit::selectrooms">selectrooms</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#130"><abbr title="App\Http\Livewire\Initialization\Studentinit::setSelectedNames">setSelectedNames</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#140"><abbr title="App\Http\Livewire\Initialization\Studentinit::removeItem">removeItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#153"><abbr title="App\Http\Livewire\Initialization\Studentinit::mappingData">mappingData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#163"><abbr title="App\Http\Livewire\Initialization\Studentinit::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#190"><abbr title="App\Http\Livewire\Initialization\Studentinit::isValid">isValid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#207"><abbr title="App\Http\Livewire\Initialization\Studentinit::isExist">isExist</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#216"><abbr title="App\Http\Livewire\Initialization\Studentinit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Studentinit.php.html#222"><abbr title="App\Http\Livewire\Initialization\Studentinit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#32"><abbr title="App\Http\Livewire\Initialization\Subjectinit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#38"><abbr title="App\Http\Livewire\Initialization\Subjectinit::formGenerate">formGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#47"><abbr title="App\Http\Livewire\Initialization\Subjectinit::boot">boot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#53"><abbr title="App\Http\Livewire\Initialization\Subjectinit::getGrades">getGrades</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#59"><abbr title="App\Http\Livewire\Initialization\Subjectinit::mappingData">mappingData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#69"><abbr title="App\Http\Livewire\Initialization\Subjectinit::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#97"><abbr title="App\Http\Livewire\Initialization\Subjectinit::isValidData">isValidData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#118"><abbr title="App\Http\Livewire\Initialization\Subjectinit::saveImage">saveImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#131"><abbr title="App\Http\Livewire\Initialization\Subjectinit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Subjectinit.php.html#137"><abbr title="App\Http\Livewire\Initialization\Subjectinit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#33"><abbr title="App\Http\Livewire\Initialization\Teacherinit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#38"><abbr title="App\Http\Livewire\Initialization\Teacherinit::formGenerate">formGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#48"><abbr title="App\Http\Livewire\Initialization\Teacherinit::setGrades">setGrades</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#54"><abbr title="App\Http\Livewire\Initialization\Teacherinit::setSubject">setSubject</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#63"><abbr title="App\Http\Livewire\Initialization\Teacherinit::setTeacher">setTeacher</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#69"><abbr title="App\Http\Livewire\Initialization\Teacherinit::updatedTeacherName">updatedTeacherName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#84"><abbr title="App\Http\Livewire\Initialization\Teacherinit::selectGrades">selectGrades</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#102"><abbr title="App\Http\Livewire\Initialization\Teacherinit::selectSubjects">selectSubjects</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#114"><abbr title="App\Http\Livewire\Initialization\Teacherinit::setSelectedNames">setSelectedNames</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#124"><abbr title="App\Http\Livewire\Initialization\Teacherinit::removeItem">removeItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#137"><abbr title="App\Http\Livewire\Initialization\Teacherinit::mappingData">mappingData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#147"><abbr title="App\Http\Livewire\Initialization\Teacherinit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#152"><abbr title="App\Http\Livewire\Initialization\Teacherinit::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#177"><abbr title="App\Http\Livewire\Initialization\Teacherinit::isValid">isValid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#194"><abbr title="App\Http\Livewire\Initialization\Teacherinit::isExist">isExist</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Teacherinit.php.html#203"><abbr title="App\Http\Livewire\Initialization\Teacherinit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#69"><abbr title="App\Http\Livewire\Initialization\Userinit::mount">mount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#80"><abbr title="App\Http\Livewire\Initialization\Userinit::boot">boot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#86"><abbr title="App\Http\Livewire\Initialization\Userinit::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#91"><abbr title="App\Http\Livewire\Initialization\Userinit::changeProfileState">changeProfileState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#96"><abbr title="App\Http\Livewire\Initialization\Userinit::changeMoreActionState">changeMoreActionState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#101"><abbr title="App\Http\Livewire\Initialization\Userinit::profileFormGenerate">profileFormGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#109"><abbr title="App\Http\Livewire\Initialization\Userinit::moreactionFormGenerate">moreactionFormGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#118"><abbr title="App\Http\Livewire\Initialization\Userinit::selectGrade">selectGrade</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#151"><abbr title="App\Http\Livewire\Initialization\Userinit::removeItem">removeItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#164"><abbr title="App\Http\Livewire\Initialization\Userinit::selectSubject">selectSubject</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#176"><abbr title="App\Http\Livewire\Initialization\Userinit::resetSelectedSubjectNames">resetSelectedSubjectNames</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#187"><abbr title="App\Http\Livewire\Initialization\Userinit::selectRoom">selectRoom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#192"><abbr title="App\Http\Livewire\Initialization\Userinit::changeRole">changeRole</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#198"><abbr title="App\Http\Livewire\Initialization\Userinit::getGrades">getGrades</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#204"><abbr title="App\Http\Livewire\Initialization\Userinit::getSubject">getSubject</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#214"><abbr title="App\Http\Livewire\Initialization\Userinit::getRooms">getRooms</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#227"><abbr title="App\Http\Livewire\Initialization\Userinit::getStatuses">getStatuses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#232"><abbr title="App\Http\Livewire\Initialization\Userinit::getGenders">getGenders</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#237"><abbr title="App\Http\Livewire\Initialization\Userinit::accountFormGenerate">accountFormGenerate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#246"><abbr title="App\Http\Livewire\Initialization\Userinit::mappingData">mappingData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#256"><abbr title="App\Http\Livewire\Initialization\Userinit::createAccount">createAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#340"><abbr title="App\Http\Livewire\Initialization\Userinit::addAndNext">addAndNext</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#347"><abbr title="App\Http\Livewire\Initialization\Userinit::isUserValid">isUserValid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#366"><abbr title="App\Http\Livewire\Initialization\Userinit::getCleanData">getCleanData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Userinit.php.html#376"><abbr title="App\Http\Livewire\Initialization\Userinit::isUserEmailExist">isUserEmailExist</abbr></a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Userinit.php.html#256"><abbr title="App\Http\Livewire\Initialization\Userinit::createAccount">createAccount</abbr></a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="Userinit.php.html#118"><abbr title="App\Http\Livewire\Initialization\Userinit::selectGrade">selectGrade</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Roominit.php.html#129"><abbr title="App\Http\Livewire\Initialization\Roominit::isValidData">isValidData</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#58"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::isValid">isValid</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Userinit.php.html#347"><abbr title="App\Http\Livewire\Initialization\Userinit::isUserValid">isUserValid</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Studentinit.php.html#140"><abbr title="App\Http\Livewire\Initialization\Studentinit::removeItem">removeItem</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Studentinit.php.html#190"><abbr title="App\Http\Livewire\Initialization\Studentinit::isValid">isValid</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Subjectinit.php.html#97"><abbr title="App\Http\Livewire\Initialization\Subjectinit::isValidData">isValidData</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Teacherinit.php.html#124"><abbr title="App\Http\Livewire\Initialization\Teacherinit::removeItem">removeItem</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Teacherinit.php.html#177"><abbr title="App\Http\Livewire\Initialization\Teacherinit::isValid">isValid</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Userinit.php.html#151"><abbr title="App\Http\Livewire\Initialization\Userinit::removeItem">removeItem</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Gradeinit.php.html#22"><abbr title="App\Http\Livewire\Initialization\Gradeinit::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Gradeinit.php.html#45"><abbr title="App\Http\Livewire\Initialization\Gradeinit::isValid">isValid</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Insistenceinit.php.html#25"><abbr title="App\Http\Livewire\Initialization\Insistenceinit::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Roominit.php.html#63"><abbr title="App\Http\Livewire\Initialization\Roominit::updatedTeacherName">updatedTeacherName</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Roominit.php.html#100"><abbr title="App\Http\Livewire\Initialization\Roominit::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Schoolyearinit.php.html#33"><abbr title="App\Http\Livewire\Initialization\Schoolyearinit::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Studentinit.php.html#85"><abbr title="App\Http\Livewire\Initialization\Studentinit::updatedStudentName">updatedStudentName</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Studentinit.php.html#130"><abbr title="App\Http\Livewire\Initialization\Studentinit::setSelectedNames">setSelectedNames</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Studentinit.php.html#163"><abbr title="App\Http\Livewire\Initialization\Studentinit::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Subjectinit.php.html#69"><abbr title="App\Http\Livewire\Initialization\Subjectinit::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Teacherinit.php.html#69"><abbr title="App\Http\Livewire\Initialization\Teacherinit::updatedTeacherName">updatedTeacherName</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Teacherinit.php.html#114"><abbr title="App\Http\Livewire\Initialization\Teacherinit::setSelectedNames">setSelectedNames</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Teacherinit.php.html#152"><abbr title="App\Http\Livewire\Initialization\Teacherinit::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Userinit.php.html#176"><abbr title="App\Http\Livewire\Initialization\Userinit::resetSelectedSubjectNames">resetSelectedSubjectNames</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Roominit.php.html#90"><abbr title="App\Http\Livewire\Initialization\Roominit::mappingData">mappingData</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Roominit.php.html#155"><abbr title="App\Http\Livewire\Initialization\Roominit::saveImage">saveImage</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Studentinit.php.html#100"><abbr title="App\Http\Livewire\Initialization\Studentinit::selectGrades">selectGrades</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Studentinit.php.html#118"><abbr title="App\Http\Livewire\Initialization\Studentinit::selectrooms">selectrooms</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Studentinit.php.html#153"><abbr title="App\Http\Livewire\Initialization\Studentinit::mappingData">mappingData</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Subjectinit.php.html#59"><abbr title="App\Http\Livewire\Initialization\Subjectinit::mappingData">mappingData</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Subjectinit.php.html#118"><abbr title="App\Http\Livewire\Initialization\Subjectinit::saveImage">saveImage</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Teacherinit.php.html#84"><abbr title="App\Http\Livewire\Initialization\Teacherinit::selectGrades">selectGrades</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Teacherinit.php.html#102"><abbr title="App\Http\Livewire\Initialization\Teacherinit::selectSubjects">selectSubjects</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Teacherinit.php.html#137"><abbr title="App\Http\Livewire\Initialization\Teacherinit::mappingData">mappingData</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Userinit.php.html#164"><abbr title="App\Http\Livewire\Initialization\Userinit::selectSubject">selectSubject</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Userinit.php.html#246"><abbr title="App\Http\Livewire\Initialization\Userinit::mappingData">mappingData</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Userinit.php.html#366"><abbr title="App\Http\Livewire\Initialization\Userinit::getCleanData">getCleanData</abbr></a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 10.1.5</a> using <a href="https://www.php.net/" target="_top">PHP 8.2.4</a> and <a href="https://phpunit.de/">PHPUnit 10.3.5</a> at Fri Sep 29 5:07:09 CEST 2023.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../../../_js/jquery.min.js?v=10.1.5" type="text/javascript"></script>
+  <script src="../../../_js/d3.min.js?v=10.1.5" type="text/javascript"></script>
+  <script src="../../../_js/nv.d3.min.js?v=10.1.5" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([8,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([100,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,11,"<a href=\"Gradeinit.php.html#8\">App\\Http\\Livewire\\Initialization\\Gradeinit<\/a>"],[0,7,"<a href=\"Insistenceinit.php.html#9\">App\\Http\\Livewire\\Initialization\\Insistenceinit<\/a>"],[0,22,"<a href=\"Roominit.php.html#14\">App\\Http\\Livewire\\Initialization\\Roominit<\/a>"],[0,14,"<a href=\"Schoolyearinit.php.html#8\">App\\Http\\Livewire\\Initialization\\Schoolyearinit<\/a>"],[0,32,"<a href=\"Studentinit.php.html#14\">App\\Http\\Livewire\\Initialization\\Studentinit<\/a>"],[0,17,"<a href=\"Subjectinit.php.html#12\">App\\Http\\Livewire\\Initialization\\Subjectinit<\/a>"],[0,31,"<a href=\"Teacherinit.php.html#13\">App\\Http\\Livewire\\Initialization\\Teacherinit<\/a>"],[0,51,"<a href=\"Userinit.php.html#21\">App\\Http\\Livewire\\Initialization\\Userinit<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"Gradeinit.php.html#12\">App\\Http\\Livewire\\Initialization\\Gradeinit::mount<\/a>"],[0,1,"<a href=\"Gradeinit.php.html#17\">App\\Http\\Livewire\\Initialization\\Gradeinit::formGenerate<\/a>"],[0,3,"<a href=\"Gradeinit.php.html#22\">App\\Http\\Livewire\\Initialization\\Gradeinit::create<\/a>"],[0,3,"<a href=\"Gradeinit.php.html#45\">App\\Http\\Livewire\\Initialization\\Gradeinit::isValid<\/a>"],[0,1,"<a href=\"Gradeinit.php.html#58\">App\\Http\\Livewire\\Initialization\\Gradeinit::isExistName<\/a>"],[0,1,"<a href=\"Gradeinit.php.html#65\">App\\Http\\Livewire\\Initialization\\Gradeinit::addAndNext<\/a>"],[0,1,"<a href=\"Gradeinit.php.html#71\">App\\Http\\Livewire\\Initialization\\Gradeinit::render<\/a>"],[0,1,"<a href=\"Insistenceinit.php.html#15\">App\\Http\\Livewire\\Initialization\\Insistenceinit::mount<\/a>"],[0,1,"<a href=\"Insistenceinit.php.html#20\">App\\Http\\Livewire\\Initialization\\Insistenceinit::formGenerate<\/a>"],[0,3,"<a href=\"Insistenceinit.php.html#25\">App\\Http\\Livewire\\Initialization\\Insistenceinit::create<\/a>"],[0,1,"<a href=\"Insistenceinit.php.html#48\">App\\Http\\Livewire\\Initialization\\Insistenceinit::addAndNext<\/a>"],[0,1,"<a href=\"Insistenceinit.php.html#54\">App\\Http\\Livewire\\Initialization\\Insistenceinit::render<\/a>"],[0,1,"<a href=\"Roominit.php.html#36\">App\\Http\\Livewire\\Initialization\\Roominit::mount<\/a>"],[0,1,"<a href=\"Roominit.php.html#42\">App\\Http\\Livewire\\Initialization\\Roominit::formGenerate<\/a>"],[0,1,"<a href=\"Roominit.php.html#52\">App\\Http\\Livewire\\Initialization\\Roominit::boot<\/a>"],[0,1,"<a href=\"Roominit.php.html#58\">App\\Http\\Livewire\\Initialization\\Roominit::render<\/a>"],[0,3,"<a href=\"Roominit.php.html#63\">App\\Http\\Livewire\\Initialization\\Roominit::updatedTeacherName<\/a>"],[0,1,"<a href=\"Roominit.php.html#78\">App\\Http\\Livewire\\Initialization\\Roominit::getGrades<\/a>"],[0,1,"<a href=\"Roominit.php.html#84\">App\\Http\\Livewire\\Initialization\\Roominit::getTeachers<\/a>"],[0,2,"<a href=\"Roominit.php.html#90\">App\\Http\\Livewire\\Initialization\\Roominit::mappingData<\/a>"],[0,3,"<a href=\"Roominit.php.html#100\">App\\Http\\Livewire\\Initialization\\Roominit::create<\/a>"],[0,5,"<a href=\"Roominit.php.html#129\">App\\Http\\Livewire\\Initialization\\Roominit::isValidData<\/a>"],[0,2,"<a href=\"Roominit.php.html#155\">App\\Http\\Livewire\\Initialization\\Roominit::saveImage<\/a>"],[0,1,"<a href=\"Roominit.php.html#168\">App\\Http\\Livewire\\Initialization\\Roominit::addAndNext<\/a>"],[0,1,"<a href=\"Schoolyearinit.php.html#16\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::mount<\/a>"],[0,1,"<a href=\"Schoolyearinit.php.html#21\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::render<\/a>"],[0,1,"<a href=\"Schoolyearinit.php.html#26\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::formGenerate<\/a>"],[0,3,"<a href=\"Schoolyearinit.php.html#33\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::create<\/a>"],[0,5,"<a href=\"Schoolyearinit.php.html#58\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::isValid<\/a>"],[0,1,"<a href=\"Schoolyearinit.php.html#79\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::isExistName<\/a>"],[0,1,"<a href=\"Schoolyearinit.php.html#86\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::isInAnotherRange<\/a>"],[0,1,"<a href=\"Schoolyearinit.php.html#93\">App\\Http\\Livewire\\Initialization\\Schoolyearinit::addAndNext<\/a>"],[0,1,"<a href=\"Studentinit.php.html#36\">App\\Http\\Livewire\\Initialization\\Studentinit::boot<\/a>"],[0,1,"<a href=\"Studentinit.php.html#41\">App\\Http\\Livewire\\Initialization\\Studentinit::mount<\/a>"],[0,1,"<a href=\"Studentinit.php.html#46\">App\\Http\\Livewire\\Initialization\\Studentinit::formGenerate<\/a>"],[0,1,"<a href=\"Studentinit.php.html#56\">App\\Http\\Livewire\\Initialization\\Studentinit::setGrades<\/a>"],[0,1,"<a href=\"Studentinit.php.html#62\">App\\Http\\Livewire\\Initialization\\Studentinit::setRoom<\/a>"],[0,1,"<a href=\"Studentinit.php.html#71\">App\\Http\\Livewire\\Initialization\\Studentinit::setStudent<\/a>"],[0,3,"<a href=\"Studentinit.php.html#85\">App\\Http\\Livewire\\Initialization\\Studentinit::updatedStudentName<\/a>"],[0,2,"<a href=\"Studentinit.php.html#100\">App\\Http\\Livewire\\Initialization\\Studentinit::selectGrades<\/a>"],[0,2,"<a href=\"Studentinit.php.html#118\">App\\Http\\Livewire\\Initialization\\Studentinit::selectrooms<\/a>"],[0,3,"<a href=\"Studentinit.php.html#130\">App\\Http\\Livewire\\Initialization\\Studentinit::setSelectedNames<\/a>"],[0,4,"<a href=\"Studentinit.php.html#140\">App\\Http\\Livewire\\Initialization\\Studentinit::removeItem<\/a>"],[0,2,"<a href=\"Studentinit.php.html#153\">App\\Http\\Livewire\\Initialization\\Studentinit::mappingData<\/a>"],[0,3,"<a href=\"Studentinit.php.html#163\">App\\Http\\Livewire\\Initialization\\Studentinit::create<\/a>"],[0,4,"<a href=\"Studentinit.php.html#190\">App\\Http\\Livewire\\Initialization\\Studentinit::isValid<\/a>"],[0,1,"<a href=\"Studentinit.php.html#207\">App\\Http\\Livewire\\Initialization\\Studentinit::isExist<\/a>"],[0,1,"<a href=\"Studentinit.php.html#216\">App\\Http\\Livewire\\Initialization\\Studentinit::addAndNext<\/a>"],[0,1,"<a href=\"Studentinit.php.html#222\">App\\Http\\Livewire\\Initialization\\Studentinit::render<\/a>"],[0,1,"<a href=\"Subjectinit.php.html#32\">App\\Http\\Livewire\\Initialization\\Subjectinit::mount<\/a>"],[0,1,"<a href=\"Subjectinit.php.html#38\">App\\Http\\Livewire\\Initialization\\Subjectinit::formGenerate<\/a>"],[0,1,"<a href=\"Subjectinit.php.html#47\">App\\Http\\Livewire\\Initialization\\Subjectinit::boot<\/a>"],[0,1,"<a href=\"Subjectinit.php.html#53\">App\\Http\\Livewire\\Initialization\\Subjectinit::getGrades<\/a>"],[0,2,"<a href=\"Subjectinit.php.html#59\">App\\Http\\Livewire\\Initialization\\Subjectinit::mappingData<\/a>"],[0,3,"<a href=\"Subjectinit.php.html#69\">App\\Http\\Livewire\\Initialization\\Subjectinit::create<\/a>"],[0,4,"<a href=\"Subjectinit.php.html#97\">App\\Http\\Livewire\\Initialization\\Subjectinit::isValidData<\/a>"],[0,2,"<a href=\"Subjectinit.php.html#118\">App\\Http\\Livewire\\Initialization\\Subjectinit::saveImage<\/a>"],[0,1,"<a href=\"Subjectinit.php.html#131\">App\\Http\\Livewire\\Initialization\\Subjectinit::addAndNext<\/a>"],[0,1,"<a href=\"Subjectinit.php.html#137\">App\\Http\\Livewire\\Initialization\\Subjectinit::render<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#33\">App\\Http\\Livewire\\Initialization\\Teacherinit::mount<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#38\">App\\Http\\Livewire\\Initialization\\Teacherinit::formGenerate<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#48\">App\\Http\\Livewire\\Initialization\\Teacherinit::setGrades<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#54\">App\\Http\\Livewire\\Initialization\\Teacherinit::setSubject<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#63\">App\\Http\\Livewire\\Initialization\\Teacherinit::setTeacher<\/a>"],[0,3,"<a href=\"Teacherinit.php.html#69\">App\\Http\\Livewire\\Initialization\\Teacherinit::updatedTeacherName<\/a>"],[0,2,"<a href=\"Teacherinit.php.html#84\">App\\Http\\Livewire\\Initialization\\Teacherinit::selectGrades<\/a>"],[0,2,"<a href=\"Teacherinit.php.html#102\">App\\Http\\Livewire\\Initialization\\Teacherinit::selectSubjects<\/a>"],[0,3,"<a href=\"Teacherinit.php.html#114\">App\\Http\\Livewire\\Initialization\\Teacherinit::setSelectedNames<\/a>"],[0,4,"<a href=\"Teacherinit.php.html#124\">App\\Http\\Livewire\\Initialization\\Teacherinit::removeItem<\/a>"],[0,2,"<a href=\"Teacherinit.php.html#137\">App\\Http\\Livewire\\Initialization\\Teacherinit::mappingData<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#147\">App\\Http\\Livewire\\Initialization\\Teacherinit::render<\/a>"],[0,3,"<a href=\"Teacherinit.php.html#152\">App\\Http\\Livewire\\Initialization\\Teacherinit::create<\/a>"],[0,4,"<a href=\"Teacherinit.php.html#177\">App\\Http\\Livewire\\Initialization\\Teacherinit::isValid<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#194\">App\\Http\\Livewire\\Initialization\\Teacherinit::isExist<\/a>"],[0,1,"<a href=\"Teacherinit.php.html#203\">App\\Http\\Livewire\\Initialization\\Teacherinit::addAndNext<\/a>"],[0,1,"<a href=\"Userinit.php.html#69\">App\\Http\\Livewire\\Initialization\\Userinit::mount<\/a>"],[0,1,"<a href=\"Userinit.php.html#80\">App\\Http\\Livewire\\Initialization\\Userinit::boot<\/a>"],[0,1,"<a href=\"Userinit.php.html#86\">App\\Http\\Livewire\\Initialization\\Userinit::render<\/a>"],[0,1,"<a href=\"Userinit.php.html#91\">App\\Http\\Livewire\\Initialization\\Userinit::changeProfileState<\/a>"],[0,1,"<a href=\"Userinit.php.html#96\">App\\Http\\Livewire\\Initialization\\Userinit::changeMoreActionState<\/a>"],[0,1,"<a href=\"Userinit.php.html#101\">App\\Http\\Livewire\\Initialization\\Userinit::profileFormGenerate<\/a>"],[0,1,"<a href=\"Userinit.php.html#109\">App\\Http\\Livewire\\Initialization\\Userinit::moreactionFormGenerate<\/a>"],[0,7,"<a href=\"Userinit.php.html#118\">App\\Http\\Livewire\\Initialization\\Userinit::selectGrade<\/a>"],[0,4,"<a href=\"Userinit.php.html#151\">App\\Http\\Livewire\\Initialization\\Userinit::removeItem<\/a>"],[0,2,"<a href=\"Userinit.php.html#164\">App\\Http\\Livewire\\Initialization\\Userinit::selectSubject<\/a>"],[0,3,"<a href=\"Userinit.php.html#176\">App\\Http\\Livewire\\Initialization\\Userinit::resetSelectedSubjectNames<\/a>"],[0,1,"<a href=\"Userinit.php.html#187\">App\\Http\\Livewire\\Initialization\\Userinit::selectRoom<\/a>"],[0,1,"<a href=\"Userinit.php.html#192\">App\\Http\\Livewire\\Initialization\\Userinit::changeRole<\/a>"],[0,1,"<a href=\"Userinit.php.html#198\">App\\Http\\Livewire\\Initialization\\Userinit::getGrades<\/a>"],[0,1,"<a href=\"Userinit.php.html#204\">App\\Http\\Livewire\\Initialization\\Userinit::getSubject<\/a>"],[0,1,"<a href=\"Userinit.php.html#214\">App\\Http\\Livewire\\Initialization\\Userinit::getRooms<\/a>"],[0,1,"<a href=\"Userinit.php.html#227\">App\\Http\\Livewire\\Initialization\\Userinit::getStatuses<\/a>"],[0,1,"<a href=\"Userinit.php.html#232\">App\\Http\\Livewire\\Initialization\\Userinit::getGenders<\/a>"],[0,1,"<a href=\"Userinit.php.html#237\">App\\Http\\Livewire\\Initialization\\Userinit::accountFormGenerate<\/a>"],[0,2,"<a href=\"Userinit.php.html#246\">App\\Http\\Livewire\\Initialization\\Userinit::mappingData<\/a>"],[0,9,"<a href=\"Userinit.php.html#256\">App\\Http\\Livewire\\Initialization\\Userinit::createAccount<\/a>"],[0,1,"<a href=\"Userinit.php.html#340\">App\\Http\\Livewire\\Initialization\\Userinit::addAndNext<\/a>"],[0,5,"<a href=\"Userinit.php.html#347\">App\\Http\\Livewire\\Initialization\\Userinit::isUserValid<\/a>"],[0,2,"<a href=\"Userinit.php.html#366\">App\\Http\\Livewire\\Initialization\\Userinit::getCleanData<\/a>"],[0,1,"<a href=\"Userinit.php.html#376\">App\\Http\\Livewire\\Initialization\\Userinit::isUserEmailExist<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

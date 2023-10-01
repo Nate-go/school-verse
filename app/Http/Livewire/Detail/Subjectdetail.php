@@ -4,10 +4,10 @@ namespace App\Http\Livewire\Detail;
 
 use App\Models\Subject;
 use App\Services\ConstantService;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
-class Subjectdetail extends Component
+class Subjectdetail extends BaseComponent
 {
     use WithFileUploads;
 
@@ -38,13 +38,13 @@ class Subjectdetail extends Component
     public function formGenerate()
     {
         $result = Subject::selectColumns([
-            'subjects.name', 
-            'number_lesson', 
-            'coefficient', 
-            'image_url', 
-            'grades.name as grade_name', 
-            'grade_id'
-            ])
+            'subjects.name',
+            'number_lesson',
+            'coefficient',
+            'image_url',
+            'grades.name as grade_name',
+            'grade_id',
+        ])
             ->join('grades', 'grades.id', '=', 'subjects.grade_id')
             ->where('subjects.id', $this->itemId)
             ->first();
@@ -73,7 +73,7 @@ class Subjectdetail extends Component
 
         $result = $this->isValidData($subject);
 
-        if (!$result['isValid']) {
+        if (! $result['isValid']) {
             $this->notify('error', $result['message']);
 
             return;
@@ -104,7 +104,7 @@ class Subjectdetail extends Component
             return ['isValid' => false, 'message' => 'Number_lesson is invalid'];
         }
 
-        $nameExists = Subject::where('id', '<>',$this->itemId)
+        $nameExists = Subject::where('id', '<>', $this->itemId)
             ->where('name', $subject['name'])
             ->where('grade_id', $this->gradeId)
             ->exists();
@@ -119,16 +119,16 @@ class Subjectdetail extends Component
     public function saveImage()
     {
         if ($this->image) {
-            $imageName = time() . '.' . $this->image->extension();
+            $imageName = time().'.'.$this->image->extension();
             $this->image->storeAs('public/images', $imageName);
-            $url = asset('storage/images/' . $imageName);
+            $url = asset('storage/images/'.$imageName);
 
             return $url;
         } else {
             return $this->imageUrl;
         }
     }
-    
+
     public function render()
     {
         return view('livewire.detail.subjectdetail');

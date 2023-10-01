@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Initialization;
 
 use App\Models\Grade;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Gradeinit extends Component
+class Gradeinit extends BaseComponent
 {
     public $name;
 

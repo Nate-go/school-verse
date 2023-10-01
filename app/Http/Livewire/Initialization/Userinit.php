@@ -16,9 +16,9 @@ use App\Services\ConstantService;
 use App\Services\UtilService;
 use DB;
 use Hash;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Userinit extends Component
+class Userinit extends BaseComponent
 {
     public $isProfileOpen = true;
 
@@ -129,12 +129,12 @@ class Userinit extends Component
             $this->removeItem($this->selectedSubjects, $this->subjects);
             $this->resetSelectedSubjectNames();
         } else {
-            if(!empty($this->selectedGrades)) {
+            if (! empty($this->selectedGrades)) {
                 if ($value != $this->selectedGrades[0]) {
                     $this->selectedRoom = null;
                 }
             }
-            
+
             $this->selectedGrades = [$value];
             $this->getRooms();
         }

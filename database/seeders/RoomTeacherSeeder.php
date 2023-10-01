@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Grade;
 use App\Models\Room;
 use App\Models\RoomTeacher;
 use App\Models\Subject;
@@ -18,9 +17,9 @@ class RoomTeacherSeeder extends Seeder
     {
         $rooms = Room::selectColumns(['id', 'grade_id'])->get();
 
-        foreach($rooms as $room) {
+        foreach ($rooms as $room) {
             $subjects = Subject::selectColumns(['id'])->where('grade_id', $room->grade_id)->get();
-            foreach($subjects as $subject) {
+            foreach ($subjects as $subject) {
                 $teachers = Teacher::selectColumns(['id'])->where('subject_id', $subject->id)->get();
                 $teacherIndex = random_int(0, count($teachers) - 1);
 

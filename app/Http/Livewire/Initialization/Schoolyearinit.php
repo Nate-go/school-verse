@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Initialization;
 
 use App\Models\SchoolYear;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Schoolyearinit extends Component
+class Schoolyearinit extends BaseComponent
 {
     public $name;
 

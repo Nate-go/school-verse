@@ -7,9 +7,9 @@ use App\Models\Student;
 use App\Models\User;
 use App\Services\UtilService;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Studentdetail extends Component
+class Studentdetail extends BaseComponent
 {
     public $itemId;
 
@@ -86,7 +86,7 @@ class Studentdetail extends Component
                 'teacherName' => $item->teacher_name,
                 'roomImage' => $item->room_image,
                 'teacherImage' => $item->teacher_image,
-                'id' => $item->id
+                'id' => $item->id,
             ];
         }
     }

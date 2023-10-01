@@ -13,7 +13,7 @@ class StudentController extends Controller
 
     public function __construct(StudentService $studentService)
     {
-        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::STUDENT))->except('destroy');
+        $this->middleware('author:'.str(UserRole::ADMIN).'|'.str(UserRole::STUDENT))->except('destroy');
         $this->studentService = $studentService;
     }
 
@@ -22,8 +22,9 @@ class StudentController extends Controller
         if (Auth::user()->role == UserRole::ADMIN) {
             return $this->studentService->getPageForAdmin();
         }
+
         return $this->studentService->getPageForStudent(Auth::user()->id);
-        
+
     }
 
     /**
@@ -50,6 +51,7 @@ class StudentController extends Controller
         if (Auth::user()->role != UserRole::ADMIN) {
             return redirect()->route('notPermission');
         }
+
         return $this->studentService->getDetailPageForAdmin($id);
     }
 

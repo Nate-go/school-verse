@@ -12,7 +12,7 @@ class ExamController extends Controller
 
     public function __construct(ExamService $examService)
     {
-        $this->middleware('author:' . str(UserRole::ADMIN) . '|' . str(UserRole::TEACHER));
+        $this->middleware('author:'.str(UserRole::ADMIN).'|'.str(UserRole::TEACHER));
         $this->examService = $examService;
     }
 
@@ -69,7 +69,8 @@ class ExamController extends Controller
         //
     }
 
-    public function rescore(string $examStudentId) {
+    public function rescore(string $examStudentId)
+    {
         return $this->examService->getRescorePage($examStudentId);
     }
 }

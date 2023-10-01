@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Constant\UserRole;
-use App\Models\Grade;
 use App\Models\Room;
-use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -17,24 +15,24 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $randomGrades = $this->generate_increasing_combinations_with_repeats(range(1,7), 5);
+        $randomGrades = $this->generate_increasing_combinations_with_repeats(range(1, 7), 5);
         $students = User::selectColumns('id')->where('role', UserRole::STUDENT)->get();
         $rooms = Room::selectColumns(['id', 'grade_id', 'school_year_id'])->get();
 
         $studentData = [];
         $data = $this->getTrueData($randomGrades, count($students));
 
-        for($i = 0; $i < count($students); $i++) {
+        for ($i = 0; $i < count($students); $i++) {
             $studentData[] = [
                 'userId' => $students[$i]->id,
-                'gradeIds' => $data[$i]
+                'gradeIds' => $data[$i],
             ];
         }
 
         $studentMap = [];
 
         foreach ($studentData as $item) {
-            
+
             for ($i = 0; $i < 5; $i++) {
                 $studentMap[$i + 1][$item['gradeIds'][$i]][] = $item['userId'];
             }
@@ -42,11 +40,11 @@ class StudentSeeder extends Seeder
 
         foreach (range(1, 5) as $schoolYear) {
             foreach (range(1, 7) as $grade) {
-                if(!isset($studentMap[$schoolYear][$grade])) {
+                if (! isset($studentMap[$schoolYear][$grade])) {
                     continue;
                 }
                 $currentStudents = $studentMap[$schoolYear][$grade];
-                while (!empty($currentStudents)) {
+                while (! empty($currentStudents)) {
                     foreach ($rooms as $room) {
                         if ($room->grade_id != $grade or $room->school_year_id != $schoolYear) {
                             continue;
@@ -68,7 +66,8 @@ class StudentSeeder extends Seeder
 
     }
 
-    private function getTrueData($randomGrades, $number) {
+    private function getTrueData($randomGrades, $number)
+    {
         $success = false;
 
         $data = [];
@@ -80,14 +79,15 @@ class StudentSeeder extends Seeder
         return $data;
     }
 
-    private function check_occurrences($array) {
+    private function check_occurrences($array)
+    {
         $required_numbers = range(1, 7);
 
         foreach ($array as $sub_array) {
             $counts = array_count_values($sub_array);
 
             foreach ($required_numbers as $number) {
-                if (!isset($counts[$number]) || $counts[$number] < 1) {
+                if (! isset($counts[$number]) || $counts[$number] < 1) {
                     return false;
                 }
             }
@@ -96,8 +96,9 @@ class StudentSeeder extends Seeder
         return true;
     }
 
-    private function generate_increasing_combinations_with_repeats($numbers, $k) {
-        $combinations = array();
+    private function generate_increasing_combinations_with_repeats($numbers, $k)
+    {
+        $combinations = [];
         $total_numbers = count($numbers);
 
         if ($k == 0 || $k > $total_numbers) {

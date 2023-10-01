@@ -8,9 +8,9 @@ use App\Models\Teacher;
 use App\Models\User;
 use App\Services\UtilService;
 use DB;
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
 
-class Teacherdetail extends Component
+class Teacherdetail extends BaseComponent
 {
     public $itemId;
 
@@ -38,11 +38,13 @@ class Teacherdetail extends Component
 
     protected $utilService;
 
-    public function boot(UtilService $utilService) {
+    public function boot(UtilService $utilService)
+    {
         $this->utilService = $utilService;
     }
 
-    public function mount($itemId) {
+    public function mount($itemId)
+    {
         $this->itemId = $itemId;
         $this->setTeacher();
         $this->setInit();
@@ -50,16 +52,18 @@ class Teacherdetail extends Component
         $this->setDisplayRooms();
     }
 
-    private function setTeacher() {
+    private function setTeacher()
+    {
         $data = User::selectColumns(['image_url', 'username'])
-                    ->where('id', $this->itemId)
-                    ->first();
+            ->where('id', $this->itemId)
+            ->first();
 
         $this->username = $data->username;
         $this->imageUrl = $data->image_url;
     }
 
-    private function setInit() {
+    private function setInit()
+    {
         $schoolYears = SchoolYear::selectColumns(['name', 'id as value'])->get();
 
         $this->schoolYears = $this->utilService->getJsonData($schoolYears);
@@ -69,7 +73,8 @@ class Teacherdetail extends Component
         $this->selectedSchoolYear = $this->utilService->getCurrentSchoolYear();
     }
 
-    private function setData() {
+    private function setData()
+    {
         $data = Teacher::select(
             'grades.id as grade_id',
             'grades.name as grade_name',
@@ -87,27 +92,26 @@ class Teacherdetail extends Component
             ->get();
 
         $this->grades = [
-            ['name' => 'All', 'value' => -1]
+            ['name' => 'All', 'value' => -1],
         ];
 
         $this->rooms = [
-            ['name' => 'All', 'value' => -1, 'grade' => -1]
+            ['name' => 'All', 'value' => -1, 'grade' => -1],
         ];
 
         $this->subjects = [
-            ['name' => 'All', 'value' => -1, 'grade' => -1]
+            ['name' => 'All', 'value' => -1, 'grade' => -1],
         ];
 
         foreach ($data as $item) {
-            if (!$this->isExist($this->grades, $item->grade_id)) {
+            if (! $this->isExist($this->grades, $item->grade_id)) {
                 $this->grades[] = [
                     'name' => $item->grade_name,
                     'value' => $item->grade_id,
                 ];
             }
 
-
-            if (!$this->isExist($this->rooms, $item->room_id)) {
+            if (! $this->isExist($this->rooms, $item->room_id)) {
                 $this->rooms[] = [
                     'name' => $item->room_name,
                     'value' => $item->room_id,
@@ -115,8 +119,7 @@ class Teacherdetail extends Component
                 ];
             }
 
-
-            if (!$this->isExist($this->subjects, $item->subject_id)) {
+            if (! $this->isExist($this->subjects, $item->subject_id)) {
                 $this->subjects[] = [
                     'name' => $item->subject_name,
                     'value' => $item->subject_id,
@@ -130,55 +133,59 @@ class Teacherdetail extends Component
         $this->selectedSubject = -1;
     }
 
-    private function isExist($elements, $id) {
-        foreach($elements as $element) {
-            if($element['value'] == $id) {
+    private function isExist($elements, $id)
+    {
+        foreach ($elements as $element) {
+            if ($element['value'] == $id) {
                 return true;
             }
         }
+
         return false;
     }
 
-    public function setDisplayRooms() {
+    public function setDisplayRooms()
+    {
         $this->displayRooms = [];
 
         $this->setHomeroomClass();
 
         $data = Teacher::select(
-            'rooms.image_url as room_image', 
+            'rooms.image_url as room_image',
             'room_teachers.id',
             'subjects.image_url as subject_image',
             DB::raw('CONCAT(subjects.name, " ", grades.name) as subject_name'),
             DB::raw('CONCAT(grades.name, " ", rooms.name) as room_name')
         )
-        ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
-        ->join('room_teachers', 'room_teachers.teacher_id', '=', 'teachers.id')
-        ->join('rooms', 'rooms.id', '=', 'room_teachers.room_id')
-        ->join('grades', 'grades.id', '=', 'subjects.grade_id')
-        ->where('teachers.user_id', $this->itemId)
-        ->whereOrAll(
-            ['rooms.id', 'subjects.id', 'rooms.school_year_id'], 
-            [$this->selectedRoom, $this->selectedSubject, $this->selectedSchoolYear]
-        )
-        ->get();
+            ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
+            ->join('room_teachers', 'room_teachers.teacher_id', '=', 'teachers.id')
+            ->join('rooms', 'rooms.id', '=', 'room_teachers.room_id')
+            ->join('grades', 'grades.id', '=', 'subjects.grade_id')
+            ->where('teachers.user_id', $this->itemId)
+            ->whereOrAll(
+                ['rooms.id', 'subjects.id', 'rooms.school_year_id'],
+                [$this->selectedRoom, $this->selectedSubject, $this->selectedSchoolYear]
+            )
+            ->get();
 
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $this->displayRooms[] = [
                 'roomName' => $item->room_name,
                 'subjectName' => $item->subject_name,
                 'roomImage' => $item->room_image,
                 'subjectImage' => $item->subject_image,
-                'id' => $item->id
+                'id' => $item->id,
             ];
         }
     }
 
-    private function getTeacherId($userId, $subjectId) {
+    private function getTeacherId($userId, $subjectId)
+    {
         $result = Teacher::selectColumns(['id'])
-                        ->where('user_id', $userId)
-                        ->where('subject_id', $subjectId)
-                        ->first();
-        
+            ->where('user_id', $userId)
+            ->where('subject_id', $subjectId)
+            ->first();
+
         return $result ? $result->id : null;
     }
 
@@ -187,7 +194,8 @@ class Teacherdetail extends Component
         return view('livewire.detail.teacherdetail');
     }
 
-    public function updatedSelectedRoom($value) {
+    public function updatedSelectedRoom($value)
+    {
         $this->setDisplayRooms();
     }
 
@@ -202,7 +210,8 @@ class Teacherdetail extends Component
         $this->setDisplayRooms();
     }
 
-    private function setHomeroomClass() {
+    private function setHomeroomClass()
+    {
         $data = Room::select(
             'rooms.image_url as room_image',
             'rooms.id',
@@ -222,7 +231,7 @@ class Teacherdetail extends Component
                 'subjectName' => 'Homeroom',
                 'roomImage' => $item->room_image,
                 'subjectImage' => $this->imageUrl,
-                'id' => $item->id
+                'id' => $item->id,
             ];
         }
     }
