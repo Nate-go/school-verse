@@ -10,8 +10,6 @@
     {{-- @vite('resources/css/app.css') --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    <wireui:scripts />
-    <script src="//unpkg.com/alpinejs" defer></script>
     <link rel="icon" type="image/png" href="{{ asset('img/icon-tab.png') }}">
     @livewireStyles
     @csrf

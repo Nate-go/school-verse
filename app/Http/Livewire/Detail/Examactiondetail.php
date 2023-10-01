@@ -5,17 +5,16 @@ namespace App\Http\Livewire\Detail;
 use App\Constant\NotificationStatus;
 use App\Constant\OtherConstant;
 use App\Constant\UserRole;
-use App\Http\Livewire\BaseComponent;
+use App\Http\Livewire\BaseModalComponent;
 use App\Models\Exam;
 use App\Models\ExamStudent;
 use App\Models\Student;
 use Auth;
 use DB;
 use League\Csv\Reader;
-use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class Examactiondetail extends BaseComponent
+class Examactiondetail extends BaseModalComponent
 {
     use WithFileUploads;
 
@@ -201,11 +200,9 @@ class Examactiondetail extends BaseComponent
 
     public function close()
     {
-        $this->forceClose();
         $this->closeModalWithEvents([
-            Teacherroomdetail::getName() => 'formGenerate',
+            Teacherroomdetail::getName() => 'updateExamList',
         ]);
-
     }
 
     public function updatedSelectedStudent($value)

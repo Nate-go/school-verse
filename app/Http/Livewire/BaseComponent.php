@@ -3,12 +3,11 @@
 namespace App\Http\Livewire;
 use App\Events\NotifyEvent;
 use App\Jobs\SendEmailQueue;
-use App\Mail\SendMail;
 use App\Models\Notification;
-use LivewireUI\Modal\ModalComponent;
+use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
-class BaseComponent extends ModalComponent {
+class BaseComponent extends Component {
 
     use LivewireAlert;
 

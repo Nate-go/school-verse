@@ -7,15 +7,15 @@ use App\Constant\InsistenceTypes;
 use App\Constant\NotificationStatus;
 use App\Constant\OtherConstant;
 use App\Constant\UserRole;
+use App\Http\Livewire\BaseModalComponent;
 use App\Models\ExamStudent;
 use App\Models\Insistence;
 use App\Models\User;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use App\Http\Livewire\BaseComponent;
 
-class Examdetail extends BaseComponent
+class Examdetail extends BaseModalComponent
 {
     const STUDNET = UserRole::STUDENT;
 
