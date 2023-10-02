@@ -64,7 +64,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![Screenshot (1107)](https://github.com/Nate-go/school-verse/assets/140036945/c6eba647-e99b-4278-ae83-a22fec9caa96)
 
 School-Verse is an advanced school management system designed to streamline and enhance administrative tasks within educational institutions. Our comprehensive platform is tailored to meet the unique needs of schools, enabling them to efficiently manage various aspects of their daily operations.
 
@@ -88,6 +88,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 * [![MySQL][MySQL.com]][MySQL-url]
 * [![Blade][Blade.com]][Blade-url]
 * [![Tailwind][Tailwind.com]][Tailwind-url]
+* [![Livewire][Livewire.com]][Livewire-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -128,20 +129,26 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 5. Generate the application key:
    ```sh
-   cp .env.example .env
+   php artisan key:generate
    ```
 6. Configure the database:
     * Open the `.env` file in a text editor.
     * Set the database connection details like `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` according to your MySQL setup.
-7. Run the database migrations:
+7. Import:
    ```sh
-   php artisan migrate
+   composer require jantinnerezo/livewire-alert
+   composer require wire-elements/modal
    ```
-8. Serve the application:
+8. Run the database migrations and seed:
    ```sh
+   php artisan migrate --seed
+   ```
+9. Serve the application and active queue:
+   ```sh
+   php artisan queue:work
    php artisan serve
    ```
-9. Open your web browser and navigate to http://localhost:8000 to see the application running.
+10. Open your web browser and navigate to http://localhost:8000 to see the application running.
    
 Congratulations! You have successfully cloned, installed, and run the Laravel project on your local machine. Now you can start exploring and customizing it for your needs. If you encounter any issues, feel free to open an issue on the project's repository or seek help from the Laravel community. Goodluck!
    
@@ -153,7 +160,15 @@ Congratulations! You have successfully cloned, installed, and run the Laravel pr
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This website will help you to manage the school issue
+- For admin role
+![Screenshot (1108)](https://github.com/Nate-go/school-verse/assets/140036945/9179d3e8-c696-4a8e-adee-a2f82adac88b)
+
+- For teacher role
+![Screenshot (1109)](https://github.com/Nate-go/school-verse/assets/140036945/130b2c9a-bf34-4b5f-935f-4becfc5db041)
+
+- For student role
+![Screenshot (1110)](https://github.com/Nate-go/school-verse/assets/140036945/08d2c0a5-1684-4cbb-ad74-0ec2c976a02b)
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -259,3 +274,5 @@ Use this space to list resources you find helpful and would like to give credit 
 [Blade-url]: https://laravel.com/docs/10.x/blade
 [Tailwind.com]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [Tailwind-url]: https://tailwindcss.com/
+[Livewire.com]: https://img.shields.io/badge/Livewire-FF4E1F?style=for-the-badge&logo=laravel&logoColor=white
+[Livewire-url]: https://laravel-livewire.com/
