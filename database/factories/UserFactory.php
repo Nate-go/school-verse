@@ -2,37 +2,50 @@
 
 namespace Database\Factories;
 
+use App\Models\Profile;
+use App\Services\FactoryService;
+use App\Traits\ServiceInjection\InjectionService;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    use InjectionService;
+
+    public $roles = [];
+
+    public $roleRange = [[], [30, 35], [70, 75]];
+
+    public $statuses = [];
+
+    public $statusRange = [[10, 15], [80, 85], [5, 10]];
+
+    public $factoryService;
+
     public function definition(): array
     {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-        ];
-    }
+        $this->setInjection([FactoryService::class]);
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        $role = $this->factoryService->getValidValue($this->roles, $this->roleRange, [1, 2]);
+        $this->roles[] = $role;
+
+        $profile = Profile::factory()->create();
+
+        $status = $this->factoryService->getValidValue($this->statuses, $this->statusRange, range(0, 2));
+        $this->statuses[] = $status;
+        $host = url('/');
+        $port = env('APP_PORT', 8000);
+
+        $fullUrl = $host.':'.$port;
+
+        return [
+            'email' => fake()->unique()->safeEmail(),
+            'password' => Hash::make('123456'),
+            'role' => $role,
+            'username' => fake()->name(),
+            'profile_id' => $profile->id,
+            'status' => $status,
+            'image_url' => $fullUrl.'/img/default-user-'.str(random_int(0, 5)).'.png',
+        ];
     }
 }
