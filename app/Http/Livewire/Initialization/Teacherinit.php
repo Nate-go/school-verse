@@ -3,12 +3,12 @@
 namespace App\Http\Livewire\Initialization;
 
 use App\Constant\UserRole;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Grade;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
 use DB;
-use App\Http\Livewire\BaseComponent;
 
 class Teacherinit extends BaseComponent
 {

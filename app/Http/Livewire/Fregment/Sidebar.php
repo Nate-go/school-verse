@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\Fregment;
 
 use App\Constant\UserRole;
-use App\Services\UtilService;
 use App\Http\Livewire\BaseComponent;
+use App\Services\UtilService;
 use Request;
 
 class Sidebar extends BaseComponent

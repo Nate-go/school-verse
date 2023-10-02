@@ -5,8 +5,8 @@ namespace App\Http\Livewire\Initialization;
 use App\Constant\InsistenceTypes;
 use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
-use App\Models\Insistence;
 use App\Http\Livewire\BaseComponent;
+use App\Models\Insistence;
 use App\Models\User;
 use Auth;
 
@@ -51,7 +51,7 @@ class Insistenceinit extends BaseComponent
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $admin->id,
                 'status' => NotificationStatus::UNSEEN,
-                'link' => '/insistences/' . str($newInsistence->id),
+                'link' => '/insistences/'.str($newInsistence->id),
             ];
 
             $this->realTimeNotify($newNotify);

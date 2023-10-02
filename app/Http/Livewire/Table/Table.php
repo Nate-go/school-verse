@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Table;
 
-use App\Services\ConstantService;
 use App\Http\Livewire\BaseComponent;
+use App\Services\ConstantService;
 use Livewire\WithPagination;
 use Request;
 
@@ -77,7 +77,7 @@ class Table extends BaseComponent
     public function changeData($value)
     {
         $this->filterForm['search']['value']['value'] = $value;
-        $this->updateData(); 
+        $this->updateData();
     }
 
     public function updateFilterForm($filterForm)

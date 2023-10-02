@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Initialization;
 use App\Constant\Gender;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Grade;
 use App\Models\Profile;
 use App\Models\Room;
@@ -16,7 +17,6 @@ use App\Services\ConstantService;
 use App\Services\UtilService;
 use DB;
 use Hash;
-use App\Http\Livewire\BaseComponent;
 
 class Userinit extends BaseComponent
 {

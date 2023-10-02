@@ -2,20 +2,17 @@
 
 namespace Tests\Unit\Services\ModelServices\GradeServiceTest;
 
-use App\Models\Grade;
 use App\Services\ModelServices\GradeService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\Unit\BaseTest;
 
-class GetGradesJsonTest extends TestCase
+class GetGradesJsonTest extends BaseTest
 {
     use RefreshDatabase;
 
     public function testGetExistGrade()
     {
-        $grade = Grade::create([
-            'name' => 10,
-        ]);
+        $data = $this->setUpInitData();
 
         $gradeService = app()->make(GradeService::class);
         $result = $gradeService->getGradesJson();

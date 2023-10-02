@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Initialization;
 
+use App\Http\Livewire\BaseComponent;
 use App\Models\Grade;
 use App\Models\Subject;
 use App\Services\ConstantService;
 use App\Services\UtilService;
-use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
 class Subjectinit extends BaseComponent

@@ -36,6 +36,6 @@ class SubjectService extends BaseService
 
     private function isSubjectExist($subjectId)
     {
-        return Subject::where('id', $subjectId)->exist();
+        return Subject::where('id', $subjectId)->exists();
     }
 }

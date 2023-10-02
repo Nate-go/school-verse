@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Livewire\BaseComponent;
 use InvalidArgumentException;
 use LivewireUI\Modal\Contracts\ModalComponent as Contract;
 
@@ -74,7 +73,7 @@ abstract class BaseModalComponent extends BaseComponent implements Contract
 
     public static function modalMaxWidthClass(): string
     {
-        if (!array_key_exists(static::modalMaxWidth(), static::$maxWidths)) {
+        if (! array_key_exists(static::modalMaxWidth(), static::$maxWidths)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Modal max width [%s] is invalid. The width must be one of the following [%s].',

@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\Fregment;
 
 use App\Constant\UserRole;
-use Auth;
 use App\Http\Livewire\BaseComponent;
+use Auth;
 
 class Userinfomation extends BaseComponent
 {

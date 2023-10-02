@@ -6,6 +6,7 @@ use App\Constant\Insistence;
 use App\Constant\InsistenceTypes;
 use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
+use App\Http\Livewire\BaseComponent;
 use App\Models\ExamStudent;
 use App\Models\Room;
 use App\Models\Student;
@@ -13,7 +14,6 @@ use App\Services\ConstantService;
 use Auth;
 use Carbon\Carbon;
 use DB;
-use App\Http\Livewire\BaseComponent;
 
 class Insistencedetail extends BaseComponent
 {

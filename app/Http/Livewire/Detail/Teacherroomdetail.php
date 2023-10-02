@@ -6,6 +6,7 @@ use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
 use App\Constant\SortTypes;
 use App\Constant\UserRole;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Exam;
 use App\Models\Room;
 use App\Models\RoomTeacher;
@@ -13,8 +14,6 @@ use App\Models\Student;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use Exception;
-use App\Http\Livewire\BaseComponent;
 
 class Teacherroomdetail extends BaseComponent
 {

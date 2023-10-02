@@ -1,21 +1,24 @@
 <?php
 
 namespace App\Http\Livewire;
+
 use App\Events\NotifyEvent;
 use App\Jobs\SendEmailQueue;
 use App\Models\Notification;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
-class BaseComponent extends Component {
-
+class BaseComponent extends Component
+{
     use LivewireAlert;
 
-    public function displayModal($name, $params) {
+    public function displayModal($name, $params)
+    {
         $this->emit('openModal', $name, $params);
     }
 
-    public function notify($type, $message) {
+    public function notify($type, $message)
+    {
         $this->alert($type, $message, [
             'position' => 'top-end',
             'timer' => 3000,
@@ -24,14 +27,16 @@ class BaseComponent extends Component {
         ]);
     }
 
-    public function realTimeNotify($notify) {
+    public function realTimeNotify($notify)
+    {
         $newNotify = Notification::create($notify);
         event(new NotifyEvent($newNotify->id));
         SendEmailQueue::dispatch($newNotify->id);
     }
 
-    public function confirmBox($message, $action, $params) {
-        $this->alert('question', 'Are you sure to ' . $message . ' ?', [
+    public function confirmBox($message, $action, $params)
+    {
+        $this->alert('question', 'Are you sure to '.$message.' ?', [
             'position' => 'top-end',
             'timer' => 10000,
             'toast' => true,

@@ -31,26 +31,14 @@ class RoomService extends BaseService
 
         $room = Student::selectColumns(['room_id'])->where('user_id', Auth::user()->id)->where('school_year_id', $currentSchoolYearId)->first();
 
-        return '/students/'.str(Auth::user()->id).'/rooms/'.str($room->room_id);
+        if ($room) {
+            return '/students/'.str(Auth::user()->id).'/rooms/'.str($room->room_id);
+        }
+
+        return '/students';
     }
 
     public function getPageForAdmin()
-    {
-        $data = TableData::ROOMS;
-        $this->tableService->setTableForm($data);
-
-        return view('admin/room/rooms', ['tableSource' => $data]);
-    }
-
-    public function getPageForTeacher()
-    {
-        $data = TableData::ROOMS;
-        $this->tableService->setTableForm($data);
-
-        return view('admin/room/rooms', ['tableSource' => $data]);
-    }
-
-    public function getPageForStudent()
     {
         $data = TableData::ROOMS;
         $this->tableService->setTableForm($data);
