@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Detail;
 
 use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Room;
 use App\Models\RoomTeacher;
 use App\Models\Student;
@@ -12,7 +13,6 @@ use App\Models\Teacher;
 use App\Models\User;
 use Auth;
 use DB;
-use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
 class Roomdetail extends BaseComponent

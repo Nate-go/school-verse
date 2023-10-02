@@ -79,5 +79,4 @@ class GetStudentRoomTest extends BaseTest
 
         $this->assertEquals(route('notPermission'), $result->getTargetUrl());
     }
-
 }

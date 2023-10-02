@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Detail;
 
 use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Exam;
 use App\Models\Room;
 use App\Models\RoomTeacher;
@@ -12,7 +13,6 @@ use App\Models\Subject;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
 class Homeroomdetail extends BaseComponent

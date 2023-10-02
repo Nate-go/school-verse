@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Constant\UserRole;
 use App\Services\ModelServices\RoomService;
-use Auth;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller

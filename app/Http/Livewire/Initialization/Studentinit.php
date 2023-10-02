@@ -3,13 +3,13 @@
 namespace App\Http\Livewire\Initialization;
 
 use App\Constant\UserRole;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Grade;
 use App\Models\Room;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\UtilService;
 use DB;
-use App\Http\Livewire\BaseComponent;
 
 class Studentinit extends BaseComponent
 {

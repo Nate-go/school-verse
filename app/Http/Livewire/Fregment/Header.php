@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Fregment;
 
+use App\Http\Livewire\BaseComponent;
 use App\Models\Notification;
 use App\Services\UtilService;
-use App\Http\Livewire\BaseComponent;
 use Request;
 
 class Header extends BaseComponent

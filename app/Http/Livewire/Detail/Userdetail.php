@@ -6,6 +6,7 @@ use App\Constant\Gender;
 use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\ConstantService;
@@ -13,7 +14,6 @@ use Auth;
 use DateTime;
 use DB;
 use Hash;
-use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
 class Userdetail extends BaseComponent

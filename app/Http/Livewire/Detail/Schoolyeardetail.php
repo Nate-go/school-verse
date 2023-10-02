@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Detail;
 
+use App\Http\Livewire\BaseComponent;
 use App\Models\SchoolYear;
 use DateTime;
-use App\Http\Livewire\BaseComponent;
 
 class Schoolyeardetail extends BaseComponent
 {

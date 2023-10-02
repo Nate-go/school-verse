@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Detail;
 
-use App\Models\Grade;
 use App\Http\Livewire\BaseComponent;
+use App\Models\Grade;
 
 class Gradedetail extends BaseComponent
 {

@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Fregment;
 
 use App\Constant\NotificationStatus;
 use App\Constant\SortTypes;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Notification;
 use Auth;
-use App\Http\Livewire\BaseComponent;
 
 class Notifytable extends BaseComponent
 {

@@ -31,9 +31,10 @@ class RoomService extends BaseService
 
         $room = Student::selectColumns(['room_id'])->where('user_id', Auth::user()->id)->where('school_year_id', $currentSchoolYearId)->first();
 
-        if($room) {
-            return '/students/' . str(Auth::user()->id) . '/rooms/' . str($room->room_id);
+        if ($room) {
+            return '/students/'.str(Auth::user()->id).'/rooms/'.str($room->room_id);
         }
+
         return '/students';
     }
 

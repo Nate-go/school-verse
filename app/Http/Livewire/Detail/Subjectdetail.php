@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Detail;
 
+use App\Http\Livewire\BaseComponent;
 use App\Models\Subject;
 use App\Services\ConstantService;
-use App\Http\Livewire\BaseComponent;
 use Livewire\WithFileUploads;
 
 class Subjectdetail extends BaseComponent

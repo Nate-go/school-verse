@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Detail;
 
+use App\Http\Livewire\BaseComponent;
 use App\Models\Room;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\UtilService;
 use DB;
-use App\Http\Livewire\BaseComponent;
 
 class Teacherdetail extends BaseComponent
 {

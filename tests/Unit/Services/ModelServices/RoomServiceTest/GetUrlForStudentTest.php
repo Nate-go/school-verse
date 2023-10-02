@@ -20,7 +20,7 @@ class GetUrlForStudentTest extends BaseTest
         $room = $data['room'];
         $schoolYear = $data['schoolYear'];
 
-        $mock = $this->mock(SchoolYearService::class, function (MockInterface $mock) use ($schoolYear){
+        $mock = $this->mock(SchoolYearService::class, function (MockInterface $mock) use ($schoolYear) {
             $mock->shouldReceive('getCurrentSchoolYear')->andReturn($schoolYear->id);
         });
 
@@ -28,7 +28,7 @@ class GetUrlForStudentTest extends BaseTest
         $this->be($student);
         $result = $roomService->getUrlForStudent();
 
-        $url = 'http://localhost/students/' . str($student->id) . '/rooms/' . str($room->id);
+        $url = 'http://localhost/students/'.str($student->id).'/rooms/'.str($room->id);
         $this->assertEquals($url, $result);
     }
 

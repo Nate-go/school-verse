@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services\ModelServices\SubjectServiceTest;
 
 use App\Constant\TableData;
-use App\Services\ModelServices\StudentService;
 use App\Services\ModelServices\SubjectService;
 use App\Services\TableService;
 use Illuminate\Contracts\View\View;

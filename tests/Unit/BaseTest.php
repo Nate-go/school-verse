@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Unit;
+
 use App\Constant\ExamType;
 use App\Constant\InsistenceTypes;
 use App\Constant\UserRole;
@@ -20,10 +21,10 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class BaseTest extends TestCase {
-
+class BaseTest extends TestCase
+{
     use RefreshDatabase;
-    
+
     public function setUpInitData()
     {
         $data = [];
@@ -34,7 +35,7 @@ class BaseTest extends TestCase {
             'role' => UserRole::ADMIN,
             'status' => UserStatus::ACTIVE,
             'username' => 'admin',
-            'profile_id' => 1
+            'profile_id' => 1,
         ];
 
         $studentData = [
@@ -43,7 +44,7 @@ class BaseTest extends TestCase {
             'role' => UserRole::STUDENT,
             'status' => UserStatus::ACTIVE,
             'username' => 'student',
-            'profile_id' => 2
+            'profile_id' => 2,
         ];
 
         $teacherData = [
@@ -52,7 +53,7 @@ class BaseTest extends TestCase {
             'role' => UserRole::TEACHER,
             'status' => UserStatus::ACTIVE,
             'username' => 'teacher',
-            'profile_id' => 3
+            'profile_id' => 3,
         ];
 
         $otherTeacherData = [
@@ -61,7 +62,7 @@ class BaseTest extends TestCase {
             'role' => UserRole::TEACHER,
             'status' => UserStatus::ACTIVE,
             'username' => 'other_teacher',
-            'profile_id' => 4
+            'profile_id' => 4,
         ];
 
         Profile::factory()->count(4)->create();
@@ -123,7 +124,7 @@ class BaseTest extends TestCase {
             'student_id' => $studentUser->id,
             'score' => random_int(0, 100),
             'review' => 'nana',
-            'rescored_at' => '2023-10-22'
+            'rescored_at' => '2023-10-22',
         ]);
 
         $exam = Exam::create([
@@ -150,7 +151,7 @@ class BaseTest extends TestCase {
             'student_id' => $studentUser->id,
             'score' => random_int(0, 100),
             'review' => 'nana',
-            'rescored_at' => '2023-09-19'
+            'rescored_at' => '2023-09-19',
         ]);
 
         $insistence = Insistence::create([
@@ -177,7 +178,7 @@ class BaseTest extends TestCase {
             'examStudent' => $examStudent,
             'examStudentRescoreableClose' => $examStudentRescoreableClose,
             'insistence' => $insistence,
-            'roomTeacher' => $roomTeacher
+            'roomTeacher' => $roomTeacher,
         ];
 
         return $data;

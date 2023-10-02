@@ -7,6 +7,7 @@ use App\Constant\ExamTypeCoefficient;
 use App\Constant\InsistenceTypes;
 use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
+use App\Http\Livewire\BaseComponent;
 use App\Models\Exam;
 use App\Models\Insistence;
 use App\Models\Room;
@@ -17,7 +18,6 @@ use App\Models\User;
 use App\Services\ConstantService;
 use Auth;
 use DB;
-use App\Http\Livewire\BaseComponent;
 
 class Studentroomdetail extends BaseComponent
 {

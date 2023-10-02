@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Services\ModelServices\TeacherServiceTest;
 
-use App\Services\ModelServices\StudentService;
 use App\Services\ModelServices\TeacherService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;

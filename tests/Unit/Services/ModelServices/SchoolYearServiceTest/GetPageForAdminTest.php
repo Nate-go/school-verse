@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services\ModelServices\SchoolYearServiceTest;
 
 use App\Constant\TableData;
-use App\Services\ModelServices\RoomService;
 use App\Services\ModelServices\SchoolYearService;
 use App\Services\TableService;
 use Illuminate\Contracts\View\View;
