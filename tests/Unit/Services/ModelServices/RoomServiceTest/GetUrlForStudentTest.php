@@ -28,7 +28,7 @@ class GetUrlForStudentTest extends BaseTest
         $this->be($student);
         $result = $roomService->getUrlForStudent();
 
-        $url = 'http://localhost/students/'.str($student->id).'/rooms/'.str($room->id);
+        $url = '/students/'.str($student->id).'/rooms/'.str($room->id);
         $this->assertEquals($url, $result);
     }
 
@@ -46,7 +46,7 @@ class GetUrlForStudentTest extends BaseTest
         $this->be($student);
         $result = $roomService->getUrlForStudent();
 
-        $url = 'http://localhost/students';
+        $url = '/students';
         $this->assertEquals($url, $result);
     }
 }
