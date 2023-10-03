@@ -14,13 +14,6 @@ ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 
-# ENV DB_CONNECTION mysql
-# ENV DB_HOST mysql-148320-0.cloudclusters.net
-# ENV DB_PORT 19999
-# ENV DB_DATABASE school_verse
-# ENV DB_USERNAME admin
-# ENV DB_PASSWORD oVbJRDxv
-
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
