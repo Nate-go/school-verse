@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Detail;
 use App\Http\Livewire\BaseComponent;
 use App\Models\Subject;
 use App\Services\ConstantService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
 class Subjectdetail extends BaseComponent
@@ -121,8 +122,7 @@ class Subjectdetail extends BaseComponent
         if ($this->image) {
             $imageName = time().'.'.$this->image->extension();
             $this->image->storeAs('public/images', $imageName);
-            $url = asset('storage/images/'.$imageName);
-
+            $url = asset('storage/images/' . $imageName);
             return $url;
         } else {
             return $this->imageUrl;
