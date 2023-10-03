@@ -14,4 +14,4 @@ echo 'Running storage...'
 php artisan storage:link
 
 echo 'Running queue...'
-php artisan queue:work
+php artisan queue:work &
