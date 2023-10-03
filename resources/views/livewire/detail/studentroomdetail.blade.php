@@ -197,50 +197,53 @@
         </div>
     </div>
 
-    <div class="bg-transparent h-6"></div>
-
-    <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
-        <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
-            <div class="">
-                <div class="text-center pb-4">
-                    <h6
-                        class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
-                        Change class</h6>
+    @if ($isStudent)
+        <div class="bg-transparent h-6"></div>
+        
+        <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
+            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
+                <div class="">
+                    <div class="text-center pb-4">
+                        <h6
+                            class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
+                            Change class</h6>
+                    </div>
+                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
+                        <div class="md:col-span-2">
+                            <label>Classes</label>
+                            <select wire:model='selectedRoom'
+                                class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                @if (!$selectedRoom)
+                                <option selected hidden>
+                                    Select class</option>
+                                @endif
+                                @foreach ($rooms as $room)
+                                <option {{ $room['value']===$selectedRoom ? 'selected' : '' }} value="{{ $room['value'] }}">
+                                    {{$room['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+        
+                        <div class="md:col-span-2 md:row-span-2">
+                            <label>Content</label>
+                            <textarea class="py-2 h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="5"
+                                wire:model='content'></textarea>
+                        </div>
+        
+                        <div class="md:col-span-2">
+                            <label>Action</label>
+                            <button wire:click='requestChangeRoom'
+                                class="mt-1 col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <p>Request to change</p>
+                            </button>
+                        </div>
+        
+                    </div>
+        
                 </div>
-                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
-                    <div class="md:col-span-2">
-                        <label>Classes</label>
-                        <select wire:model='selectedRoom'
-                            class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
-                            @if (!$selectedRoom)
-                            <option selected hidden>
-                                Select class</option>
-                            @endif
-                            @foreach ($rooms as $room)
-                            <option {{ $room['value']===$selectedRoom ? 'selected' : '' }}
-                                value="{{ $room['value'] }}">
-                                {{$room['name']}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="md:col-span-2 md:row-span-2">
-                        <label>Content</label>
-                        <textarea class="py-2 h-30 border mt-1 rounded px-4 w-full bg-gray-50" rows="5" wire:model='content'></textarea>
-                    </div>
-    
-                    <div class="md:col-span-2">
-                        <label>Action</label>
-                        <button wire:click='requestChangeRoom'
-                            class="mt-1 col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <p>Request to change</p>
-                        </button>
-                    </div>
-    
-                </div>
-    
             </div>
         </div>
-    </div>
+    @endif 
+
 </div>

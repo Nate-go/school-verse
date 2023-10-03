@@ -47,6 +47,8 @@ class Studentroomdetail extends BaseComponent
 
     public $content;
 
+    public $isStudent;
+
     public function boot(ConstantService $constantService)
     {
         $this->constantService = $constantService;
@@ -93,6 +95,7 @@ class Studentroomdetail extends BaseComponent
         $this->selectedRoom = null;
         $this->content = '';
         $this->setRoom();
+        $this->isStudent = UserRole::STUDENT == Auth::user()->role;
     }
 
     public function setRoom()

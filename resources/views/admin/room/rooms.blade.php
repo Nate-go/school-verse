@@ -22,6 +22,7 @@
         <livewire:fregment.settingbutton/>
     </div>
     @livewireScripts
+    @stack('scripts')
     @livewire('foot')
 </body>
 </html>

@@ -22,9 +22,9 @@
                     class="hover:bg-slate-200 md:hidden text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xl hover:text-blue-400 active:text-blue-500"
                     wire:click="$emit('displaySidebar')" type="button">
                     @if ($sidebarIsDisplay)
-                    <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark"></i>
                     @else
-                    <i class="fa-solid fa-bars"></i>
+                        <i class="fa-solid fa-bars"></i>
                     @endif
                 </button>
 
@@ -36,18 +36,7 @@
     <div {{ $headerIsLock ? 'hidden' : '' }} class='h-16 bg-transparent'>
     
     </div>
-    <script>
-        Pusher.logToConsole = true;
-            
-            var pusher = new Pusher('34c5d9a9c46a96a5b6e6', {
-                cluster: 'ap1'
-            });
-            
-            var channel = pusher.subscribe('channel-' + {{str(auth()->user()->id)}});
-            channel.bind('my-event', function(data) {
-                Livewire.emit('realtimeNotifyDisplay', data);
-            });
-    </script>
+
 </div>
 
 

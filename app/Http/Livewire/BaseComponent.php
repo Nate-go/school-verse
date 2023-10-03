@@ -51,13 +51,6 @@ class BaseComponent extends Component
         ]);
     }
 
-    public function getListeners()
-    {
-        return [
-            'confirmAction',
-        ];
-    }
-
     public function confirmAction($input)
     {
         $data = $input['data']['inputAttributes'];

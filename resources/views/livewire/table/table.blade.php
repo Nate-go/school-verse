@@ -58,6 +58,7 @@
     </div>
     <div class=" overflow-x-auto px-0 pt-0 z-10 flex-col table-wrp block max-h-[32.5rem] rounded-b-xl">
         <table class="w-full min-w-[640px] table-autos">
+            <div wire:loading>Loading...</div>
             <thead class="sticky top-0 z-20">
                 <tr class='bg-slate-100'>
                     @foreach ($header as $column)
