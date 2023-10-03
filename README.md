@@ -41,6 +41,9 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#project-structure">Project Structure</a></li>
+        <li><a href="#architecture-diagram">Architecture Diagram</a></li>
+        <li><a href="#database-diagram">Database Diagram</a></li>
       </ul>
     </li>
     <li>
@@ -76,8 +79,6 @@ Our goal is to provide schools with a user-friendly, reliable, and comprehensive
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 ### Built With
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
@@ -92,7 +93,163 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Project structure
+```
+.
+├───app
+│   ├───Console
+│   │   └───Commands
+│   ├───Constant
+│   ├───Events
+│   ├───Exceptions
+│   ├───Http
+│   │   ├───Controllers
+│   │   ├───Livewire
+│   │   │   ├───Detail
+│   │   │   ├───Fregment
+│   │   │   ├───Initialization
+│   │   │   ├───Table
+│   │   │   └───Ulti
+│   │   ├───Middleware
+│   │   └───Resources
+│   ├───Jobs
+│   ├───Mail
+│   ├───Models
+│   ├───Providers
+│   ├───Services
+│   │   └───ModelServices
+│   └───Traits
+│       ├───Model
+│       └───ServiceInjection
+├───bootstrap
+│   └───cache
+├───config
+├───database
+│   ├───factories
+│   ├───migrations
+│   └───seeders
+├───public
+│   ├───build
+│   │   └───assets
+│   ├───css
+│   ├───img
+│   ├───js
+│   └───storage
+├───resources
+│   ├───css
+│   ├───img
+│   ├───js
+│   └───views
+│       ├───admin
+│       │   ├───grade
+│       │   ├───insistence
+│       │   ├───room
+│       │   ├───school-year
+│       │   ├───student
+│       │   ├───subject
+│       │   ├───teacher
+│       │   └───user
+│       ├───emails
+│       ├───error
+│       ├───livewire
+│       │   ├───detail
+│       │   ├───fregment
+│       │   ├───initialization
+│       │   ├───table
+│       │   └───ulti
+│       ├───student
+│       │   └───room
+│       ├───teacher
+│       │   ├───exam
+│       │   ├───insistences
+│       │   └───room
+│       ├───user
+│       └───vendor
+│           └───livewire-ui-modal
+├───routes
+├───scripts
+├───storage
+│   ├───app
+│   │   ├───livewire-tmp
+│   │   └───public
+│   │       └───images
+│   ├───framework
+│   │   ├───cache
+│   │   │   └───data
+│   │   │       ├───76
+│   │   │       │   └───e7
+│   │   │       ├───9c
+│   │   │       │   └───1c
+│   │   │       └───ee
+│   │   │           └───2f
+│   │   ├───sessions
+│   │   ├───testing
+│   │   └───views
+│   └───logs
+├───tests
+│   ├───Feature
+│   └───Unit
+│       └───Services
+│           └───ModelServices
+│               ├───ExamServiceTest
+│               ├───GradeServiceTest
+│               ├───InsistenceServiceTest
+│               ├───RoomServiceTest
+│               ├───SchoolYearServiceTest
+│               ├───StudentServiceTest
+│               ├───SubjectServiceTest
+│               ├───TeacherServiceTest
+│               └───UserServiceTest
+└───xdebug
+    ├───.azure
+    │   ├───i386
+    │   └───macos
+    ├───.build.scripts
+    ├───.circleci
+    ├───.github
+    │   └───workflows
+    ├───.xdebugci
+    ├───contrib
+    ├───m4
+    ├───src
+    │   ├───base
+    │   ├───coverage
+    │   ├───debugger
+    │   ├───develop
+    │   ├───gcstats
+    │   ├───lib
+    │   ├───profiler
+    │   └───tracing
+    └───tests
+        ├───base
+        ├───coverage
+        ├───debugger
+        │   └───dbgp
+        ├───develop
+        ├───filter
+        │   ├───foobar
+        │   ├───stack
+        │   └───xdebug
+        │       └───trace
+        ├───gcstats
+        ├───library
+        ├───profiler
+        └───tracing
+```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Architecture diagram
+
+![architecture-diagram drawio](https://github.com/Nate-go/school-verse/assets/140036945/45d869ae-5074-4f2b-9c36-8734e24d42bc)
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Database diagram
+
+![mermaid-diagram-school-verse](https://github.com/Nate-go/school-verse/assets/140036945/9fc41eec-d075-47a3-b26f-93337e5ed31d)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
