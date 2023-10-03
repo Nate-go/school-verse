@@ -15,7 +15,7 @@
                     <ul class='flex-col w-full'>
                         <li class='rounded-md bg-blue-100 my-2 px-2'>
                             <div class='py-1 flex items-center'>
-                                <p class='pr-2'>Row per page </p>
+                                <p class='pr-2'>Rows per page </p>
                                 <input type="number" value="{{$filterForm['perPage']}}"
                                     wire:change="perPageChange($event.target.value)"
                                     class="border h-7 w-14 rounded border-gray-200 sm:text-sm p-2" />

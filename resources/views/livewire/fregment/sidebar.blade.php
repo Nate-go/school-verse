@@ -1,5 +1,5 @@
 <aside
-        class="z-45 fixed overflow-hidden bg-white my-4 ml-4 h-[calc(100vh-32px)] w-64 rounded-xl transition-transform duration-300 {{ $sidebarIsDisplay ? 'translate-x-0' :  '-translate-x-80 md:translate-x-0'}}">
+        class="z-40 fixed overflow-hidden bg-white my-4 ml-4 h-[calc(100vh-32px)] w-64 rounded-xl transition-transform duration-300 {{ $sidebarIsDisplay ? 'translate-x-0' :  '-translate-x-80 md:translate-x-0'}}">
         <div class="border-b">
             <a class="flex py-6 px-6" href="/">
                 <img
