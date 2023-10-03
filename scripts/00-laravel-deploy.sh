@@ -12,3 +12,6 @@ php artisan route:cache
 #php artisan migrate --force
 echo 'Running storage...'
 php artisan storage:link
+
+echo 'Running queue...'
+php artisan queue:work
