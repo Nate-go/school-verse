@@ -20,7 +20,7 @@
                                         alt="Current profile photo" />
                                 </div>
                                 <label class="col-span-1 flex items-center justify-center">
-                                    <input type="file" wire:model="image" class="cursor-pointer block w-56 text-sm text-slate-500
+                                    <input type="file" name="subjecyt-img" wire:model="image" class="cursor-pointer block w-56 text-sm text-slate-500
                                         file:mr-4 file:py-2 file:px-4
                                         file:rounded-full file:border-0
                                         file:text-sm file:font-semibold
