@@ -4,13 +4,10 @@ namespace Tests\Unit\Services\ModelServices\ExamServiceTest;
 
 use App\Services\ModelServices\ExamService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Unit\BaseTest;
 
 class GetRescorePageTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testAdminCanAccessPage()
     {
         $data = $this->setUpInitData();

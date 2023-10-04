@@ -14,7 +14,6 @@ class AuthenService
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-
         $email = $request->get('email');
 
         if ($validator->fails()) {

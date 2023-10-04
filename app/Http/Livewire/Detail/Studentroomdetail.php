@@ -95,7 +95,7 @@ class Studentroomdetail extends BaseComponent
         $this->selectedRoom = null;
         $this->content = '';
         $this->setRoom();
-        $this->isStudent = UserRole::STUDENT == Auth::user()->role;
+        $this->isStudent = Auth::user()->role == UserRole::STUDENT;
     }
 
     public function setRoom()

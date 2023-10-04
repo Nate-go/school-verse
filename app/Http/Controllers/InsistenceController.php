@@ -51,9 +51,10 @@ class InsistenceController extends Controller
      */
     public function show(string $id)
     {
-        if(Auth::user()->role == UserRole::ADMIN) {
+        if (Auth::user()->role == UserRole::ADMIN) {
             return $this->insistenceService->getDetailPageForAdmin($id);
         }
+
         return $this->insistenceService->getDetailPageForUser($id);
     }
 

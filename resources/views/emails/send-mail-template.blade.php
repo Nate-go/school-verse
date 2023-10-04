@@ -24,7 +24,7 @@
             </div>
             
             <div class="mt-4">
-                <a href="{{'http://127.0.0.1:8000' . $link}}">
+                <a href="{{'https://school-verse-go.onrender.com' . $link}}">
                     <button class="px-2 py-2 text-blue-200 bg-blue-600 rounded">Go to detail</button>
                 </a>
                 

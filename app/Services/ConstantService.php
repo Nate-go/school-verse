@@ -2,16 +2,10 @@
 
 namespace App\Services;
 
-use App\Constant\TableSetting;
 use ReflectionClass;
 
 class ConstantService
 {
-    public function getSortType($currentType)
-    {
-        return $currentType === TableSetting::DECREASE_SORT ? TableSetting::INCREASE_SORT : TableSetting::DECREASE_SORT;
-    }
-
     public function getConstants($constantClass)
     {
         $reflectionClass = new ReflectionClass($constantClass);

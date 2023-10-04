@@ -10,7 +10,6 @@ use App\Services\ConstantService;
 use Auth;
 use DB;
 use Illuminate\Support\Carbon;
-use Livewire\Component;
 
 class Rescoreform extends BaseComponent
 {
