@@ -100,7 +100,7 @@
             <div class="mt-6 flex overflow-x-auto gap-8 scroll">
                 @foreach ($displayRooms as $room)
                 <div
-                    class="relative flex flex-col bg-clip-border rounded-xl bg-transparent text-gray-700 shadow-none min-w-[250px]">
+                    class="relative flex flex-col bg-clip-border rounded-xl bg-transparent text-gray-700 shadow-none min-w-[250px] max-w-[250px]">
                     <div
                         class="relative bg-clip-border rounded-xl overflow-hidden bg-gray-500 text-white shadow-gray-500/40 shadow-lg mx-0 mt-0 mb-2 h-64 xl:h-40">
                         <img src="{{$room['roomImage'] ?? asset('storage/images/default-image.png')}}"
