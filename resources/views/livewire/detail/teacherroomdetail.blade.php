@@ -222,7 +222,6 @@
                         Student scores</h6>
                 </div>
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-3">
-
                     <div class="md:col-span-3">
                         @if (!empty($header) and !empty($body))
                         <table class="w-full min-w-[640px] table-autos">

@@ -9,8 +9,6 @@ use Tests\Unit\BaseTest;
 
 class GetInitizationFormTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testReturnView()
     {
         $roomService = app()->make(RoomService::class);

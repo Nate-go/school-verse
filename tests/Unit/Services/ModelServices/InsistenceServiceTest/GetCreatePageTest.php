@@ -9,9 +9,7 @@ use Tests\Unit\BaseTest;
 
 class GetCreatePageTest extends BaseTest
 {
-    use RefreshDatabase;
-
-    public function testInsistenceExist()
+    public function testReturnView()
     {
         $data = $this->setUpInitData();
 

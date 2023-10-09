@@ -33,11 +33,11 @@ class UserFactory extends Factory
 
         $status = $this->factoryService->getValidValue($this->statuses, $this->statusRange, range(0, 2));
         $this->statuses[] = $status;
-        $host = url('/');
-        $port = env('APP_PORT', 8000);
+        // $host = url('/');
+        // $port = env('APP_PORT', 8000);
 
-        $fullUrl = $host.':'.$port;
-
+        // $fullUrl = $host.':'.$port;
+        $fullUrl = 'https://school-verse-go.onrender.com';
         return [
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('123456'),

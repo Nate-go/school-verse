@@ -32,7 +32,10 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return $this->studentService->getInitizationForm();
+        if(Auth::user()->role == UserRole::ADMIN) {
+            return $this->studentService->getInitizationForm();
+        }
+        return redirect()->route('notPermission');
     }
 
     /**

@@ -30,22 +30,36 @@ class ExamStudentsSeeder extends Seeder
     public function run(): void
     {
         $exams = Exam::selectColumns(['exams.id', 'room_id'])
-            ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')->get();
+            ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
+            ->join('rooms', 'rooms.id', '=', 'room_teachers.room_id')
+            ->where('rooms.school_year_id', 3)->get();
 
+        $countExam = 1;
+        
+        $totalExam = count($exams); 
+        echo "Total: {$totalExam}\n";
         foreach ($exams as $exam) {
             $students = Student::selectColumns(['id'])
                 ->where('room_id', $exam->room_id)
                 ->get();
+
+            $totalStudent = count($students);
+            $countStudentExam = 1;
+            echo "- {$countExam}/{$totalExam}: total student {$totalStudent}\n";
 
             foreach ($students as $student) {
                 $reviewIndex = random_int(0, count($this->feedbackArray) - 1);
                 ExamStudent::create([
                     'exam_id' => $exam->id,
                     'student_id' => $student->id,
-                    'score' => random_int(0, 100),
+                    'score' => random_int(15, 100),
                     'review' => $this->feedbackArray[$reviewIndex],
                 ]);
+                echo "Exam Student success: {$countStudentExam}/{$totalStudent} - Exam: {$countExam}/{$totalExam}\n";
+                $countStudentExam += 1;
             }
+
+            $countExam += 1;
         }
     }
 }

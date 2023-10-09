@@ -9,8 +9,6 @@ use Tests\Unit\BaseTest;
 
 class GetDetailPageForUserTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testTrueUser()
     {
         $data = $this->setUpInitData();

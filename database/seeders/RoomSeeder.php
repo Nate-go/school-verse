@@ -19,7 +19,7 @@ class RoomSeeder extends Seeder
         $schoolYears = SchoolYear::selectColumns(['id'])->get();
         foreach ($schoolYears as $schoolYear) {
             foreach ($grades as $grade) {
-                $numberRoom = random_int(2, 5);
+                $numberRoom = random_int(2, 3);
                 foreach (range(0, $numberRoom - 1) as $number) {
                     Room::create([
                         'grade_id' => $grade->id,

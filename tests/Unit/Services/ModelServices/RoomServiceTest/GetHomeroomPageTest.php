@@ -9,8 +9,6 @@ use Tests\Unit\BaseTest;
 
 class GetHomeroomPageTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testRoomExistAdminAccess()
     {
         $data = $this->setUpInitData();

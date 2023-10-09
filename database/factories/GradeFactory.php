@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GradeFactory extends Factory
 {
-    public $grade = 5;
+    public $grade = 9;
 
     public function definition(): array
     {

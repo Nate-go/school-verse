@@ -3,16 +3,13 @@
 namespace Tests\Unit\Services\ModelServices\SchoolYearServiceTest;
 
 use App\Constant\TableData;
-use App\Services\ModelServices\SchoolYearService;
 use App\Services\TableService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\ModelServices\SchoolYearService;
 use Tests\Unit\BaseTest;
 
 class GetPageForAdminTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testReturnView()
     {
         $schoolYearService = app()->make(SchoolYearService::class);

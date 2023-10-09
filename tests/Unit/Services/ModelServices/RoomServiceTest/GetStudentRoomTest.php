@@ -9,8 +9,6 @@ use Tests\Unit\BaseTest;
 
 class GetStudentRoomTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testStudentRoomExistAdminAccess()
     {
         $data = $this->setUpInitData();

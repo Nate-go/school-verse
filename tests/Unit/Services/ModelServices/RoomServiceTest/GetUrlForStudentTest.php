@@ -10,8 +10,6 @@ use Tests\Unit\BaseTest;
 
 class GetUrlForStudentTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testStudentRoomExist()
     {
         $data = $this->setUpInitData();

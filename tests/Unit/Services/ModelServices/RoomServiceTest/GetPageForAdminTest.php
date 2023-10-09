@@ -11,8 +11,6 @@ use Tests\Unit\BaseTest;
 
 class GetPageForAdminTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testReturnView()
     {
         $roomService = app()->make(RoomService::class);

@@ -2,14 +2,22 @@
 
 namespace App\Http\Livewire\Detail;
 
+use App\Cache\GradeCache;
 use App\Http\Livewire\BaseComponent;
 use App\Models\Grade;
+use Illuminate\Support\Facades\Redis;
 
 class Gradedetail extends BaseComponent
 {
     public $itemId;
 
     public $name;
+
+    private $gradeCache;
+
+    public function boot(GradeCache $gradeCache) {
+        $this->gradeCache = $gradeCache;
+    }
 
     public function mount($itemId)
     {
@@ -19,10 +27,8 @@ class Gradedetail extends BaseComponent
 
     public function formGenerate()
     {
-        $result = Grade::selectColumns(['name'])
-            ->where('id', $this->itemId)->first();
-
-        $this->name = $result->name;
+        $result = $this->gradeCache->getById($this->itemId);
+        $this->name = $result ? $result->name : '';
     }
 
     public function save()

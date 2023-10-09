@@ -10,8 +10,6 @@ use Tests\Unit\BaseTest;
 
 class GetDetailPageForAdminTest extends BaseTest
 {
-    use RefreshDatabase;
-
     public function testSchoolYearExist()
     {
         $data = $this->setUpInitData();
@@ -29,8 +27,8 @@ class GetDetailPageForAdminTest extends BaseTest
 
     public function testSchoolYearNotExist()
     {
-        $roomService = app()->make(RoomService::class);
-        $result = $roomService->getDetailPageForAdmin(100);
+        $schoolYearService = app()->make(SchoolYearService::class);
+        $result = $schoolYearService->getDetailPageForAdmin(100);
 
         $this->assertInstanceOf(\Illuminate\Http\RedirectResponse::class, $result);
         $this->assertEquals(route('notFound'), $result->getTargetUrl());

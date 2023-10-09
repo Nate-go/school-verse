@@ -12,6 +12,6 @@ class InsistenceSeeder extends Seeder
      */
     public function run(): void
     {
-        Insistence::factory()->count(600)->create();
+        Insistence::factory()->count(300)->create();
     }
 }
