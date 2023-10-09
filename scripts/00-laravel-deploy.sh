@@ -17,3 +17,6 @@ echo 'Running queue...'
 php artisan queue:work &
 
  php -r "echo ini_get('memory_limit').PHP_EOL;" 
+ echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-ram-limit.ini
+ 
+ php -r "echo ini_get('memory_limit').PHP_EOL;"
