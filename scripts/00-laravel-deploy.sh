@@ -15,3 +15,5 @@ php artisan storage:link
 
 echo 'Running queue...'
 php artisan queue:work &
+
+ php -r "echo ini_get('memory_limit').PHP_EOL;" 
