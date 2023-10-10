@@ -7,6 +7,7 @@ use App\Constant\NotificationStatus;
 use App\Constant\UserRole;
 use App\Constant\UserStatus;
 use App\Http\Livewire\BaseComponent;
+use App\Models\ParentStudent;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\ConstantService;
@@ -60,6 +61,8 @@ class Userdetail extends BaseComponent
 
     public $isAdmin;
 
+    public $parentData;
+
     protected $constantService;
 
     public function boot(ConstantService $constantService)
@@ -90,6 +93,20 @@ class Userdetail extends BaseComponent
         $this->dateOfBirth = $dateTime->format('Y-m-d');
     }
 
+    public function setParentData() {
+        $result = ParentStudent::where('user_id', $this->itemId)->first();
+
+        $this->parentData = [
+            'gender' => $result->gender,
+            'address' => $result->address,
+            'email' => $result->email,
+            'phonenumber' => $result->phonenumber,
+            'relationship' => $result->relationship,
+            'name' => $result->name
+        ];
+
+    }
+
     public function formGenerate()
     {
         $result = User::selectColumns(['image_url', 'username', 'role', 'email', 'status', 'profile_id'])
@@ -103,6 +120,10 @@ class Userdetail extends BaseComponent
         $this->role = $this->constantService->getNameConstant(UserRole::class, $result->role);
         $this->image = null;
         $this->profileId = $result->profile_id;
+
+        if ($result->role == UserRole::STUDENT) {
+            $this->setParentData();
+        }
     }
 
     private function setGender()
@@ -177,6 +198,8 @@ class Userdetail extends BaseComponent
                 'phonenumber' => $this->phoneNumber,
                 'date_of_birth' => $this->dateOfBirth,
             ]);
+
+            ParentStudent::where('user_id', $this->itemId)->update($this->parentData);
 
             $result = true;
         });

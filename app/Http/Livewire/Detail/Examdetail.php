@@ -190,7 +190,7 @@ class Examdetail extends BaseModalComponent
     public function notifyForUpdateScore()
     {
         $newNotify = [
-            'content' => 'Your '.$this->data['subjectName'].' score has been updated',
+            'content' => 'Your '.$this->data['subjectName'].' score has been updated to ' . str($this->score),
             'from_user_id' => Auth::user()->id,
             'user_id' => $this->data['userId'],
             'status' => NotificationStatus::UNSEEN,
