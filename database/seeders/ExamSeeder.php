@@ -10,10 +10,10 @@ use Illuminate\Database\Seeder;
 class ExamSeeder extends Seeder
 {
     public $types = [
-        ['value' => ExamType::ORAL, 'name' => 'ORAL', 'min' => 1, 'max' => 4],
-        ['value' => ExamType::FIFTEEN_MINUTES, 'name' => 'FIFTEEN_MINUTES', 'min' => 1, 'max' => 3],
-        ['value' => ExamType::LESSON, 'name' => 'LESSON', 'min' => 1, 'max' => 2],
-        ['value' => ExamType::MIDTERM, 'name' => 'MIDTERM', 'min' => 1, 'max' => 2],
+        ['value' => ExamType::ORAL, 'name' => 'ORAL', 'min' => 1, 'max' => 2],
+        ['value' => ExamType::FIFTEEN_MINUTES, 'name' => 'FIFTEEN_MINUTES', 'min' => 1, 'max' => 2],
+        ['value' => ExamType::LESSON, 'name' => 'LESSON', 'min' => 1, 'max' => 1],
+        ['value' => ExamType::MIDTERM, 'name' => 'MIDTERM', 'min' => 1, 'max' => 1],
         ['value' => ExamType::FINAL_SEMESTER, 'name' => 'FINAL_SEMESTER', 'min' => 1, 'max' => 1],
     ];
 

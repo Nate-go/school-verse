@@ -11,7 +11,7 @@ class FactoryService
         $this->utilService = $utilService;
     }
 
-    public function calculatePercentage($array, $value)
+    private function calculatePercentage($array, $value)
     {
         $totalCount = count($array);
         if ($totalCount === 0) {
@@ -29,7 +29,7 @@ class FactoryService
         return $percentage;
     }
 
-    public function isValidPercent($percent, $range)
+    private function isValidPercent($percent, $range)
     {
         if ($percent >= $range[0] and $percent <= $range[1]) {
             return true;

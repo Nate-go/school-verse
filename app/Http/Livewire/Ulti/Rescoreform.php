@@ -4,14 +4,14 @@ namespace App\Http\Livewire\Ulti;
 
 use App\Constant\ExamType;
 use App\Constant\NotificationStatus;
+use App\Http\Livewire\BaseComponent;
 use App\Models\ExamStudent;
 use App\Services\ConstantService;
 use Auth;
 use DB;
 use Illuminate\Support\Carbon;
-use Livewire\Component;
 
-class Rescoreform extends Component
+class Rescoreform extends BaseComponent
 {
     public $data;
 

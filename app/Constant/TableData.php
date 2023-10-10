@@ -57,7 +57,6 @@ class TableData
             'search' => [
                 'elements' => [
                     ['column' => 0, 'types' => [CompareTypes::CONTAIN, CompareTypes::EQUAL]],
-                    ['column' => 2, 'types' => [CompareTypes::GREATER_EQUAL, CompareTypes::EQUAL, CompareTypes::SMALLER_EQUAL]],
                 ],
                 'value' => ['element' => 0, 'type' => 0, 'value' => ''],
             ],

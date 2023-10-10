@@ -65,7 +65,7 @@ class UtilService
         $urls = [];
         foreach ($parts as $part) {
             if ($part !== '') {
-                $currentUrl .= $part;
+                $currentUrl .= '/'.$part;
                 $urls[] = ['name' => $part, 'url' => $currentUrl];
             }
         }

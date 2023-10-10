@@ -4,6 +4,7 @@ namespace App\Services\ModelServices;
 
 use App\Constant\TableData;
 use App\Models\Insistence;
+use Auth;
 
 class InsistenceService extends BaseService
 {
@@ -53,5 +54,21 @@ class InsistenceService extends BaseService
     private function isInsistenceExist($id)
     {
         return Insistence::where('id', $id)->exists();
+    }
+
+    public function getDetailPageForUser($id)
+    {
+        if ($this->isTrueInsistence($id)) {
+            return view('admin/insistence/insistences-detail', ['id' => $id]);
+        }
+
+        return redirect()->route('notPermission');
+    }
+
+    private function isTrueInsistence($id)
+    {
+        return Insistence::where('id', $id)
+            ->where('user_id', Auth::user()->id)
+            ->exists();
     }
 }

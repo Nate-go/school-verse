@@ -76,4 +76,9 @@ class Header extends BaseComponent
 
         $this->notify('info', $notify->content);
     }
+
+    public function testCLick($dta)
+    {
+        dd($dta);
+    }
 }

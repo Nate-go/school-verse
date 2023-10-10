@@ -21,7 +21,7 @@ class Table extends BaseComponent
 
     public $detailUrl;
 
-    protected $listeners = ['dataSend' => 'updateFilterForm', 'filter' => 'updateData'];
+    protected $listeners = ['dataSend' => 'updateFilterForm', 'filter' => 'updateData', 'confirmAction'];
 
     protected $constantService;
 

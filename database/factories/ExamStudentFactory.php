@@ -28,7 +28,7 @@ class ExamStudentFactory extends Factory
         return [
             'exam_id' => $exam_id,
             'student_id' => $this->utilService->randValues([$student_ids]),
-            'score' => random_int(0, 100) / 10,
+            'score' => random_int(0, 100),
             'review' => Str::random(10),
         ];
     }

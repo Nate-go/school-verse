@@ -317,7 +317,7 @@ class Examactiondetail extends BaseModalComponent
     {
         foreach ($updateExams as $updateExam) {
             $newNotify = [
-                'content' => 'Your '.$this->exam['name'].' score has been updated',
+                'content' => 'Your '.$this->exam['content'].' score has been updated',
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $updateExam['userId'],
                 'status' => NotificationStatus::UNSEEN,
@@ -387,7 +387,7 @@ class Examactiondetail extends BaseModalComponent
 
     public function delete()
     {
-        if ($this->exam['member'] > 0) {
+        if (count($this->currentData) > 0) {
             $this->notify('error', 'Have '.str($this->exam['member']).' student done this exam you can not delete');
 
             return;
