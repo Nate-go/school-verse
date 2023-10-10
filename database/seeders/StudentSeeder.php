@@ -15,7 +15,7 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $randomGrades = $this->generate_increasing_combinations_with_repeats(range(1, 7), 5);
+        $randomGrades = $this->generate_increasing_combinations_with_repeats(range(1, 3), 3);
         $students = User::selectColumns('id')->where('role', UserRole::STUDENT)->get();
         $rooms = Room::selectColumns(['id', 'grade_id', 'school_year_id'])->get();
 
@@ -33,13 +33,13 @@ class StudentSeeder extends Seeder
 
         foreach ($studentData as $item) {
 
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 3; $i++) {
                 $studentMap[$i + 1][$item['gradeIds'][$i]][] = $item['userId'];
             }
         }
 
-        foreach (range(1, 5) as $schoolYear) {
-            foreach (range(1, 7) as $grade) {
+        foreach (range(1, 3) as $schoolYear) {
+            foreach (range(1, 3) as $grade) {
                 if (! isset($studentMap[$schoolYear][$grade])) {
                     continue;
                 }
@@ -81,7 +81,7 @@ class StudentSeeder extends Seeder
 
     private function check_occurrences($array)
     {
-        $required_numbers = range(1, 7);
+        $required_numbers = range(1, 3);
 
         foreach ($array as $sub_array) {
             $counts = array_count_values($sub_array);

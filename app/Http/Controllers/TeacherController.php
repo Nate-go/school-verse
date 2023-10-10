@@ -13,7 +13,7 @@ class TeacherController extends Controller
 
     public function __construct(TeacherService $teacherService)
     {
-        $this->middleware('author:'.str(UserRole::ADMIN).'|'.str(UserRole::TEACHER));
+        $this->middleware('author:'.str(UserRole::ADMIN).'|'. str(UserRole::TEACHER));
         $this->teacherService = $teacherService;
     }
 
@@ -22,6 +22,7 @@ class TeacherController extends Controller
         if (Auth::user()->role == UserRole::ADMIN) {
             return $this->teacherService->getPageForAdmin();
         }
+        
 
         return $this->teacherService->getPageForTeacher(Auth::user()->id);
     }

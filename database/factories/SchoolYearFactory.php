@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SchoolYearFactory extends Factory
 {
-    public $year = 2019;
+    public $year = 2020;
 
     public function definition(): array
     {

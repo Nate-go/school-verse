@@ -12,6 +12,6 @@ class SchoolYearSeeder extends Seeder
      */
     public function run(): void
     {
-        SchoolYear::factory()->count(5)->create();
+        SchoolYear::factory()->count(3)->create();
     }
 }

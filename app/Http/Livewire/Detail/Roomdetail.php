@@ -567,7 +567,6 @@ class Roomdetail extends BaseComponent
 
     public function deleteSubjectTeacher($id)
     {
-
         $result = RoomTeacher::where('id', $id)->delete();
 
         if ($result) {
