@@ -11,7 +11,7 @@ trait ScopeTrait
     public function scopeWhereAllDeletedNull($query, $tables)
     {
         foreach ($tables as $table) {
-            $query->whereNull($table . '.deleted_at');
+            $query->whereNull($table.'.deleted_at');
         }
     }
 
