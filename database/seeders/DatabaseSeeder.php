@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             // StudentSeeder::class,
             // ExamSeeder::class,
             // ExamStudentsSeeder::class,
-            ParentSeeder::class,
-            // ChangeDataSeeder::class
+            // ParentSeeder::class,
+            ChangeDataSeeder::class
         ]);
     }
 }

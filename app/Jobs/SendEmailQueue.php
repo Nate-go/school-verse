@@ -46,21 +46,21 @@ class SendEmailQueue implements ShouldQueue
                 ->first();
 
             $mail = new SendToParent($notify);
-        } else {
-            $notify = Notification::selectColumns([
-                'users.username as name',
-                'from_users.username as from_name',
-                'users.email',
-                'content',
-                'link',
-            ])
-                ->join('users as from_users', 'from_users.id', '=', 'notifications.from_user_id')
-                ->join('users', 'users.id', '=', 'notifications.user_id')
-                ->where('notifications.id', $this->notifyId)
-                ->first();
-                
-            $mail = new SendMail($notify);
+            Mail::to($notify->email)->send($mail);
         }
+        $notify = Notification::selectColumns([
+            'users.username as name',
+            'from_users.username as from_name',
+            'users.email',
+            'content',
+            'link',
+        ])
+            ->join('users as from_users', 'from_users.id', '=', 'notifications.from_user_id')
+            ->join('users', 'users.id', '=', 'notifications.user_id')
+            ->where('notifications.id', $this->notifyId)
+            ->first();
+
+        $mail = new SendMail($notify);
         Mail::to($notify->email)->send($mail);
     }
 }

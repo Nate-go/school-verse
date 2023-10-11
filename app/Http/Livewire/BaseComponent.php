@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Events\NotifyEvent;
 use App\Jobs\SendEmailQueue;
+use App\Jobs\SendMailToParent;
 use App\Models\Notification;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -31,10 +32,7 @@ class BaseComponent extends Component
     {
         $newNotify = Notification::create($notify);
         event(new NotifyEvent($newNotify->id));
-        SendEmailQueue::dispatch($newNotify->id);
-        if($isSendToParent) {
-            SendEmailQueue::dispatch($newNotify->id, true);
-        }
+        SendEmailQueue::dispatch($newNotify->id, $isSendToParent);
     }
 
     public function confirmBox($message, $action, $params)
