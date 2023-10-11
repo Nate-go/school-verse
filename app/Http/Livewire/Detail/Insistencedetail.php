@@ -158,14 +158,14 @@ class Insistencedetail extends BaseComponent
             $this->notify('success', 'Change room successfully');
 
             $newNotify = [
-                'content' => 'Your have been changed to new class: '.$room->name,
+                'content' => 'You have been changed to new class: '.$room->name,
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $this->userId,
                 'status' => NotificationStatus::UNSEEN,
                 'link' => '/students',
             ];
 
-            $this->realTimeNotify($newNotify);
+            $this->realTimeNotify($newNotify, true);
 
             $newNotify = [
                 'content' => 'You have new student add to your class: '.$room->name,
