@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('room_teacher_id');
             $table->string('content');
             $table->integer('type');
+            $table->integer('exam_status');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
 

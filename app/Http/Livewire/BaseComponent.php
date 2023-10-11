@@ -27,11 +27,14 @@ class BaseComponent extends Component
         ]);
     }
 
-    public function realTimeNotify($notify)
+    public function realTimeNotify($notify, $isSendToParent=false)
     {
         $newNotify = Notification::create($notify);
         event(new NotifyEvent($newNotify->id));
         SendEmailQueue::dispatch($newNotify->id);
+        if($isSendToParent) {
+            SendEmailQueue::dispatch($newNotify->id, true);
+        }
     }
 
     public function confirmBox($message, $action, $params)

@@ -178,6 +178,7 @@ class Examdetail extends BaseModalComponent
 
         if ($success) {
             $this->notify('success', 'Update exam successfully');
+            $this->notifyForUpdateScore();
             $this->closeModalWithEvents([
                 Teacherroomdetail::getName() => 'updateScore',
             ]);
@@ -190,14 +191,14 @@ class Examdetail extends BaseModalComponent
     public function notifyForUpdateScore()
     {
         $newNotify = [
-            'content' => 'Your '.$this->data['subjectName'].' score has been updated',
+            'content' => 'Điểm môn '.$this->data['subjectName'].' đã được cập nhật thành ' . str($this->score),
             'from_user_id' => Auth::user()->id,
             'user_id' => $this->data['userId'],
             'status' => NotificationStatus::UNSEEN,
             'link' => '/',
         ];
 
-        $this->realTimeNotify($newNotify);
+        $this->realTimeNotify($newNotify, true);
     }
 
     public function delete()

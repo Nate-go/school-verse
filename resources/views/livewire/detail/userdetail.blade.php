@@ -138,7 +138,7 @@
                             <select name="gender" id="" wire:model='selectedGender'
                                 class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
                                 @foreach ($genders as $gender)
-                                <option {{ $gender['value']===$gender ? 'selected' : '' }} value="{{ $gender['value'] }}">
+                                <option {{ $gender['value']=== $selectedGender ? 'selected' : '' }} value="{{ $gender['value'] }}">
                                     {{$gender['name']}}</option>
                                 @endforeach
                             </select>
@@ -166,6 +166,76 @@
         <div class="bg-transparent h-6"></div>
     </div>
 
+    @if ($isAdmin and $parentData != null)        
+        <div {{ $isProfileOpen ? '' : 'hidden' }}>
+            <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
+                <div wire:click='setParentData'
+                    class="absolute top-5 right-1 flex items-center bg-white rounded-full p-1 hover:text-blue-600 cursor-pointer">
+                    <span class="rounded-md pl-4 -mr-2 text-base">refresh</span>
+                    <button class="px-3 pt-1 flex items-center justify-center rounded-full text-xs">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                </div>
+                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1">
+                    <div class="">
+                        <div class="text-center pb-4">
+                            <h6
+                                class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
+                                Parent Information</h6>
+                        </div>
+                        <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-4">
+                            <div class="md:col-span-2">
+                                <label>Name</label>
+                                <input type="text" name="address" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                    wire:model='parentData.name' />
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label>Address</label>
+                                <input type="text" name="address" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                    wire:model='parentData.address' />
+                            </div>
+        
+                            <div class="md:col-span-2">
+                                <label for="country">Gender</label>
+                                <select name="gender" id="" wire:model='parentData.gender'
+                                    class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 w-full">
+                                    @foreach ($genders as $gender)
+                                    <option {{ $gender['value']===$parentData['gender'] ? 'selected' : '' }} value="{{ $gender['value'] }}">
+                                        {{$gender['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+        
+                            <div class="md:col-span-2">
+                                <label>Phonenumber</label>
+                                <input type="text" name="phonenumber" oninput="this.value = this.value.replace(/[0-9\+\-]/g, '');"
+                                    wire:model='parentData.phonenumber' class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                    placeholder="" />
+                            </div>
+        
+                            <div class="md:col-span-2">
+                                <label>Relationship</label>
+                                <input type="text" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                    wire:model='parentData.relationship' placeholder="" />
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label>email</label>
+                                <input type="text" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" wire:model='parentData.email'
+                                    placeholder="" />
+                            </div>
+        
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="bg-transparent h-10"></div>
+        </div>
+    @endif
+    
     <div {{ $isChangePasswordOpen ? '' : 'hidden' }}>
         <div class="relative bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
             <div wire:click='changePasswordFormGenerate'
