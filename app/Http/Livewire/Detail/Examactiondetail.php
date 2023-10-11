@@ -317,14 +317,14 @@ class Examactiondetail extends BaseModalComponent
     {
         foreach ($updateExams as $updateExam) {
             $newNotify = [
-                'content' => 'Your '.$this->exam['content'].' score has been updated to ' . $updateExam['score'],
+                'content' => 'Điểm môn '.$this->exam['content'].' đã được cập nhật thành ' . $updateExam['score'],
                 'from_user_id' => Auth::user()->id,
                 'user_id' => $updateExam['userId'],
                 'status' => NotificationStatus::UNSEEN,
                 'link' => '/',
             ];
 
-            $this->realTimeNotify($newNotify);
+            $this->realTimeNotify($newNotify, true);
         }
     }
 
