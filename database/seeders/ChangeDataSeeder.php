@@ -14,42 +14,42 @@ class ChangeDataSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::whereNot('role', UserRole::ADMIN)->get();
+        // $users = User::whereNot('role', UserRole::ADMIN)->get();
 
-        foreach($users as $user) {
-            $numberOfword = random_int(3, 4);
-            $mail = $user->role == UserRole::STUDENT ? 'student.gmail.com' : 'teacher.gmail.com';
-            $name = vnfaker()->fullname($numberOfword);
+        // foreach($users as $user) {
+        //     $numberOfword = random_int(3, 4);
+        //     $mail = $user->role == UserRole::STUDENT ? 'student.gmail.com' : 'teacher.gmail.com';
+        //     $name = vnfaker()->fullname($numberOfword);
 
-            User::where('id', $user->id)->update([
-                'username' => $name,
-                'email' => $this->emailRender($name) . str($user->id) . '@' .  $mail
-            ]);
-        }
-
-        // $subjectNames = [
-        //     'Physics' => 'Vật lý',
-        //     'Chemistry' => 'Hóa học',
-        //     'History' => 'Lịch sử',
-        //     'Geography' => 'Địa lý',
-        //     'Biology' => 'Sinh học',
-        //     'Civic Education' => 'Giáo dục công dân',
-        //     'Technology' => 'Công nghệ',
-        //     'National Defense Education' => 'Giáo dục quốc phòng',
-        //     'Physical Education' => 'Giáo dục thể chất',
-        //     'Computer Science' => 'Khoa học máy tính',
-        //     'Mathematics' => 'Toán',
-        //     'Literature' => 'Ngữ văn',
-        //     'English' => 'Anh văn',
-        // ];
-
-        // $subjects = Subject::get(); 
-
-        // foreach ($subjects as $subject) {
-        //     Subject::where('id', $subject->id)->update([
-        //         'name' => $subjectNames[$subject->name]
+        //     User::where('id', $user->id)->update([
+        //         'username' => $name,
+        //         'email' => $this->emailRender($name) . str($user->id) . '@' .  $mail
         //     ]);
         // }
+
+        $subjectNames = [
+            'Physics' => 'Vật lý',
+            'Chemistry' => 'Hóa học',
+            'History' => 'Lịch sử',
+            'Geography' => 'Địa lý',
+            'Biology' => 'Sinh học',
+            'Civic Education' => 'Giáo dục công dân',
+            'Technology' => 'Công nghệ',
+            'National Defense Education' => 'Giáo dục quốc phòng',
+            'Physical Education' => 'Giáo dục thể chất',
+            'Computer Science' => 'Khoa học máy tính',
+            'Mathematics' => 'Toán',
+            'Literature' => 'Ngữ văn',
+            'English' => 'Anh văn',
+        ];
+
+        $subjects = Subject::get(); 
+
+        foreach ($subjects as $subject) {
+            Subject::where('id', $subject->id)->update([
+                'name' => $subjectNames[$subject->name]
+            ]);
+        }
     }
 
     private function emailRender($str)

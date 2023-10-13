@@ -54,7 +54,11 @@ class Dashboard extends BaseComponent
 
     public $selectedRank;
 
+    public $selectedRoomCompare;
+
     public $displayStudent = false;
+
+    public $last = null;
 
     protected $listeners = [
         'onPointClick' => 'handleOnPointClick',
@@ -69,6 +73,10 @@ class Dashboard extends BaseComponent
 
     public function handleOnSliceClick($slice)
     {
+        if($this->last == null or $this->last == 'column') {
+            $this->selectedRank = self::ALL;
+        }
+        $this->last = 'pie';
         $this->displayStudent = false;
         $this->displayStudent();
         $this->selectedRank = $this->selectedRank == $slice['title'] ? self::ALL : $slice['title']; 
@@ -76,9 +84,25 @@ class Dashboard extends BaseComponent
 
     public function handleOnColumnClick($column)
     {
+        if ($this->last == null or $this->last == 'pie') {
+            $this->selectedRank = self::ALL;
+            $this->selectedRoomCompare = self::ALL;
+        }
+        $this->last = 'column';
         $this->displayStudent = false;
         $this->displayStudent();
-        $this->selectedRank = $this->selectedRank == $column['title'] ? self::ALL : $column['title'];
+        if(isset($column['seriesName'])) {
+            if($this->selectedRank == $column['seriesName'] and $this->selectedRoomCompare == $column['title'] ) {
+                $this->selectedRank = self::ALL;
+                $this->selectedRoomCompare = self::ALL;
+            } else {
+                $this->selectedRank = $column['seriesName'];
+                $this->selectedRoomCompare = $column['title'];
+            }
+        } else {
+            $this->selectedRank = $this->selectedRank == $column['title'] ? self::ALL : $column['title'];
+        }
+        
     }
 
     public function handleOnBlockClick($block)
@@ -96,6 +120,7 @@ class Dashboard extends BaseComponent
         $this->selectedSchoolYear = self::ALL;
         $this->setSchoolYear();
         $this->selectedRank = self::ALL;
+        $this->selectedRoomCompare = self::ALL;
     }
 
     public function setSchoolYear() {
@@ -267,34 +292,69 @@ class Dashboard extends BaseComponent
     public function resetData() {
         $this->displayStudent = false;
         $this->students = null;
-        $this->rank = self::ALL;
+        $this->selectedRank = self::ALL;
+        $this->selectedRoomCompare = self::ALL;
     }
 
     public function render()
     {
-        $columnChartModel = LivewireCharts::columnChartModel()
-                    ->setTitle('Number of students')
-                    ->setAnimated($this->firstRun)
-                    ->withOnColumnClickEventName('onColumnClick')
-                    ->setLegendVisibility(false)
-                    ->setDataLabelsEnabled($this->showDataLabels)
-                    ->setColumnWidth(20)
-                    ->withGrid();
-        
         $data = $this->getData();
 
         $pieChartModel = LivewireCharts::pieChartModel()
-                    ->setTitle('Percent')
-                    ->setAnimated($this->firstRun)
-                    ->setType('donut')
-                    ->withOnSliceClickEvent('onSliceClick')
-                    ->legendPositionBottom()
-                    ->legendHorizontallyAlignedCenter()
-                    ->setDataLabelsEnabled($this->showDataLabels);
+            ->setTitle('Percent')
+            ->setAnimated($this->firstRun)
+            ->setType('donut')
+            ->withOnSliceClickEvent('onSliceClick')
+            ->legendPositionBottom()
+            ->legendHorizontallyAlignedCenter()
+            ->setDataLabelsEnabled($this->showDataLabels);
 
         foreach ($data as $type => $value) {
-            $columnChartModel->addColumn($type, $value, $this->colors[$type]);
             $pieChartModel->addSlice($type, $value, $this->colors[$type]);
+        }
+
+        if($this->selectedGrade != self::ALL and $this->selectedRoom == self::ALL) {
+            $multilColumnChartModel = LivewireCharts::multiColumnChartModel()->setTitle('Number of students')
+                ->setAnimated($this->firstRun)
+                ->withOnColumnClickEventName('onColumnClick')
+                ->setLegendVisibility(false)
+                ->setDataLabelsEnabled($this->showDataLabels)
+                ->setColumnWidth(30)
+                ->multiColumn()
+                ->withGrid();
+
+            $this->setStudent();
+            $data = $this->students;
+            $muilColumns = [];
+
+            foreach($data as $item) {
+                if(isset($multiColumns[$item['roomName']][$item['rank']])) {
+                    $multiColumns[$item['roomName']][$item['rank']] += 1;
+                } else {
+                    $multiColumns[$item['roomName']][$item['rank']] = 1;
+                }
+            }
+
+            foreach($multiColumns as $roomName => $room) {
+                foreach($room as $rank => $value) {
+                    $multilColumnChartModel->addSeriesColumn($rank, $roomName, $value);
+                }
+            }
+
+            $columnChartModel = $multilColumnChartModel;
+        } else {
+            $columnChartModel = LivewireCharts::columnChartModel()
+                ->setTitle('Number of students')
+                ->setAnimated($this->firstRun)
+                ->withOnColumnClickEventName('onColumnClick')
+                ->setLegendVisibility(false)
+                ->setDataLabelsEnabled($this->showDataLabels)
+                ->setColumnWidth(20)
+                ->withGrid();
+
+            foreach ($data as $type => $value) {
+                $columnChartModel->addColumn($type, $value, $this->colors[$type]);
+            }
         }
 
         $this->firstRun = false;

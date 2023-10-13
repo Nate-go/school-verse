@@ -71,19 +71,33 @@
         </div>
     </div>
 
-    <div class="container mx-auto p-4 sm:p-0 mt-8 rounded-xl">
-        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-            <div class="shadow rounded-2xl p-4 border bg-white flex-1" style="height: 32rem;">
-                <livewire:livewire-column-chart key="{{ $columnChartModel->reactiveKey() }}"
-                    :column-chart-model="$columnChartModel" />
-            </div>
+    @if ($selectedGrade != self::ALL and $selectedRoom == self::ALL)
+        <div class="container mx-auto p-4 sm:p-0 mt-8 rounded-xl">
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <div class="shadow rounded-2xl p-4 border bg-white flex-1" style="height: 32rem;">
+                    <livewire:livewire-column-chart key="{{ $columnChartModel->reactiveKey() }}"
+                        :column-chart-model="$columnChartModel" />
+                </div>
 
-            <div class="shadow rounded-2xl p-4 border bg-white flex-1" style="height: 32rem;">
-                <livewire:livewire-pie-chart key="{{ $pieChartModel->reactiveKey() }}"
-                    :pie-chart-model="$pieChartModel" />
+                <div class="shadow rounded-2xl p-4 border bg-white flex-1" style="height: 32rem;">
+                    <livewire:livewire-pie-chart key="{{ $pieChartModel->reactiveKey() }}" :pie-chart-model="$pieChartModel" />
+                </div>
             </div>
         </div>
-    </div>
+    @else
+        <div class="container mx-auto p-4 sm:p-0 mt-8 rounded-xl">
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <div class="shadow rounded-2xl p-4 border bg-white flex-1" style="height: 32rem;">
+                    <livewire:livewire-column-chart key="{{ $columnChartModel->reactiveKey() }}"
+                        :column-chart-model="$columnChartModel" />
+                </div>
+        
+                <div class="shadow rounded-2xl p-4 border bg-white flex-1" style="height: 32rem;">
+                    <livewire:livewire-pie-chart key="{{ $pieChartModel->reactiveKey() }}" :pie-chart-model="$pieChartModel" />
+                </div>
+            </div>
+        </div>
+    @endif
 
     @if ($displayStudent)
         <div class="bg-transparent h-10"></div>
@@ -138,7 +152,7 @@
                                         $count = 0;
                                     @endphp
                                     @foreach ($students as $item)
-                                        @if ($selectedRank == self::ALL or $selectedRank == $item['rank'])
+                                        @if (($selectedRank == self::ALL or $selectedRank == $item['rank']) and ($selectedRoomCompare == self::ALL or $selectedRoomCompare == $item['roomName']))
                                             <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                                 <td class="cursor-pointer pl-2 py-3 px-5 border-b border-blue-gray-50">
                                                     <div class="flex gap-2 items-center">
