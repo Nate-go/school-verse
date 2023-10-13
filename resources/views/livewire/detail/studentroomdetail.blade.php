@@ -8,7 +8,7 @@
                 <div class="text-center pb-4">
                     <h6
                         class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
-                        Student room detail</h6>
+                        Student class detail</h6>
                 </div>
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-7">
                     <div class="md:col-span-2 md:row-span-3">
@@ -177,7 +177,7 @@
                                 <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                     <td class="py-3 px-5 border-b border-blue-gray-50" colspan="6">
                                         <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
-                                            Điểm tổng kết
+                                            Final score
                                         </p>
                                     </td>
                                     <td class="py-3 px-5 border-b border-blue-gray-50">
@@ -192,7 +192,7 @@
                                 <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                     <td class="py-3 px-5 border-b border-blue-gray-50" colspan="6">
                                         <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
-                                            Học lực
+                                            Ranked academic
                                         </p>
                                     </td>
                                     <td class="py-3 px-5 border-b border-blue-gray-50">
