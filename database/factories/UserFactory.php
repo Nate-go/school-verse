@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Constant\UserRole;
+use App\Constant\UserStatus;
 use App\Models\Profile;
 use App\Services\FactoryService;
 use App\Traits\ServiceInjection\InjectionService;
@@ -22,6 +24,8 @@ class UserFactory extends Factory
 
     public $factoryService;
 
+    public $count = 0;
+
     public function definition(): array
     {
         $this->setInjection([FactoryService::class]);
@@ -33,18 +37,16 @@ class UserFactory extends Factory
 
         $status = $this->factoryService->getValidValue($this->statuses, $this->statusRange, range(0, 2));
         $this->statuses[] = $status;
-        $host = url('/');
-        $port = env('APP_PORT', 8000);
 
-        $fullUrl = $host.':'.$port;
-
+        $fullUrl = url('/');
+        $this->count+=1;
         return [
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('123456'),
-            'role' => $role,
+            'role' => $this->count%8 < 3 ? UserRole::TEACHER : UserRole::STUDENT,
             'username' => fake()->name(),
             'profile_id' => $profile->id,
-            'status' => $status,
+            'status' => UserStatus::ACTIVE,
             'image_url' => $fullUrl.'/img/default-user-'.str(random_int(0, 5)).'.png',
         ];
     }

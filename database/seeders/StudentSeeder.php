@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Constant\UserRole;
 use App\Models\Room;
+use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -15,101 +16,39 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $randomGrades = $this->generate_increasing_combinations_with_repeats(range(1, 3), 3);
         $students = User::selectColumns('id')->where('role', UserRole::STUDENT)->get();
         $rooms = Room::selectColumns(['id', 'grade_id', 'school_year_id'])->get();
+        $schoolYears = SchoolYear::selectColumns(['id'])->get();
 
-        $studentData = [];
-        $data = $this->getTrueData($randomGrades, count($students));
+        foreach($students as $student) {
+            $randNumberYears = $this->getRandomConsecutiveNumber([[1, 0, 0], [2, 0, 0], [3, 0, 0], [0, 1, 0], [0, 2, 0], [0, 3, 0], [0, 0, 1], [0, 0, 2], [0, 0, 3], [0, 1, 2], [0, 2, 3], [0, 1, 2], [0, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]);
 
-        for ($i = 0; $i < count($students); $i++) {
-            $studentData[] = [
-                'userId' => $students[$i]->id,
-                'gradeIds' => $data[$i],
-            ];
-        }
-
-        $studentMap = [];
-
-        foreach ($studentData as $item) {
-
-            for ($i = 0; $i < 3; $i++) {
-                $studentMap[$i + 1][$item['gradeIds'][$i]][] = $item['userId'];
-            }
-        }
-
-        foreach (range(1, 3) as $schoolYear) {
-            foreach (range(1, 3) as $grade) {
-                if (! isset($studentMap[$schoolYear][$grade])) {
+            for($i=0; $i < count($randNumberYears); $i++) {
+                if($randNumberYears[$i] == 0) {
                     continue;
                 }
-                $currentStudents = $studentMap[$schoolYear][$grade];
-                while (! empty($currentStudents)) {
-                    foreach ($rooms as $room) {
-                        if ($room->grade_id != $grade or $room->school_year_id != $schoolYear) {
-                            continue;
-                        }
-                        if (empty($currentStudents)) {
-                            break;
-                        }
-                        $studentId = array_shift($currentStudents);
-                        Student::create([
-                            'user_id' => $studentId,
-                            'school_year_id' => $schoolYear,
-                            'grade_id' => $grade,
-                            'room_id' => $room->id,
-                        ]);
+                $currentRooms = [];
+                foreach($rooms as $room) {
+                    if($room->school_year_id == $schoolYears[$i]->id and $room->grade_id == $randNumberYears[$i]) {
+                        $currentRooms[] = $room;
                     }
                 }
+
+                $randomRoom = random_int(0, count($currentRooms) - 1);
+
+                Student::create([
+                    'user_id' => $student->id,
+                    'school_year_id' => $schoolYears[$i]->id,
+                    'grade_id' => $randNumberYears[$i],
+                    'room_id' => $currentRooms[$randomRoom]->id,
+                ]);
             }
         }
-
     }
 
-    private function getTrueData($randomGrades, $number)
+    function getRandomConsecutiveNumber($sequences)
     {
-        $success = false;
-
-        $data = [];
-        foreach (range(1, $number) as $index) {
-            $randomIndex = random_int(0, count($randomGrades) - 1);
-            $data[] = $randomGrades[$randomIndex];
-        }
-
-        return $data;
-    }
-
-    private function check_occurrences($array)
-    {
-        $required_numbers = range(1, 3);
-
-        foreach ($array as $sub_array) {
-            $counts = array_count_values($sub_array);
-
-            foreach ($required_numbers as $number) {
-                if (! isset($counts[$number]) || $counts[$number] < 1) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    private function generate_increasing_combinations_with_repeats($numbers, $k)
-    {
-        $combinations = [];
-        $total_numbers = count($numbers);
-
-        if ($k == 0 || $k > $total_numbers) {
-            return $combinations;
-        }
-
-        for ($i = 0; $i <= $total_numbers - $k; $i++) {
-            $combination = array_slice($numbers, $i, $k);
-            $combinations[] = $combination;
-        }
-
-        return $combinations;
+        $randomIndex = array_rand($sequences);
+        return $sequences[$randomIndex];
     }
 }

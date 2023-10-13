@@ -6,11 +6,9 @@
 
     </IfModule>
 
- 
+    php_value max_execution_time 300
 
     RewriteEngine On
-
- 
 
     # Handle Authorization Header
 

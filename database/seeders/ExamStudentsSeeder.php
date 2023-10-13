@@ -27,6 +27,10 @@ class ExamStudentsSeeder extends Seeder
         'Good job! Your hard work is paying off in your exams.',
     ];
 
+    public $mins = [5, 50, 65, 80, 50, 65, 80];
+
+    public $maxs = [100, 70, 79, 100, 70, 79, 100];
+
     public function run(): void
     {
         $exams = Exam::selectColumns(['exams.id', 'room_id'])
@@ -39,10 +43,11 @@ class ExamStudentsSeeder extends Seeder
 
             foreach ($students as $student) {
                 $reviewIndex = random_int(0, count($this->feedbackArray) - 1);
+                $typeStudent = $student->id%5;
                 ExamStudent::create([
                     'exam_id' => $exam->id,
                     'student_id' => $student->id,
-                    'score' => random_int(0, 100),
+                    'score' => random_int($this->mins[$typeStudent], $this->maxs[$typeStudent]),
                     'review' => $this->feedbackArray[$reviewIndex],
                 ]);
             }

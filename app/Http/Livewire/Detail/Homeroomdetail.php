@@ -55,6 +55,8 @@ class Homeroomdetail extends BaseComponent
 
     public $studentName;
 
+    public $subjectCoeffs;
+
     protected $constantService;
 
     public function boot(ConstantService $constantService)
@@ -76,6 +78,18 @@ class Homeroomdetail extends BaseComponent
         $this->selectedTypeView = self::TOTAL_SCORE;
 
         $this->setDataTable();
+    }
+
+    private function getSubjectCoeffs() {
+        $subjects = Subject::where('grade_id', $this->room['gradeId'])->get();
+
+        $data = [];
+
+        foreach ($subjects as $subject) {
+            $data[$subject->id] = $subject->coefficient;
+        }
+
+        return $data;
     }
 
     public function formGenerate()
@@ -106,6 +120,7 @@ class Homeroomdetail extends BaseComponent
         $this->image = null;
 
         $this->updateTypeViewData();
+        $this->subjectCoeffs = $this->getSubjectCoeffs();
     }
 
     private function updateTypeViewData()
@@ -178,14 +193,17 @@ class Homeroomdetail extends BaseComponent
 
     private function setBodyByStudent()
     {
-
         $subjects = $this->getSubjects();
 
         $subjectScores = [];
+        $scores = json_decode(Student::selectColumns(['scores'])->where('id', $this->selectedStudent)->first()->scores);
         foreach ($subjects as $subject) {
             $exams = $this->getExamBySubject($subject['value'], $this->selectedStudent);
-            $subjectScore = $this->getTotalScore($exams);
-
+            foreach($scores as $score) {
+                if($score->subject_id == $subject['value']) {
+                    $subjectScore = $score->value;
+                }
+            }
             $subjectScores[] = [
                 'subject' => $subject,
                 'scores' => $exams,
@@ -193,11 +211,11 @@ class Homeroomdetail extends BaseComponent
             ];
         }
 
-        $scores = $this->getTotalScores($this->selectedStudent);
+        $score = $this->getJsonTotalScore($scores);
 
         $this->body = [
             'subjectScores' => $subjectScores,
-            'finalScore' => end($scores),
+            'finalScore' => $score,
         ];
     }
 
@@ -214,7 +232,13 @@ class Homeroomdetail extends BaseComponent
 
         foreach ($students as $student) {
             $exams = $this->getExamBySubject($this->selectedSubject, $student['studentId']);
-            $subjectScore = $this->getTotalScore($exams);
+            $scores = json_decode(Student::selectColumns(['scores'])->where('id', $student['studentId'])->first()->scores);
+
+            foreach ($scores as $score) {
+                if ($score->subject_id == $this->selectedSubject) {
+                    $subjectScore = $score->value;
+                }
+            }
 
             $this->body[] = [
                 'student' => $student,
@@ -241,11 +265,33 @@ class Homeroomdetail extends BaseComponent
         $this->body = [];
 
         foreach ($students as $student) {
+            $scores = json_decode($student['scores']);
+            $totalScores = [];
+
+            foreach($scores as $score) {
+                $totalScores[] = $score->value;
+            }
+
+            $totalScores[] = $this->getJsonTotalScore($scores);
+
             $this->body[] = [
                 'student' => $student,
-                'totalScores' => $this->getTotalScores($student['studentId']),
+                'totalScores' => $totalScores,
             ];
         }
+    }
+
+    private function getJsonTotalScore($scores) {
+        $totalScore = 0;
+        $totalCoeff = 0;
+        foreach ($scores as $score) {
+            $coeff = $this->subjectCoeffs[$score->subject_id];
+            $totalScore += $score->value * $coeff;
+            $totalCoeff += $coeff;
+        }
+
+        $totalScore = $totalCoeff > 0 ? round($totalScore / $totalCoeff, self::MAXNUMBERLENGTH) : 0;
+        return $totalScore;
     }
 
     public function updatedSelectedStudent()
@@ -291,29 +337,6 @@ class Homeroomdetail extends BaseComponent
         return $data;
     }
 
-    private function getTotalScores($studentId)
-    {
-        $subjects = $this->getSubjects();
-
-        $scores = [];
-
-        $finalScore = 0;
-        $totalCoeff = 0;
-        foreach ($subjects as $subject) {
-            $exams = $this->getExamBySubject($subject['value'], $studentId);
-
-            $score = round($this->getTotalScore($exams), self::MAXNUMBERLENGTH);
-            $scores[] = $score;
-
-            $finalScore += $score * $subject['coefficient'];
-            $totalCoeff += $subject['coefficient'];
-        }
-
-        $scores[] = $totalCoeff > 0 ? round($finalScore / $totalCoeff, self::MAXNUMBERLENGTH) : 0;
-
-        return $scores;
-    }
-
     private function getExamBySubject($subjectId, $studentId)
     {
         $exams = Exam::selectColumns([
@@ -344,20 +367,6 @@ class Homeroomdetail extends BaseComponent
         return $data;
     }
 
-    private function getTotalScore($exams)
-    {
-        $totalScore = 0;
-        $totalCoefficient = 0;
-
-        foreach ($exams as $exam) {
-            $coef = ExamTypeCoefficient::COEFFICIENT[$exam['type']];
-            $totalCoefficient += $coef;
-            $totalScore += $exam['score'] * $coef;
-        }
-
-        return $totalCoefficient > 0 ? round($totalScore / $totalCoefficient, self::MAXNUMBERLENGTH) : 0;
-    }
-
     private function getStudents()
     {
         $students = Student::selectColumns([
@@ -365,6 +374,7 @@ class Homeroomdetail extends BaseComponent
             'users.username as student_name',
             'users.image_url as student_image',
             'users.id as user_id',
+            'students.scores'
         ])
             ->join('users', 'users.id', '=', 'students.user_id')
             ->where('students.room_id', '=', $this->itemId)
@@ -379,6 +389,7 @@ class Homeroomdetail extends BaseComponent
                 'studentName' => $student->student_name,
                 'studentImage' => $student->student_image,
                 'userId' => $student->user_id,
+                'scores' => $student->scores
             ];
         }
 
@@ -387,7 +398,6 @@ class Homeroomdetail extends BaseComponent
 
     public function save()
     {
-
         $room = [];
 
         $room['image_url'] = $this->saveImage();

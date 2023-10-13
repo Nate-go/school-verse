@@ -29,6 +29,7 @@ class ExamSeeder extends Seeder
                         'content' => $type['name'].' '.str($number + 1),
                         'room_teacher_id' => $roomTeacher->id,
                         'type' => $type['value'],
+                        'exam_status' => random_int(0, 1)
                     ]);
                 }
             }

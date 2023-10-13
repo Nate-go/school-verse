@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('exam_status');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-
             $table->foreign('room_teacher_id')->references('id')->on('room_teachers');
         });
     }

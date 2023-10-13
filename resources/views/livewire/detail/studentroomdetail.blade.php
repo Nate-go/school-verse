@@ -177,12 +177,27 @@
                                 <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
                                     <td class="py-3 px-5 border-b border-blue-gray-50" colspan="6">
                                         <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
-                                            Final score
+                                            Điểm tổng kết
                                         </p>
                                     </td>
                                     <td class="py-3 px-5 border-b border-blue-gray-50">
                                         <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
                                             {{ $body['finalScore'] }}
+                                        </p>
+                                    </td>
+                                </tr>
+                                @php
+                                    $count += 1;
+                                @endphp
+                                <tr class='{{ $count%2 === 1 ? ' bg-slate-100' : '' }} hover:bg-blue-100'>
+                                    <td class="py-3 px-5 border-b border-blue-gray-50" colspan="6">
+                                        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
+                                            Học lực
+                                        </p>
+                                    </td>
+                                    <td class="py-3 px-5 border-b border-blue-gray-50">
+                                        <p class="block antialiased font-sans text-xs font-medium text-blue-gray-600 text-center">
+                                            {{ $body['rank'] }}
                                         </p>
                                     </td>
                                 </tr>

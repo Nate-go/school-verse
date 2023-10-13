@@ -1,5 +1,5 @@
 <div class="flex-col">
-    <div wire:loading wire:target='selectedExamType,createExam,getModal,changeExam'>
+    <div wire:loading wire:target='selectedExamType,createExam,getModal,changeExam,changeOfficalView'>
         @livewire('fregment.loading')
     </div>
     <div class="bg-white rounded-xl shadow-lg p-4 px-4 md:p-4">
@@ -194,6 +194,10 @@
                                                 class="hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
                                                 wire:click="changeExam({{$exam['id']}})" type="button"><i class="fa-regular fa-square-check fa-lg"></i>
                                             </button>
+                                            <button
+                                                class="{{ $exam['exam_status'] ? 'text-yellow-300' : '' }} hover:bg-slate-200 text-center uppercase transition-all w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-base hover:text-blue-400"
+                                                wire:click="changeOffical({{$exam['id']}})" type="button"><i class="fa-solid fa-star fa-lg"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     @php
@@ -221,8 +225,15 @@
                         class="capitalize block antialiased tracking-normal font-sans text-xl font-semibold leading-relaxed text-blue-gray-900 mb-1">
                         Student scores</h6>
                 </div>
-                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-3">
-                    <div class="md:col-span-3">
+                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
+                    <div class="md:col-span-1">
+                        <button wire:click='changeOfficalView'
+                            class="w-28 col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded gap-2 flex items-center h-10 border mt-1">
+                            <i class="{{ $isOffical ? 'text-yellow-300' : '' }} fa-solid fa-star fa-lg"></i>
+                            <p>{{$isOffical ? 'Offical' : 'All'}}</p>
+                        </button>
+                    </div>
+                    <div class="md:col-span-6">
                         @if (!empty($header) and !empty($body))
                         <table class="w-full min-w-[640px] table-autos">
                             <thead class="sticky top-0 z-20">

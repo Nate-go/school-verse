@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Detail;
 
+use App\Constant\ExamStatus;
 use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
 use App\Constant\SortTypes;
@@ -49,6 +50,10 @@ class Teacherroomdetail extends BaseComponent
 
     public $isTeacher;
 
+    public $isOffical;
+
+    public $updateScores = false;
+
     protected $listeners = ['updateScore' => 'setBody', 'updateExamList' => 'formGenerate'];
 
     public function boot(ConstantService $constantService)
@@ -69,6 +74,7 @@ class Teacherroomdetail extends BaseComponent
         $this->students = $this->getStudents();
 
         $this->selectedExam = null;
+        $this->isOffical = false;
     }
 
     public function changeExam($value)
@@ -122,6 +128,7 @@ class Teacherroomdetail extends BaseComponent
             'id',
             'content',
             'type',
+            'exam_status',
             DB::raw('(select count(id) from exam_students where exam_id = exams.id and deleted_at is null) as member'),
         ])
             ->where('room_teacher_id', $this->itemId)
@@ -137,6 +144,7 @@ class Teacherroomdetail extends BaseComponent
                 'content' => $item->content,
                 'type' => ['value' => $item->type, 'name' => $this->constantService->getNameConstant(ExamType::class, $item->type)],
                 'member' => $item->member,
+                'exam_status' => $item->exam_status
             ];
         }
     }
@@ -144,6 +152,21 @@ class Teacherroomdetail extends BaseComponent
     public function updatedSelectedExamType($value)
     {
         $this->setExam();
+    }
+
+    public function changeOffical($id) {
+        $this->updateScores = true;
+        $this->isOffical = true;
+        $exam = Exam::where('id', $id)->first();
+        $exam->exam_status = ExamStatus::OFFICAL - $exam->exam_status;
+        $exam->save();
+        $this->setExam();
+        $this->setBody();
+    }
+
+    public function changeOfficalView() {
+        $this->isOffical = ! $this->isOffical;
+        $this->setBody();
     }
 
     public function setTeacher()
@@ -214,26 +237,64 @@ class Teacherroomdetail extends BaseComponent
                 'scores' => $exams,
                 'totalScore' => $subjectScore,
             ];
+
+            if($this->isOffical and $this->updateScores) {
+                $this->updateScoreStudent($student['studentId'], $subjectScore, $this->room['subjectId']);
+            }
         }
+
+        $this->updateScores = false;
+    }
+
+    public function updateScoreStudent($studentId, $totalScore, $subjectId) {
+        $student = Student::where('id', $studentId)->first();
+        $scores = json_decode($student->scores);
+        foreach($scores as &$score) {
+            if($score->subject_id == $subjectId) {
+                $score->value = $totalScore;
+            }
+        }
+        $student->scores = json_encode($scores);
+        $student->save();
     }
 
     private function getExamBySubject($subjectId, $studentId)
     {
-        $exams = Exam::selectColumns([
-            'exams.id as exam_id',
-            'exam_students.id',
-            'score',
-            'exams.type',
-            'subjects.name',
-        ])
-            ->join('exam_students', 'exam_students.exam_id', '=', 'exams.id')
-            ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
-            ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
-            ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
-            ->where('exam_students.student_id', $studentId)
-            ->where('teachers.subject_id', $subjectId)
-            ->whereAllDeletedNull(['exam_students'])
-            ->get();
+        if($this->isOffical) {
+            $exams = Exam::selectColumns([
+                'exams.id as exam_id',
+                'exam_students.id',
+                'score',
+                'exams.type',
+                'subjects.name',
+            ])
+                ->join('exam_students', 'exam_students.exam_id', '=', 'exams.id')
+                ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
+                ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
+                ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
+                ->where('exam_students.student_id', $studentId)
+                ->where('teachers.subject_id', $subjectId)
+                ->where('exams.exam_status', ExamStatus::OFFICAL)
+                ->whereAllDeletedNull(['exam_students'])
+                ->get();
+        } else {
+            $exams = Exam::selectColumns([
+                'exams.id as exam_id',
+                'exam_students.id',
+                'score',
+                'exams.type',
+                'subjects.name',
+            ])
+                ->join('exam_students', 'exam_students.exam_id', '=', 'exams.id')
+                ->join('room_teachers', 'room_teachers.id', '=', 'exams.room_teacher_id')
+                ->join('teachers', 'teachers.id', '=', 'room_teachers.teacher_id')
+                ->join('subjects', 'subjects.id', '=', 'teachers.subject_id')
+                ->where('exam_students.student_id', $studentId)
+                ->where('teachers.subject_id', $subjectId)
+                ->whereAllDeletedNull(['exam_students'])
+                ->get();
+        }
+
         $data = [];
 
         foreach ($exams as $exam) {

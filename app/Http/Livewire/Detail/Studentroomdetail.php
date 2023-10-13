@@ -6,6 +6,7 @@ use App\Constant\ExamType;
 use App\Constant\ExamTypeCoefficient;
 use App\Constant\InsistenceTypes;
 use App\Constant\NotificationStatus;
+use App\Constant\Ranking;
 use App\Constant\UserRole;
 use App\Http\Livewire\BaseComponent;
 use App\Models\Exam;
@@ -241,11 +242,21 @@ class Studentroomdetail extends BaseComponent
         }
 
         $scores = $this->getTotalScores($this->itemId);
-
+        $finalScore = end($scores);
         $this->body = [
             'subjectScores' => $subjectScores,
-            'finalScore' => end($scores),
+            'finalScore' => $finalScore,
+            'rank' =>$this->rank($finalScore)
         ];
+    }
+
+    private function rank($score) {
+        foreach(Ranking::RANKS as $rank) {
+            if($score >= $rank['value']) {
+                return $rank['name'];
+            }
+        }
+        return null;
     }
 
     private function getSubjects()

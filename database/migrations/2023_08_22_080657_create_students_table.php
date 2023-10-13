@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('room_id')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-
+            $table->string('scores', 500)->nullable();          
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('school_year_id')->references('id')->on('school_years');
             $table->foreign('grade_id')->references('id')->on('grades');

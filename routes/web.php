@@ -66,5 +66,7 @@ Route::group([
     Route::get('/students/{userId}/rooms/{roomId}', [HomeController::class, 'studentRoom']);
 
     Route::get('/teachers/rescores/{examStudentId}', [ExamController::class, 'rescore']);
+    
+    Route::get('/statistic', [HomeController::class, 'getStatistic']);
 
 });

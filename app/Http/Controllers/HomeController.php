@@ -42,4 +42,8 @@ class HomeController extends Controller
     {
         return $this->roomService->getTeacherRoom($roomTeacherId);
     }
+
+    public function getStatistic() {
+        return view('user/dashboard');
+    }
 }
