@@ -325,7 +325,13 @@ class Dashboard extends BaseComponent
 
             $this->setStudent();
             $data = $this->students;
-            $muilColumns = [];
+            $multiColumns = [];
+
+            foreach($this->rooms as $room) {
+                foreach($this->types as $type) {
+                    $multiColumns[$room['name']][$type] = 0;
+                }
+            }
 
             foreach($data as $item) {
                 if(isset($multiColumns[$item['roomName']][$item['rank']])) {
