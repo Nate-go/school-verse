@@ -378,6 +378,7 @@ class Teacherroomdetail extends BaseComponent
             'content' => $content,
             'room_teacher_id' => $this->itemId,
             'type' => $this->selectedExamType,
+            'exam_status' => ExamStatus::NON_OFFICAL
         ]);
 
         if ($newExam) {
